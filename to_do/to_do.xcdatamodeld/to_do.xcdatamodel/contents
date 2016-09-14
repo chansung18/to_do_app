@@ -4,7 +4,7 @@
         <attribute name="alrams" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="context" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deadline" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="decration" optional="YES" syncable="YES"/>
+        <attribute name="decration" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

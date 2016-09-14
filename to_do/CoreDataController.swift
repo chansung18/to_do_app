@@ -18,7 +18,7 @@ class CoreDataController{
         
         
     }
-    func saveToCoredate(doItem: ToDoItem) {
+    func saveToCoredata(doItem: ToDoItem) {
         
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
@@ -29,18 +29,37 @@ class CoreDataController{
         itemObject.deadline = doItem.deadline
         itemObject.decration = doItem.decoration
         
+        
         var error :NSError?
         do {try managedObjectContext.save()}
         catch{error}
         
         if let err = error{
-            let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
-            myAlert.show()
+            //let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
+            //myAlert.show()
+            print("Error : " + String(error))
         }else{
-            let myAlert = UIAlertView(title: "saved", message: "Infomation saved", delegate: nil, cancelButtonTitle: "Ok")
-            myAlert.show()
+            //let myAlert = UIAlertView(title: "saved", message: "Infomation saved", delegate: nil, cancelButtonTitle: "Ok")
+            //myAlert.show()
+            print("saved")
         }
         
     }
-    
+    func loadFromCoredata() {
+        var dolist = [Dolist]()
+        let request = NSFetchRequest(entityName: "Dolist")
+        
+        var error :NSError?
+        do {try dolist = managedObjectContext.executeFetchRequest(request) as! [Dolist]}
+        catch{error}
+        
+        if let err = error{
+            //let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
+            //myAlert.show()
+            print("Error : " + String(error))
+        
+        }else{
+            print("list  : " + String(dolist))
+        }
+    }
 }

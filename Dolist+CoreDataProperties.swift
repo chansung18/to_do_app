@@ -16,7 +16,7 @@ extension Dolist {
 
     @NSManaged var context: String?
     @NSManaged var deadline: NSDate?
-    @NSManaged var decration: UNKNOWN_TYPE
+    @NSManaged var decration: String?
     @NSManaged var startingDate: NSDate?
     @NSManaged var title: String?
     @NSManaged var alrams: NSData?
