@@ -45,7 +45,7 @@ class CoreDataController{
         }
         
     }
-    func loadFromCoredata() {
+    func loadFromCoredata() -> [Dolist]{
         var dolist = [Dolist]()
         let request = NSFetchRequest(entityName: "Dolist")
         
@@ -61,5 +61,7 @@ class CoreDataController{
         }else{
             print("list  : " + String(dolist))
         }
+        
+        return dolist
     }
 }

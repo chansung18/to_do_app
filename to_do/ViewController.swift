@@ -10,7 +10,15 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
-
+    var dolist = [Dolist]()
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        let controllertest1: CoreDataController = CoreDataController()
+        dolist = controllertest1.loadFromCoredata()
+        self.tableView.reloadData()
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,10 +30,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print("somdate  : " + String(someDate))
         
         var test1 = ToDoItem(title: "test", deadline: someDate!, addingHours: 2, addingMinutes: 30)
-        
+        var test2 = ToDoItem(title: "test12", deadline: someDate!, addingHours: 2, addingMinutes: 30)
+
         let controllertest1: CoreDataController = CoreDataController()
         controllertest1.saveToCoredata(test1)
-        controllertest1.loadFromCoredata()
+        controllertest1.saveToCoredata(test2)
         
         
         
@@ -40,7 +49,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10;
+        print("dolist cont :" + String(dolist.count))
+        return dolist.count;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -48,8 +58,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        let cell = tableView.dequeueReusableCellWithIdentifier("todoListCell", forIndexPath: indexPath) as? ToDoListTableViewCell
         cell?.layer.borderWidth = 1.0
         cell?.colorButton.backgroundColor = UIColor.blueColor()
-        cell?.titleLabel.text = "Test Message"
+        //cell?.titleLabel.text = "Test Message"
         cell?.backgroundColor = UIColor.clearColor()
+        let doItem = dolist[indexPath.row]
+        cell!.titleLabel.text = doItem.title
+        
+        
         
 //        print(cell)
         
