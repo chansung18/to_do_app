@@ -10,14 +10,14 @@ import Foundation
 import CoreData
 import UIKit
 
-class CoreDataController{
+class CoreDataController {
+    
+    static let sharedInstace = CoreDataController()
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    init(){
-        
-        
-    }
+    private init() { }
+    
     func saveToCoredata(doItem: ToDoItem) {
         
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
@@ -29,31 +29,18 @@ class CoreDataController{
         itemObject.deadline = doItem.deadline
         itemObject.decration = doItem.decoration
         
-        
-        var error :NSError?
-        do {try managedObjectContext.save()}
-        catch{error}
-        
-        if let err = error{
-            //let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
-            //myAlert.show()
-            print("Error : " + String(error))
-        }else{
-            //let myAlert = UIAlertView(title: "saved", message: "Infomation saved", delegate: nil, cancelButtonTitle: "Ok")
-            //myAlert.show()
-            print("saved")
-        }
-        
+        saveContext()
     }
+    
     func loadFromCoredata() -> [Dolist]{
         var dolist = [Dolist]()
         let request = NSFetchRequest(entityName: "Dolist")
         
-        var error :NSError?
+        let error :NSError? = nil
         do {try dolist = managedObjectContext.executeFetchRequest(request) as! [Dolist]}
         catch{error}
         
-        if let err = error{
+        if error != nil {
             //let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
             //myAlert.show()
             print("Error : " + String(error))
@@ -63,5 +50,27 @@ class CoreDataController{
         }
         
         return dolist
+    }
+    
+    func removeFromCoreData(doItem: Dolist) {
+        managedObjectContext.deleteObject(doItem)
+        saveContext()
+    }
+    
+    func saveContext() {
+        let error :NSError? = nil
+        do {
+            try managedObjectContext.save()
+        }
+        catch {
+            error
+        }
+        
+        if error != nil {
+            print("Error : " + String(error))
+        }
+        else {
+            print("saved")
+        }
     }
 }
