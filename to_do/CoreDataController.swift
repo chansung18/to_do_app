@@ -18,16 +18,16 @@ class CoreDataController {
     
     private init() { }
     
-    func saveToCoredata(doItem: ToDoItem) {
+    func saveToCoredata(title: String, deadline: NSDate, color: Color) {
         
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         
-        itemObject.title = doItem.title
-        itemObject.context = doItem.context
-        itemObject.startingDate = doItem.startingDate
-        itemObject.deadline = doItem.deadline
-        itemObject.decration = doItem.decoration
+        itemObject.title = title
+//        itemObject.context = doItem.context
+        itemObject.deadline = deadline
+        itemObject.color = color
+//        itemObject.decroration = doItem.decoration
         
         saveContext()
     }

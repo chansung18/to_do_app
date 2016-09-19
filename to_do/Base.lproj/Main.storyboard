@@ -98,6 +98,14 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ZrH-2w-TVt"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0A-Kf-JHN">
+                                <rect key="frame" x="8" y="528" width="65" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="MaP-qu-JOK"/>
+                                    <constraint firstAttribute="width" constant="65" id="ltD-xb-sk7"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="add"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.71048503709999999" blue="0.00086542638449999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -111,6 +119,8 @@
                             <constraint firstItem="L08-AU-NeD" firstAttribute="top" secondItem="tHs-SH-MLe" secondAttribute="bottom" constant="8" id="gvd-la-pfF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SAT-RA-P0G" secondAttribute="trailing" id="jDe-al-jZ7"/>
                             <constraint firstItem="SAT-RA-P0G" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="n7h-KM-vXj"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="I0A-Kf-JHN" secondAttribute="bottom" constant="7" id="uSW-qL-LJb"/>
+                            <constraint firstItem="I0A-Kf-JHN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="ue7-e4-LpA"/>
                             <constraint firstAttribute="leadingMargin" secondItem="tHs-SH-MLe" secondAttribute="leading" id="x92-QQ-thM"/>
                         </constraints>
                         <variation key="default">
@@ -129,6 +139,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="512" height="512"/>
         <image name="search" width="128" height="128"/>
     </resources>
 </document>

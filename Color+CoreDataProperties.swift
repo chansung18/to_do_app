@@ -1,5 +1,5 @@
 //
-//  Dolist+CoreDataProperties.swift
+//  Color+CoreDataProperties.swift
 //  to_do
 //
 //  Created by chansung on 9/19/16.
@@ -12,14 +12,12 @@
 import Foundation
 import CoreData
 
-extension Dolist {
+extension Color {
 
-    @NSManaged var context: String?
-    @NSManaged var deadline: NSDate?
-    @NSManaged var decoration: String?
-    @NSManaged var startingDate: NSDate?
-    @NSManaged var title: String?
-    @NSManaged var alarms: NSSet?
-    @NSManaged var color: Color?
+    @NSManaged var r: NSNumber?
+    @NSManaged var g: NSNumber?
+    @NSManaged var b: NSNumber?
+    @NSManaged var a: NSNumber?
+    @NSManaged var dolist: Dolist?
 
 }

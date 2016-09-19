@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -23,18 +24,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
 //        
-//        print("start test")
-//        let formatter = NSDateFormatter()
-//        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
-//        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
-//        print("somdate  : " + String(someDate))
+        print("start test")
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
+        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
+        print("somdate  : " + String(someDate))
         
-//        var test1 = ToDoItem(title: "test", deadline: someDate!, addingHours: 2, addingMinutes: 30)
-//        var test2 = ToDoItem(title: "test12", deadline: someDate!, addingHours: 2, addingMinutes: 30)
-
-//        let controllertest1: CoreDataController = CoreDataController()
-//        controllertest1.saveToCoredata(test1)
-//        controllertest1.saveToCoredata(test2)
+        let colorR = arc4random() % 256
+        let colorG = arc4random() % 256
+        let colorB = arc4random() % 256
+        
+        let entityDescription = NSEntityDescription.entityForName("Color", inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let color = Color(entity: entityDescription!, insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        color.r = NSNumber(unsignedInt: colorR)
+        color.g = NSNumber(unsignedInt: colorG)
+        color.b = NSNumber(unsignedInt: colorB)
+        color.a = NSNumber(unsignedInt: colorB)
+        
+        CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)
+//        CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -53,6 +61,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let doItem = dolist[indexPath.row]
         cell!.titleLabel.text = doItem.title
         
+        if let color = doItem.color {
+            let colorR = CGFloat(color.r!) / 255
+            let colorG = CGFloat(color.g!) / 255
+            let colorB = CGFloat(color.b!) / 255
+        
+            let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
+            cell?.colorButton.backgroundColor = labelColor
+        }
+        
         return cell!
     }
     
@@ -68,6 +85,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.endUpdates()
         }
+    }
+}
+
+extension NSNumber {
+    
+    // CGFloat -> NSNumber
+    private convenience init(doubleOrFloat d : Double) {
+        self.init(double : d)
+    }
+    private convenience init(doubleOrFloat f : Float) {
+        self.init(float : f)
+    }
+    convenience init(cgFloat : CGFloat) {
+        self.init(doubleOrFloat: cgFloat.native)
+    }
+    
+    // NSNumber -> CGFloat
+    private func doubleOrFloatValue() -> Double {
+        return self.doubleValue
+    }
+    private func doubleOrFloatValue() -> Float {
+        return self.floatValue
+    }
+    var cgFloatValue : CGFloat {
+        return CGFloat(floatLiteral: doubleOrFloatValue())
     }
 }
 

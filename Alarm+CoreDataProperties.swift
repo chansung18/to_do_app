@@ -1,5 +1,5 @@
 //
-//  Dolist+CoreDataProperties.swift
+//  Alarm+CoreDataProperties.swift
 //  to_do
 //
 //  Created by chansung on 9/19/16.
@@ -12,14 +12,9 @@
 import Foundation
 import CoreData
 
-extension Dolist {
+extension Alarm {
 
-    @NSManaged var context: String?
-    @NSManaged var deadline: NSDate?
-    @NSManaged var decoration: String?
-    @NSManaged var startingDate: NSDate?
-    @NSManaged var title: String?
-    @NSManaged var alarms: NSSet?
-    @NSManaged var color: Color?
+    @NSManaged var alarm: NSDate?
+    @NSManaged var dolist: Dolist?
 
 }

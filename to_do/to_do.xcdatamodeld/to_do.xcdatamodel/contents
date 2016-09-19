@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="16A313a" minimumToolsVersion="Automatic">
+    <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
+        <attribute name="alarm" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="dolist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dolist" inverseName="alarms" inverseEntity="Dolist" syncable="YES"/>
+    </entity>
+    <entity name="Color" representedClassName=".Color" syncable="YES">
+        <attribute name="a" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="b" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="g" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="r" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="dolist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dolist" inverseName="color" inverseEntity="Dolist" syncable="YES"/>
+    </entity>
     <entity name="Dolist" representedClassName=".Dolist" syncable="YES">
-        <attribute name="alrams" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="context" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deadline" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="decration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="decoration" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alarm" inverseName="dolist" inverseEntity="Alarm" syncable="YES"/>
+        <relationship name="color" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Color" inverseName="dolist" inverseEntity="Color" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Dolist" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Dolist" positionX="-4590" positionY="1062" width="128" height="148"/>
+        <element name="Alarm" positionX="-4320" positionY="1100" width="128" height="58"/>
+        <element name="Color" positionX="-4313" positionY="1244" width="128" height="118"/>
     </elements>
 </model>
