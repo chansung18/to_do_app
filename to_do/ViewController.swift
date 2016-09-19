@@ -15,7 +15,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var dolist = [Dolist]()
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
+        
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 65, 0)
+        
         dolist = CoreDataController.sharedInstace.loadFromCoredata()
         self.tableView.reloadData()
         
@@ -70,6 +73,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell?.colorButton.backgroundColor = labelColor
         }
         
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
+        lpgr.minimumPressDuration = 1.0
+        cell?.addGestureRecognizer(lpgr)
+        
         return cell!
     }
     
@@ -86,30 +93,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tableView.endUpdates()
         }
     }
-}
-
-extension NSNumber {
     
-    // CGFloat -> NSNumber
-    private convenience init(doubleOrFloat d : Double) {
-        self.init(double : d)
-    }
-    private convenience init(doubleOrFloat f : Float) {
-        self.init(float : f)
-    }
-    convenience init(cgFloat : CGFloat) {
-        self.init(doubleOrFloat: cgFloat.native)
-    }
-    
-    // NSNumber -> CGFloat
-    private func doubleOrFloatValue() -> Double {
-        return self.doubleValue
-    }
-    private func doubleOrFloatValue() -> Float {
-        return self.floatValue
-    }
-    var cgFloatValue : CGFloat {
-        return CGFloat(floatLiteral: doubleOrFloatValue())
+    func cellLongPressed(gesture: UILongPressGestureRecognizer) {
+        print("long pressed...")
     }
 }
 

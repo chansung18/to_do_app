@@ -87,6 +87,7 @@
                                                 <constraint firstItem="wk4-hr-7sq" firstAttribute="leading" secondItem="Cjh-1l-1k2" secondAttribute="trailing" constant="7" id="tTJ-X7-bOn"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="colorButton" destination="Cjh-1l-1k2" id="fq5-z6-F5V"/>
                                             <outlet property="titleLabel" destination="0vM-ac-OP2" id="Agg-eH-JN8"/>
