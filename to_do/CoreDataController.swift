@@ -23,11 +23,19 @@ class CoreDataController {
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         
+        //test
+        itemObject.addAlarmForDday(1, addingAlarmHours: 1, addingAlarmMinutes: 1)
+        itemObject.addAlarmForDday(2, addingAlarmHours: 1, addingAlarmMinutes: 1)
+        
+        
         itemObject.title = title
 //        itemObject.context = doItem.context
         itemObject.deadline = deadline
         itemObject.color = color
 //        itemObject.decroration = doItem.decoration
+        
+
+        
         
         saveContext()
     }

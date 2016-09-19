@@ -51,7 +51,14 @@ class Dolist: NSManagedObject {
         let secondsInMinutes = Double(addingAlarmMinutes) * 60
         let newAlarm = self.startingDate!.dateByAddingTimeInterval(secondsInDays + secondsInHours + secondsInMinutes)
         self.alarms?.setValue(newAlarm, forKey: newAlarm.description)
-        print(newAlarm)
+        print("set value :  "  + String(newAlarm))
 //        self.alarms.append(newAlarm)
+    }
+    func loadAlarms(){
+        print("before  loop :  " + String(self.alarms))
+        for alarm in (self.alarms!){
+            print("in the loop")
+            print("\n \n \n \n alarm   :  " + String(alarm))
+        }
     }
 }
