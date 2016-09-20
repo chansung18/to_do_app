@@ -33,6 +33,7 @@ class Dolist: NSManagedObject {
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         startingDate = NSDate()
+        
     }
     
     //날짜정하기
@@ -40,8 +41,9 @@ class Dolist: NSManagedObject {
         let secondsInHours = Double(addingAlarmHours) * 60 * 60
         let secondsInMinutes = Double(addingAlarmMinutes) * 60
         let newAlarm = when.dateByAddingTimeInterval(secondsInHours + secondsInMinutes)
-        self.alarms?.setValue(newAlarm, forKey: newAlarm.description)
+//        self.alarms?.setValue(newAlarm, forKey: newAlarm.description)
 //        self.alarms.append(newAlarm)
+        self.mutableSetValueForKey("alarms").addObject(newAlarm)
     }
     
     //날짜로 부터 D-Day
@@ -50,15 +52,18 @@ class Dolist: NSManagedObject {
         let secondsInHours = Double(addingAlarmHours) * 60 * 60
         let secondsInMinutes = Double(addingAlarmMinutes) * 60
         let newAlarm = self.startingDate!.dateByAddingTimeInterval(secondsInDays + secondsInHours + secondsInMinutes)
-        self.alarms?.setValue(newAlarm, forKey: newAlarm.description)
-        print("set value :  "  + String(newAlarm))
-//        self.alarms.append(newAlarm)
-    }
-    func loadAlarms(){
-        print("before  loop :  " + String(self.alarms))
-        for alarm in (self.alarms!){
-            print("in the loop")
-            print("\n \n \n \n alarm   :  " + String(alarm))
-        }
+        
+        let entityDescription = NSEntityDescription.entityForName("Alarm",
+                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let itemObject = Alarm(entity: entityDescription!,
+                               insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        itemObject.alarm = newAlarm
+        itemObject.dolist = self
+        
+        let copy = NSMutableSet.init(set: self.alarms!)
+        copy.addObject(itemObject)
+        self.alarms = copy
+        
+        CoreDataController.sharedInstace.saveContext()
     }
 }

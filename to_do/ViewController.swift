@@ -64,9 +64,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let doItem = dolist[indexPath.row]
         cell!.titleLabel.text = doItem.title
         
-        print("\n\n\n\n\n  test loadalarm")
-        doItem.loadAlarms()
-        
         if let color = doItem.color {
             let colorR = CGFloat(color.r!) / 255
             let colorG = CGFloat(color.g!) / 255
