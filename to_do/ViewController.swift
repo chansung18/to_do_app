@@ -58,8 +58,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("todoListCell") as? ToDoListTableViewCell
 
-        cell?.layer.borderWidth = 1.0
-        cell?.colorButton.backgroundColor = UIColor.blueColor()
+        if let width = cell?.colorButton.bounds.width {
+            print("width = \(width)")
+            cell?.colorButton.layer.cornerRadius = width / 2.0
+            cell?.colorButton.layer.masksToBounds = true
+        }
+        
         cell?.backgroundColor = UIColor.clearColor()
         let doItem = dolist[indexPath.row]
         cell!.titleLabel.text = doItem.title
@@ -80,18 +84,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50;
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        
+        UIButton.appearance().setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        
+        let editAction = UITableViewRowAction(style: .Normal, title: "🖊", handler:{ action, indexpath in
+            //edit Action codes
+        });
+        editAction.backgroundColor = UIColor.whiteColor()
+        
+        let deleteAction = UITableViewRowAction(style: .Normal, title: "╳", handler:{ action, indexpath in
+            //delete action codes
             tableView.beginUpdates()
-            CoreDataController.sharedInstace.removeFromCoreData(dolist[indexPath.row])
-            dolist.removeAtIndex(indexPath.row)
+            CoreDataController.sharedInstace.removeFromCoreData(self.dolist[indexPath.row])
+            self.dolist.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.endUpdates()
-        }
+        });
+        deleteAction.backgroundColor = UIColor.whiteColor()
+        
+        return [deleteAction, editAction];
     }
     
     func cellLongPressed(gesture: UILongPressGestureRecognizer) {
