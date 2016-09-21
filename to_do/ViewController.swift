@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     var dolist = [Dolist]()
+    var refreshController = UIRefreshControl()
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -45,13 +46,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         color.a = NSNumber(unsignedInt: colorB)
         
         CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)
-//        CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
+        
+        refreshController.addTarget(self, action: "didRefresh", forControlEvents: .ValueChanged)
+        self.tableView.addSubview(refreshController)
+        self.refreshController.backgroundColor = UIColor.darkGrayColor()
+        
+        
+        //CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    func didRefresh() {
+        print("start refresh action")
+        
+        
+        //self.refreshController.endRefreshing()
+        
+    }
+    
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("dolist cont :" + String(dolist.count))
+        //self.refreshController.addSubview(<#T##view: UIView##UIView#>)
         return dolist.count;
     }
     
