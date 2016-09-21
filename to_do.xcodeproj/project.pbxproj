@@ -25,10 +25,10 @@
 
 /* Begin PBXFileReference section */
 		1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListTableViewCell.swift; sourceTree = "<group>"; };
-		1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
-		1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alarm+CoreDataProperties.swift"; path = "../Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alarm.swift; path = ../Alarm.swift; sourceTree = "<group>"; };
+		1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Color+CoreDataProperties.swift"; path = "../Color+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = ../Color.swift; sourceTree = "<group>"; };
 		3370A5161D86893700405550 /* to_do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = to_do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3370A5191D86893700405550 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3370A51B1D86893700405550 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,8 +37,8 @@
 		3370A5231D86893700405550 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3370A5261D86893700405550 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3370A5281D86893700405550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dolist+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		80279E9E1D8782E500ABE0C0 /* Dolist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dolist.swift; sourceTree = "<group>"; };
+		80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dolist+CoreDataProperties.swift"; path = "../Dolist+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		80279E9E1D8782E500ABE0C0 /* Dolist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dolist.swift; path = ../Dolist.swift; sourceTree = "<group>"; };
 		8056529B1D893DB4008C12F3 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,15 +53,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3370A50D1D86893700405550 = {
+		1EFF6E3E1D925FC600402ECF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3370A5201D86893700405550 /* to_do.xcdatamodeld */,
 				1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */,
 				1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */,
 				1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */,
 				1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */,
 				80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */,
 				80279E9E1D8782E500ABE0C0 /* Dolist.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		1EFF6E3F1D925FDA00402ECF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3370A51B1D86893700405550 /* ViewController.swift */,
+				1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		1EFF6E401D925FEC00402ECF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				3370A51D1D86893700405550 /* Main.storyboard */,
+				3370A5231D86893700405550 /* Assets.xcassets */,
+				3370A5251D86893700405550 /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		1EFF6E411D92600E00402ECF /* DataManagement */ = {
+			isa = PBXGroup;
+			children = (
+				8056529B1D893DB4008C12F3 /* CoreDataController.swift */,
+			);
+			name = DataManagement;
+			sourceTree = "<group>";
+		};
+		3370A50D1D86893700405550 = {
+			isa = PBXGroup;
+			children = (
 				3370A5181D86893700405550 /* to_do */,
 				3370A5171D86893700405550 /* Products */,
 			);
@@ -78,15 +113,12 @@
 		3370A5181D86893700405550 /* to_do */ = {
 			isa = PBXGroup;
 			children = (
+				1EFF6E411D92600E00402ECF /* DataManagement */,
+				1EFF6E401D925FEC00402ECF /* UI */,
+				1EFF6E3F1D925FDA00402ECF /* Controllers */,
+				1EFF6E3E1D925FC600402ECF /* Models */,
 				3370A5191D86893700405550 /* AppDelegate.swift */,
-				3370A51B1D86893700405550 /* ViewController.swift */,
-				8056529B1D893DB4008C12F3 /* CoreDataController.swift */,
-				3370A51D1D86893700405550 /* Main.storyboard */,
-				3370A5231D86893700405550 /* Assets.xcassets */,
-				3370A5251D86893700405550 /* LaunchScreen.storyboard */,
 				3370A5281D86893700405550 /* Info.plist */,
-				3370A5201D86893700405550 /* to_do.xcdatamodeld */,
-				1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */,
 			);
 			path = to_do;
 			sourceTree = "<group>";

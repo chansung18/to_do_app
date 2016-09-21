@@ -12,26 +12,25 @@ import UIKit
 
 class CoreDataController {
     
+    //singleton constatant instance
     static let sharedInstace = CoreDataController()
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    private init() { }
+    //private init for singleton class
+    private init() {}
     
     func saveToCoredata(title: String, deadline: NSDate, color: Color) {
-        
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         
         itemObject.title = title
-//        itemObject.context = doItem.context
         itemObject.deadline = deadline
         itemObject.color = color
-//        itemObject.decroration = doItem.decoration
-        
+
         saveContext()
         
-        //test
+        //test - adding alarm
         itemObject.addAlarmForDday(1, addingAlarmHours: 1, addingAlarmMinutes: 1)
         itemObject.addAlarmForDday(2, addingAlarmHours: 1, addingAlarmMinutes: 1)
     }
@@ -47,13 +46,9 @@ class CoreDataController {
         catch {error}
         
         if error != nil {
-            //let myAlert = UIAlertView(title: "Error",message: error?.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
-            //myAlert.show()
             print("Error : " + String(error))
-        
         }
         else {
-//            print("list  : " + String(dolist))
             for doItem in dolist {
                 print("doItem : \(doItem.title)")
                 
