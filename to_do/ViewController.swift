@@ -28,6 +28,43 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
 //        
+   /*     print("start test")
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
+        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
+        print("somdate  : " + String(someDate))
+        
+        let colorR = arc4random() % 256
+        let colorG = arc4random() % 256
+        let colorB = arc4random() % 256
+        
+        let entityDescription = NSEntityDescription.entityForName("Color", inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let color = Color(entity: entityDescription!, insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        color.r = NSNumber(unsignedInt: colorR)
+        color.g = NSNumber(unsignedInt: colorG)
+        color.b = NSNumber(unsignedInt: colorB)
+        color.a = NSNumber(unsignedInt: colorB)
+        
+        CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)*/
+        
+        refreshController.addTarget(self, action: "didRefresh", forControlEvents: .ValueChanged)
+        
+        self.tableView.addSubview(refreshController)
+        self.refreshController.backgroundColor = UIColor.darkGrayColor()
+        //self.refreshController.animationDidStop(<#T##anim: CAAnimation##CAAnimation#>, finished: <#T##Bool#>)
+        
+        //CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
+        
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func didRefresh() {
+        print("start refresh action")
+        let subviewitem : RefreshView = RefreshView()
+        self.refreshController.addSubview(subviewitem)
+        
+        let addtitle = subviewitem.getTitle()
+        
         print("start test")
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
@@ -45,20 +82,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         color.b = NSNumber(unsignedInt: colorB)
         color.a = NSNumber(unsignedInt: colorB)
         
-        CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)
+        CoreDataController.sharedInstace.saveToCoredata(addtitle, deadline: someDate!, color: color)
         
-        refreshController.addTarget(self, action: "didRefresh", forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refreshController)
-        self.refreshController.backgroundColor = UIColor.darkGrayColor()
-        
-        
-        //CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
-        
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    func didRefresh() {
-        print("start refresh action")
         
         
         //self.refreshController.endRefreshing()
@@ -68,7 +93,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("dolist cont :" + String(dolist.count))
-        self.refreshController.addSubview(RefreshView())
+
         return dolist.count;
     }
     

@@ -10,6 +10,10 @@ import UIKit
 
 class RefreshView: UIView {
     
+    @IBOutlet var textField: UIView!
+    @IBOutlet weak var titleField: UITextField!
+    var textFieldText:String?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInitialization()
@@ -21,10 +25,17 @@ class RefreshView: UIView {
     }
     
     func commonInitialization() {
-        let view = NSBundle.mainBundle().loadNibNamed("CustomView", owner: self, options: nil).first as! UIView
+        let view = NSBundle.mainBundle().loadNibNamed("RefreshView", owner: self, options: nil).first as! UIView
         view.frame = self.bounds
         self.addSubview(view)
     }
+    func getTitle()->String{
+        return textFieldText!
+    }
 
+    @IBAction func whenPressComfirm(sender: AnyObject) {
+        textFieldText = titleField.text
+        
+    }
 
 }
