@@ -68,7 +68,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("dolist cont :" + String(dolist.count))
-        //self.refreshController.addSubview(<#T##view: UIView##UIView#>)
+        self.refreshController.addSubview(RefreshView())
         return dolist.count;
     }
     
