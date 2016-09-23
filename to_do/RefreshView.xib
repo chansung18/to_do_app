@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2327e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -16,27 +16,44 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-FV-WSB">
-                    <rect key="frame" x="255" y="27" width="30" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wv0-yS-cGE">
+                    <rect key="frame" x="8" y="0.0" width="259" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-FV-WSB">
+                    <rect key="frame" x="282" y="0.0" width="30" height="30"/>
                     <state key="normal" title="확인"/>
                     <connections>
                         <action selector="whenPressComfirm:" destination="-1" eventType="touchUpInside" id="ZQf-HV-okM"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wv0-yS-cGE">
-                    <rect key="frame" x="26" y="25" width="203" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="xib test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgR-j8-Pe0">
-                    <rect key="frame" x="132" y="63" width="56" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="2Mn-iu-C3e"/>
+                <constraint firstItem="6cz-FV-WSB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="2Tt-ww-ZYT"/>
+                <constraint firstItem="6cz-FV-WSB" firstAttribute="leading" secondItem="wv0-yS-cGE" secondAttribute="trailing" constant="8" id="8DA-AL-Go3"/>
+                <constraint firstItem="6cz-FV-WSB" firstAttribute="centerY" secondItem="wv0-yS-cGE" secondAttribute="centerY" id="AY5-GZ-jOC"/>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E2p-Sq-iAQ"/>
+                <constraint firstItem="6cz-FV-WSB" firstAttribute="leading" secondItem="wv0-yS-cGE" secondAttribute="trailing" constant="15" id="VDC-Tf-J3u"/>
+                <constraint firstAttribute="trailing" secondItem="6cz-FV-WSB" secondAttribute="trailing" constant="8" id="jFa-0m-Rsl"/>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="nxx-qj-thJ"/>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="z0w-wn-14h"/>
+                <constraint firstAttribute="trailing" secondItem="6cz-FV-WSB" secondAttribute="trailing" constant="8" id="z47-pk-x1N"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="nxx-qj-thJ"/>
+                    <exclude reference="z0w-wn-14h"/>
+                    <exclude reference="2Tt-ww-ZYT"/>
+                    <exclude reference="8DA-AL-Go3"/>
+                    <exclude reference="jFa-0m-Rsl"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-120" y="88"/>
         </view>
     </objects>
 </document>

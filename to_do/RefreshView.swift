@@ -12,7 +12,10 @@ class RefreshView: UIView {
     
     @IBOutlet var textField: UIView!
     @IBOutlet weak var titleField: UITextField!
+    
     var textFieldText:String?
+    
+    var mainViewController: ViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,13 +32,20 @@ class RefreshView: UIView {
         view.frame = self.bounds
         self.addSubview(view)
     }
-    func getTitle()->String{
-        return textFieldText!
-    }
-
+    
     @IBAction func whenPressComfirm(sender: AnyObject) {
         textFieldText = titleField.text
+        print("whenPressComfirm")
         
+        UIView.animateWithDuration(0.5) {
+            if let cells = self.mainViewController?.tableView.visibleCells {
+                for cell in cells {
+                    cell.alpha = 1
+                }
+            }
+        }
+        
+        self.mainViewController?.refreshController.endRefreshing()
     }
 
 }
