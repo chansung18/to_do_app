@@ -124,7 +124,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("todoListCell") as? ToDoListTableViewCell
-
+        
         if let width = cell?.colorButton.bounds.width {
             print("width = \(width)")
             cell?.colorButton.layer.cornerRadius = width / 2.0
@@ -134,6 +134,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell?.backgroundColor = UIColor.clearColor()
         let doItem = dolist[indexPath.row]
         cell!.titleLabel.text = doItem.title
+        cell!.originalTitle = doItem.title
         
         if let color = doItem.color {
             let colorR = CGFloat(color.r!) / 255
@@ -153,6 +154,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
+        (tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = true
+        
         UIButton.appearance().setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         
         let editAction = UITableViewRowAction(style: .Normal, title: "🖊", handler:{ action, indexpath in
@@ -171,6 +174,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         deleteAction.backgroundColor = UIColor.whiteColor()
         
         return [deleteAction, editAction];
+    }
+    
+    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+        (tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = false
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
