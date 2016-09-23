@@ -42,9 +42,9 @@ class ToDoListTableViewCell: UITableViewCell {
         else if gesture.state == .Changed {
             if isEditingMode == false && isCrossedOut == false {
                 let titleLength = originalTitle!.characters.count
-                let tmpIndex = Int(gesture.locationInView(self).x / CGFloat(titleLength)) + 1
+                let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
-                if tmpIndex < titleLength {
+                if tmpIndex < titleLength && tmpIndex >= 0 {
                     let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                     attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, tmpIndex))
                     titleLabel.attributedText = attributeString
@@ -52,13 +52,16 @@ class ToDoListTableViewCell: UITableViewCell {
             }
             else if isEditingMode == false && isCrossedOut == true {
                 let titleLength = originalTitle!.characters.count
-                let tmpIndex = Int(gesture.locationInView(self).x / CGFloat(titleLength)) + 1
+                let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
-                if tmpIndex < titleLength {
+                print("tmpIndex = \(gesture.locationInView(self).x), \(titleLength), \(tmpIndex)")
+                
+                if tmpIndex < titleLength && tmpIndex >= 0 {
                     let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                     attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length - tmpIndex))
                     titleLabel.attributedText = attributeString
-                }            }
+                }
+            }
         }
         else if gesture.state == .Ended {
             if isEditingMode == false && isCrossedOut == false {
