@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let subviewitem : RefreshView = RefreshView()
     
     var isInTheMiddleOfEnteringItem: Bool = false
+    var isRefreshControlFullyVisible: Bool = false
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -68,6 +69,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         subviewitem.titleField.becomeFirstResponder()
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let pullDistance = max(0.0, -refreshController.frame.origin.y);
+
+        if pullDistance > 0 && isRefreshControlFullyVisible == false {
+            refreshController.alpha = pullDistance * 0.01
+        }
+        
+        if refreshController.alpha >= 1 {
+            refreshController.alpha = 1
+            isRefreshControlFullyVisible = true
+        }
+        
+        print("alpha = \(refreshController.alpha)")
+    }
+    
     func tableViewTapped(gesture: UITapGestureRecognizer) {
         print("tapped...")
         if isInTheMiddleOfEnteringItem {
@@ -80,19 +96,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
         }
         
-        UIView.animateWithDuration(0.5) {
+        UIView.animateWithDuration(0.5) { 
             self.refreshController.alpha = 0.0
         }
-        
+    
         subviewitem.titleField.endEditing(true)
         refreshController.endRefreshing()
         isInTheMiddleOfEnteringItem = false
+        isRefreshControlFullyVisible = false
     }
     
     func showRefreshControl() {
-        UIView.animateWithDuration(0.5) {
-            self.refreshController.alpha = 1
-        }
+//        self.refreshController.alpha = 1
         
         UIView.animateWithDuration(0.5) {
             self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
