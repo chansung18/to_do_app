@@ -48,6 +48,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)*/
         
+        refreshController.alpha = 0.3
+        
         refreshController.frame.size.width = self.view.frame.size.width
         refreshController.tintColor = UIColor.clearColor()
         
@@ -77,6 +79,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func didRefresh() {
         UIView.animateWithDuration(0.5) { 
+            self.refreshController.alpha = 1
+        }
+        
+        UIView.animateWithDuration(0.5) {
             let cells = self.tableView.visibleCells
             
             for cell in cells {

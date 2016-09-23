@@ -37,6 +37,8 @@ class RefreshView: UIView {
         textFieldText = titleField.text
         print("whenPressComfirm")
         
+        self.mainViewController?.refreshController.endRefreshing()
+        
         UIView.animateWithDuration(0.5) {
             if let cells = self.mainViewController?.tableView.visibleCells {
                 for cell in cells {
@@ -45,7 +47,9 @@ class RefreshView: UIView {
             }
         }
         
-        self.mainViewController?.refreshController.endRefreshing()
+        UIView.animateWithDuration(0.5) { 
+            self.mainViewController?.refreshController.alpha = 0.3
+        }
     }
 
 }
