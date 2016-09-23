@@ -11,9 +11,14 @@ import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dummyView: UIView!
     
     var dolist = [Dolist]()
     var refreshController = UIRefreshControl()
+    
+    let subviewitem : RefreshView = RefreshView()
+    
+    var isInTheMiddleOfEnteringItem: Bool = false
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -21,46 +26,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 65, 0)
         
         dolist = CoreDataController.sharedInstace.loadFromCoredata()
-        self.tableView.reloadData()
+        tableView.reloadData()
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        
-        /*
-        print("start test")
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
-        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
-        print("somdate  : " + String(someDate))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
+        dummyView.addGestureRecognizer(tapGesture)
         
-        let colorR = arc4random() % 256
-        let colorG = arc4random() % 256
-        let colorB = arc4random() % 256
+        refreshController.alpha = 0.0
         
-        let entityDescription = NSEntityDescription.entityForName("Color", inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
-        let color = Color(entity: entityDescription!, insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
-        color.r = NSNumber(unsignedInt: colorR)
-        color.g = NSNumber(unsignedInt: colorG)
-        color.b = NSNumber(unsignedInt: colorB)
-        color.a = NSNumber(unsignedInt: colorB)
-        
-        CoreDataController.sharedInstace.saveToCoredata("test", deadline: someDate!, color: color)*/
-        
-        refreshController.alpha = 0.3
-        
-        refreshController.frame.size.width = self.view.frame.size.width
+        refreshController.frame.size.width = view.frame.size.width
         refreshController.tintColor = UIColor.clearColor()
         
-        let subviewitem : RefreshView = RefreshView()
         subviewitem.mainViewController = self
         subviewitem.frame = refreshController.bounds
         subviewitem.frame.size.width = subviewitem.frame.size.width - 25
         refreshController.addSubview(subviewitem)
         
         print("view.frame = \(view.frame)")
-        print("tbl.frame = \(self.tableView.frame)")
+        print("tbl.frame = \(tableView.frame)")
         print("refreshView.frame = \(subviewitem.frame)")
         print("refreshControl.bounds = \(refreshController.bounds)")
         
@@ -71,55 +58,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
         
-        self.tableView.addSubview(refreshController)
-        //self.refreshController.animationDidStop(<#T##anim: CAAnimation##CAAnimation#>, finished: <#T##Bool#>)
-        
-        //CoreDataController.sharedInstace.saveToCoredata("test12", deadline: someDate!, color: color)
+        tableView.addSubview(refreshController)
     }
     
     func didRefresh() {
-        UIView.animateWithDuration(0.5) { 
+        showRefreshControl()
+        print("start refresh action")
+        
+        subviewitem.titleField.becomeFirstResponder()
+    }
+    
+    func tableViewTapped(gesture: UITapGestureRecognizer) {
+        print("tapped...")
+        if isInTheMiddleOfEnteringItem {
+            dismissRefreshControl()
+        }
+    }
+
+    func dismissRefreshControl() {
+        UIView.animateWithDuration(0.5) {
+            self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
+        }
+        
+        UIView.animateWithDuration(0.5) {
+            self.refreshController.alpha = 0.0
+        }
+        
+        subviewitem.titleField.endEditing(true)
+        refreshController.endRefreshing()
+        isInTheMiddleOfEnteringItem = false
+    }
+    
+    func showRefreshControl() {
+        UIView.animateWithDuration(0.5) {
             self.refreshController.alpha = 1
         }
         
         UIView.animateWithDuration(0.5) {
-            let cells = self.tableView.visibleCells
-            
-            for cell in cells {
-                cell.alpha = 0
-            }
+            self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
         }
         
-        print("start refresh action")
-
-//        let addtitle = subviewitem.getTitle()
-//        
-//        print("start test")
-//        let formatter = NSDateFormatter()
-//        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
-//        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
-//        print("somdate  : " + String(someDate))
-//        
-//        let colorR = arc4random() % 256
-//        let colorG = arc4random() % 256
-//        let colorB = arc4random() % 256
-//        
-//        let entityDescription = NSEntityDescription.entityForName("Color", inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
-//        let color = Color(entity: entityDescription!, insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
-//        color.r = NSNumber(unsignedInt: colorR)
-//        color.g = NSNumber(unsignedInt: colorG)
-//        color.b = NSNumber(unsignedInt: colorB)
-//        color.a = NSNumber(unsignedInt: colorB)
-//        
-//        CoreDataController.sharedInstace.saveToCoredata(addtitle, deadline: someDate!, color: color)
-        
-        
-        
-        //self.refreshController.endRefreshing()
-        
+        isInTheMiddleOfEnteringItem = true
     }
     
-
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("dolist cont :" + String(dolist.count))
 
@@ -175,6 +156,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         deleteAction.backgroundColor = UIColor.whiteColor()
         
         return [deleteAction, editAction];
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        print("cell selection")
     }
     
     func cellLongPressed(gesture: UILongPressGestureRecognizer) {

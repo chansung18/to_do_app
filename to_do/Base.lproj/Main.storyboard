@@ -18,6 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBH-bA-lsl">
+                                <rect key="frame" x="0.0" y="88" width="600" height="512"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L08-AU-NeD">
                                 <rect key="frame" x="14" y="28" width="572" height="564"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -86,24 +90,39 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="L08-AU-NeD" secondAttribute="bottom" constant="8" id="2eD-Gg-y5C"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BBH-bA-lsl" secondAttribute="trailing" constant="-20" id="389-BX-KWR"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="width" secondItem="L08-AU-NeD" secondAttribute="width" id="3mW-4k-8pM"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="height" secondItem="L08-AU-NeD" secondAttribute="height" id="6Q6-8l-yCi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="BBH-bA-lsl" secondAttribute="bottom" id="FWK-Gg-2RJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="L08-AU-NeD" secondAttribute="trailing" constant="-6" id="KIE-24-PlD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="BBH-bA-lsl" secondAttribute="bottom" id="Lo6-aA-rXD"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="L08-AU-NeD" secondAttribute="bottom" id="Ufd-ka-WNp"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="top" secondItem="L08-AU-NeD" secondAttribute="top" id="ctp-TB-Qv1"/>
                             <constraint firstItem="L08-AU-NeD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="ger-Lz-GLx"/>
                             <constraint firstAttribute="leadingMargin" secondItem="L08-AU-NeD" secondAttribute="leading" constant="6" id="gqK-pe-xwH"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="oo0-tb-cRN"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="top" secondItem="L08-AU-NeD" secondAttribute="top" constant="60" id="vcy-97-FsI"/>
+                            <constraint firstItem="BBH-bA-lsl" firstAttribute="leading" secondItem="L08-AU-NeD" secondAttribute="trailing" constant="-572" id="zZa-U6-HBN"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="3mW-4k-8pM"/>
+                                <exclude reference="6Q6-8l-yCi"/>
+                                <exclude reference="ctp-TB-Qv1"/>
+                                <exclude reference="zZa-U6-HBN"/>
+                                <exclude reference="Lo6-aA-rXD"/>
                                 <exclude reference="Ufd-ka-WNp"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="dummyView" destination="BBH-bA-lsl" id="mQU-H1-VAY"/>
                         <outlet property="tableView" destination="L08-AU-NeD" id="lc9-18-6MT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="442" y="940"/>
+            <point key="canvasLocation" x="269" y="859"/>
         </scene>
     </scenes>
 </document>

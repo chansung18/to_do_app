@@ -20,7 +20,7 @@ class CoreDataController {
     //private init for singleton class
     private init() {}
     
-    func saveToCoredata(title: String, deadline: NSDate, color: Color) {
+    func saveToCoredata(title: String, deadline: NSDate, color: Color) -> Dolist {
         let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         
@@ -33,6 +33,8 @@ class CoreDataController {
         //test - adding alarm
         itemObject.addAlarmForDday(1, addingAlarmHours: 1, addingAlarmMinutes: 1)
         itemObject.addAlarmForDday(2, addingAlarmHours: 1, addingAlarmMinutes: 1)
+        
+        return itemObject
     }
     
     func loadFromCoredata() -> [Dolist]{

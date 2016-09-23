@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RefreshView: UIView {
     
@@ -19,37 +20,55 @@ class RefreshView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.commonInitialization()
+        commonInitialization()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.commonInitialization()
+        commonInitialization()
     }
     
     func commonInitialization() {
         let view = NSBundle.mainBundle().loadNibNamed("RefreshView", owner: self, options: nil).first as! UIView
-        view.frame = self.bounds
-        self.addSubview(view)
+        view.frame = bounds
+        addSubview(view)
     }
     
     @IBAction func whenPressComfirm(sender: AnyObject) {
-        textFieldText = titleField.text
         print("whenPressComfirm")
+        mainViewController?.dismissRefreshControl()
         
-        self.mainViewController?.refreshController.endRefreshing()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
+        let someDate = formatter.dateFromString("2014-12-25 10:25:00")
+        print("somdate  : " + String(someDate))
         
-        UIView.animateWithDuration(0.5) {
-            if let cells = self.mainViewController?.tableView.visibleCells {
-                for cell in cells {
-                    cell.alpha = 1
-                }
+        let colorR = arc4random() % 256
+        let colorG = arc4random() % 256
+        let colorB = arc4random() % 256
+        
+        let entityDescription = NSEntityDescription.entityForName("Color",
+                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let color = Color(entity: entityDescription!,
+                          insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        color.r = NSNumber(unsignedInt: colorR)
+        color.g = NSNumber(unsignedInt: colorG)
+        color.b = NSNumber(unsignedInt: colorB)
+        color.a = NSNumber(unsignedInt: colorB)
+        
+        if let textFieldText = titleField.text {
+            if textFieldText.stringByReplacingOccurrencesOfString(" ", withString: "") != "" {
+                let newItem = CoreDataController.sharedInstace.saveToCoredata(textFieldText, deadline: someDate!, color: color)
+                mainViewController?.dolist.append(newItem)
+                mainViewController?.tableView.reloadData()
+                titleField.endEditing(true)
+            }
+            else {
+                print("textFieldText = empty")
             }
         }
-        
-        UIView.animateWithDuration(0.5) { 
-            self.mainViewController?.refreshController.alpha = 0.3
+        else {
+            print("textFieldText = nil")
         }
     }
-
 }
