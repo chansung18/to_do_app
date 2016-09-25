@@ -57,7 +57,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         subviewitem.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
         subviewitem.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 1.0)
         
+        subviewitem.addSubview(AddSubInfo())
         refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
+        
         
         tableView.addSubview(refreshController)
     }

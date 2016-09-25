@@ -21,6 +21,8 @@
 		3370A5271D86893700405550 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3370A5251D86893700405550 /* LaunchScreen.storyboard */; };
 		80056B741D9411CC00B025BF /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80056B731D9411CC00B025BF /* RefreshView.swift */; };
 		80056B761D94127B00B025BF /* RefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80056B751D94127B00B025BF /* RefreshView.xib */; };
+		800CC4B01D97F1360016EDC4 /* AddSubInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CC4AF1D97F1360016EDC4 /* AddSubInfo.swift */; };
+		800CC4B21D97F1580016EDC4 /* AddSubInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800CC4B11D97F1580016EDC4 /* AddSubInfo.xib */; };
 		80279E9F1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */; };
 		80279EA01D8782E500ABE0C0 /* Dolist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9E1D8782E500ABE0C0 /* Dolist.swift */; };
 		8056529C1D893DB4008C12F3 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056529B1D893DB4008C12F3 /* CoreDataController.swift */; };
@@ -43,6 +45,8 @@
 		3370A5281D86893700405550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80056B731D9411CC00B025BF /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
 		80056B751D94127B00B025BF /* RefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefreshView.xib; sourceTree = "<group>"; };
+		800CC4AF1D97F1360016EDC4 /* AddSubInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubInfo.swift; sourceTree = "<group>"; };
+		800CC4B11D97F1580016EDC4 /* AddSubInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddSubInfo.xib; sourceTree = "<group>"; };
 		80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dolist+CoreDataProperties.swift"; path = "../Dolist+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		80279E9E1D8782E500ABE0C0 /* Dolist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dolist.swift; path = ../Dolist.swift; sourceTree = "<group>"; };
 		8056529B1D893DB4008C12F3 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 				3370A51B1D86893700405550 /* ViewController.swift */,
 				1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */,
 				80056B731D9411CC00B025BF /* RefreshView.swift */,
+				800CC4AF1D97F1360016EDC4 /* AddSubInfo.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -90,6 +95,7 @@
 				3370A5231D86893700405550 /* Assets.xcassets */,
 				3370A5251D86893700405550 /* LaunchScreen.storyboard */,
 				80056B751D94127B00B025BF /* RefreshView.xib */,
+				800CC4B11D97F1580016EDC4 /* AddSubInfo.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -193,6 +199,7 @@
 				3370A5271D86893700405550 /* LaunchScreen.storyboard in Resources */,
 				3370A5241D86893700405550 /* Assets.xcassets in Resources */,
 				80056B761D94127B00B025BF /* RefreshView.xib in Resources */,
+				800CC4B21D97F1580016EDC4 /* AddSubInfo.xib in Resources */,
 				3370A51F1D86893700405550 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +221,7 @@
 				80056B741D9411CC00B025BF /* RefreshView.swift in Sources */,
 				1E9DF6C71D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift in Sources */,
 				3370A51A1D86893700405550 /* AppDelegate.swift in Sources */,
+				800CC4B01D97F1360016EDC4 /* AddSubInfo.swift in Sources */,
 				1E9DF6C81D8F860400C0F3B4 /* Alarm.swift in Sources */,
 				80279E9F1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift in Sources */,
 				1E9DF6BC1D87757F00C0F3B4 /* ToDoListTableViewCell.swift in Sources */,
