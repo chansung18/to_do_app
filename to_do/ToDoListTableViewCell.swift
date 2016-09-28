@@ -8,6 +8,10 @@
 
 import UIKit
 
+var starY: CGFloat?
+var EndY: CGFloat?
+
+
 class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,6 +22,7 @@ class ToDoListTableViewCell: UITableViewCell {
     var isEditingMode: Bool  = false
     
     var originalTitle: String?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,12 +40,18 @@ class ToDoListTableViewCell: UITableViewCell {
         if gesture.state == UIGestureRecognizerState.Began {
             print("a = \(gesture.velocityInView(self).x)")
             
+            starY = gesture.translationInView(self.tableView).y
+            gesture
             if gesture.velocityInView(self).x < 0 {
                 isEditingMode = true
             }
         }
+        
         else if gesture.state == .Changed {
-            if isEditingMode == false && isCrossedOut == false {
+            EndY = gesture.translationInView(self.tableView).y
+            print("start Y - end Y = " + String(abs(starY! - EndY!)) )
+            
+            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 5 ){
                 let titleLength = originalTitle!.characters.count
                 let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
@@ -50,7 +61,7 @@ class ToDoListTableViewCell: UITableViewCell {
                     titleLabel.attributedText = attributeString
                 }
             }
-            else if isEditingMode == false && isCrossedOut == true {
+            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 5 ) {
                 let titleLength = originalTitle!.characters.count
                 let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
@@ -64,13 +75,16 @@ class ToDoListTableViewCell: UITableViewCell {
             }
         }
         else if gesture.state == .Ended {
-            if isEditingMode == false && isCrossedOut == false {
+            EndY = gesture.translationInView(self.tableView).y
+            print("start Y - end dddY = " + String(abs(starY! - EndY!)) )
+            
+            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 5 ){
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                 attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
                 titleLabel.attributedText = attributeString
                 isCrossedOut = true
             }
-            else if isEditingMode == false && isCrossedOut == true {
+            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 5){
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                 attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, 0))
                 titleLabel.attributedText = attributeString

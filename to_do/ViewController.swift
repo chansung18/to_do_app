@@ -34,6 +34,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //make UITapGestureRecognizer when tapping dummyview which is for fake
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         dummyView.addGestureRecognizer(tapGesture)
         
@@ -85,13 +87,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         print("alpha = \(refreshController.alpha)")
     }
-    
+    /*
+     name : tableViewTapped
+     parameter : UITapGestureRecognizer(tap)
+     function : to cancle refreshview
+    */
     func tableViewTapped(gesture: UITapGestureRecognizer) {
         print("tapped...")
         if isInTheMiddleOfEnteringItem {
             dismissRefreshControl()
         }
     }
+    /*
+     name : dismissRefreshControl
+     function : adjust visivble state of dummyview
+     */
 
     func dismissRefreshControl() {
         UIView.animateWithDuration(0.5) {
