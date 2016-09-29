@@ -16,6 +16,8 @@ class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
+    
+    var directionOfRight: Bool = false
     var tableView: UITableView?
     
     var isCrossedOut: Bool = false
@@ -45,13 +47,16 @@ class ToDoListTableViewCell: UITableViewCell {
             if gesture.velocityInView(self).x < 0 {
                 isEditingMode = true
             }
+            else if gesture.velocityInView(self).x > 0 {
+                directionOfRight = true
+            }
         }
         
         else if gesture.state == .Changed {
             EndY = gesture.translationInView(self.tableView).y
             print("start Y - end Y = " + String(abs(starY! - EndY!)) )
             
-            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 5 ){
+            if isEditingMode == false && isCrossedOut == false && abs(starY! - EndY!) < 10 && directionOfRight == true {
                 let titleLength = originalTitle!.characters.count
                 let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
@@ -61,7 +66,7 @@ class ToDoListTableViewCell: UITableViewCell {
                     titleLabel.attributedText = attributeString
                 }
             }
-            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 5 ) {
+            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 10 ) && directionOfRight == true {
                 let titleLength = originalTitle!.characters.count
                 let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
@@ -78,13 +83,13 @@ class ToDoListTableViewCell: UITableViewCell {
             EndY = gesture.translationInView(self.tableView).y
             print("start Y - end dddY = " + String(abs(starY! - EndY!)) )
             
-            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 5 ){
+            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 10 && directionOfRight == true){
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                 attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
                 titleLabel.attributedText = attributeString
                 isCrossedOut = true
             }
-            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 5){
+            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 10) && directionOfRight == true{
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
                 attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, 0))
                 titleLabel.attributedText = attributeString
