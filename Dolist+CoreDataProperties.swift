@@ -2,7 +2,7 @@
 //  Dolist+CoreDataProperties.swift
 //  to_do
 //
-//  Created by chansung on 9/19/16.
+//  Created by Eunkyo, Seo on 9/29/16.
 //  Copyright © 2016 chansung_eunkyo. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,6 +19,7 @@ extension Dolist {
     @NSManaged var decoration: String?
     @NSManaged var startingDate: NSDate?
     @NSManaged var title: String?
+    @NSManaged var lineflag: NSNumber?
     @NSManaged var alarms: NSSet?
     @NSManaged var color: Color?
 

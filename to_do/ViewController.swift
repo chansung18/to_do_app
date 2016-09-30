@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDOItemTableViewCellDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
@@ -21,6 +21,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
     
+    
+    
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -28,6 +31,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         dolist = CoreDataController.sharedInstace.loadFromCoredata()
         tableView.reloadData()
+        
+    }
+    func cellForRowAtIndexPath(indexPath: NSIndexPath){
+        
+        cell.index = indexPath.row
+        cell.delegate = self
+    }
+    func cellValueChanged(cell: ToDoListTableViewCell) {
+    
         
     }
     
@@ -65,6 +77,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.addSubview(refreshController)
     }
+    
+
+    
     
     func didRefresh() {
         showRefreshControl()
@@ -187,6 +202,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return [deleteAction, editAction];
     }
+    
     
     func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
         //(tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = false

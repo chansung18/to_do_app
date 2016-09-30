@@ -67,12 +67,12 @@
 			isa = PBXGroup;
 			children = (
 				3370A5201D86893700405550 /* to_do.xcdatamodeld */,
+				80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */,
+				80279E9E1D8782E500ABE0C0 /* Dolist.swift */,
 				1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */,
 				1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */,
 				1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */,
 				1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */,
-				80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */,
-				80279E9E1D8782E500ABE0C0 /* Dolist.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";

@@ -10,20 +10,39 @@ import UIKit
 
 var starY: CGFloat?
 var EndY: CGFloat?
+protocol ToDOItemTableViewCellDelegate{
+    func cellValueChanged(cell: ToDoListTableViewCell);
+}
+
 
 
 class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
+    var index: Int = 0
+    var delegate : ToDOItemTableViewCellDelegate?
     
     var directionOfRight: Bool = false
     var tableView: UITableView?
     
-    var isCrossedOut: Bool = false
+    //var isCrossedOut: Bool = false
     var isEditingMode: Bool  = false
     
-    var originalTitle: String?
+    //var originalTitle: String?
+    
+    var isCrossedOut: Bool = false {
+        didSet {
+            delegate?.cellValueChanged(self)
+        }
+    }
+    
+    var originalTitle: String? {
+        didSet {
+            delegate?.cellValueChanged(self)
+        }
+    } 
+
     
     
     override func awakeFromNib() {
