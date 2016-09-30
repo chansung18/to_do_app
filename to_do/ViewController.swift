@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDOItemTableViewCellDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDoListTableViewCellDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
@@ -21,9 +21,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
     
-    
-    
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -31,21 +28,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         dolist = CoreDataController.sharedInstace.loadFromCoredata()
         tableView.reloadData()
-        
-    }
-    func cellForRowAtIndexPath(indexPath: NSIndexPath){
-        
-        cell.index = indexPath.row
-        cell.delegate = self
-    }
-    func cellValueChanged(cell: ToDoListTableViewCell) {
-    
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //make UITapGestureRecognizer when tapping dummyview which is for fake
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
@@ -77,9 +63,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.addSubview(refreshController)
     }
-    
-
-    
     
     func didRefresh() {
         showRefreshControl()
@@ -160,8 +143,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         cell?.backgroundColor = UIColor.clearColor()
         let doItem = dolist[indexPath.row]
-        cell!.titleLabel.text = doItem.title
-        cell!.originalTitle = doItem.title
+        cell?.originalTitle = doItem.title
+        cell?.index = indexPath.row
+        cell?.delegate = self
         
         if let color = doItem.color {
             let colorR = CGFloat(color.r!) / 255
@@ -188,6 +172,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let editAction = UITableViewRowAction(style: .Normal, title: "🖊", handler:{ action, indexpath in
             //edit Action codes
         });
+        
         editAction.backgroundColor = UIColor.whiteColor()
         
         let deleteAction = UITableViewRowAction(style: .Normal, title: "╳", handler:{ action, indexpath in
@@ -200,7 +185,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         });
         deleteAction.backgroundColor = UIColor.whiteColor()
         
-        return [deleteAction, editAction];
+        return [deleteAction, editAction]
     }
     
     
@@ -214,6 +199,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func cellLongPressed(gesture: UILongPressGestureRecognizer) {
         print("long pressed...")
+    }
+    
+    // ToDoListTableViewCellDelegate
+    func cellValueChanged(cell: ToDoListTableViewCell) {
+        let index = cell.index
+
+        print("cellValueChanged is called on Cell Index \(index)")
+        
+        dolist[index].title = cell.originalTitle
+        dolist[index].lineflag = cell.isCrossedOut
     }
 }
 

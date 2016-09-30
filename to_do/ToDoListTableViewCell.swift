@@ -10,26 +10,22 @@ import UIKit
 
 var starY: CGFloat?
 var EndY: CGFloat?
-protocol ToDOItemTableViewCellDelegate{
+
+protocol ToDoListTableViewCellDelegate{
     func cellValueChanged(cell: ToDoListTableViewCell);
 }
-
-
 
 class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     var index: Int = 0
-    var delegate : ToDOItemTableViewCellDelegate?
+    var delegate : ToDoListTableViewCellDelegate?
     
     var directionOfRight: Bool = false
     var tableView: UITableView?
     
-    //var isCrossedOut: Bool = false
     var isEditingMode: Bool  = false
-    
-    //var originalTitle: String?
     
     var isCrossedOut: Bool = false {
         didSet {
@@ -39,11 +35,10 @@ class ToDoListTableViewCell: UITableViewCell {
     
     var originalTitle: String? {
         didSet {
+            titleLabel.text = originalTitle
             delegate?.cellValueChanged(self)
         }
     } 
-
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,7 +54,7 @@ class ToDoListTableViewCell: UITableViewCell {
     
     func didPanned(gesture: UIPanGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
-            print("a = \(gesture.velocityInView(self).x)")
+//            print("a = \(gesture.velocityInView(self).x)")
             
             starY = gesture.translationInView(self.tableView).y
             gesture
@@ -73,7 +68,7 @@ class ToDoListTableViewCell: UITableViewCell {
         
         else if gesture.state == .Changed {
             EndY = gesture.translationInView(self.tableView).y
-            print("start Y - end Y = " + String(abs(starY! - EndY!)) )
+//            print("start Y - end Y = " + String(abs(starY! - EndY!)) )
             
             if isEditingMode == false && isCrossedOut == false && abs(starY! - EndY!) < 10 && directionOfRight == true {
                 let titleLength = originalTitle!.characters.count
@@ -89,7 +84,7 @@ class ToDoListTableViewCell: UITableViewCell {
                 let titleLength = originalTitle!.characters.count
                 let tmpIndex = Int(gesture.locationInView(self).x * 10 / CGFloat(titleLength)) - 10
                 
-                print("tmpIndex = \(gesture.locationInView(self).x), \(titleLength), \(tmpIndex)")
+//                print("tmpIndex = \(gesture.locationInView(self).x), \(titleLength), \(tmpIndex)")
                 
                 if tmpIndex < titleLength && tmpIndex >= 0 {
                     let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
@@ -100,7 +95,7 @@ class ToDoListTableViewCell: UITableViewCell {
         }
         else if gesture.state == .Ended {
             EndY = gesture.translationInView(self.tableView).y
-            print("start Y - end dddY = " + String(abs(starY! - EndY!)) )
+//            print("start Y - end dddY = " + String(abs(starY! - EndY!)) )
             
             if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 10 && directionOfRight == true){
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
