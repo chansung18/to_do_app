@@ -57,7 +57,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         subviewitem.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
         subviewitem.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 1.0)
         
-        subviewitem.addSubview(AddSubInfo())
+        //subviewitem.addSubview(AddSubInfo())
+        refreshController.addSubview(AddSubInfo())
         refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)

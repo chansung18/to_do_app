@@ -32,7 +32,7 @@ class RefreshView: UIView {
         let view = NSBundle.mainBundle().loadNibNamed("RefreshView", owner: self, options: nil).first as! UIView
         view.frame = bounds
         addSubview(view)
-                titleField.autocorrectionType = UITextAutocorrectionType.No
+        titleField.autocorrectionType = UITextAutocorrectionType.No
     }
     
     @IBAction func whenPressComfirm(sender: AnyObject) {
