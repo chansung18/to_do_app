@@ -147,6 +147,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell?.index = indexPath.row
         cell?.delegate = self
         
+        if doItem.lineflag == NSNumber(bool: true) {
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: (cell?.originalTitle)!)
+            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+            cell?.titleLabel.attributedText = attributeString
+            
+        }
+        
         if let color = doItem.color {
             let colorR = CGFloat(color.r!) / 255
             let colorG = CGFloat(color.g!) / 255
