@@ -60,8 +60,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         subviewitem.addSubview(AddSubInfo())
         refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
         
         tableView.addSubview(refreshController)
+    }
+    func keyboardWillShow(nofification : NSNotification){
+        let userInfo:NSDictionary = nofification.userInfo!
+        let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.CGRectValue()
+        let keyboardHeight = keyboardRectangle.height
+        
+        print("keyboard : \(keyboardHeight)")
+
+        
     }
     
     func didRefresh() {
