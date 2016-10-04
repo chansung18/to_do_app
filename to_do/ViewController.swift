@@ -21,6 +21,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
     
+    var keyboardSubView: AddSubInfo?
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -57,23 +59,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         subviewitem.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
         subviewitem.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 1.0)
         
-        //subviewitem.addSubview(AddSubInfo())
-        refreshController.addSubview(AddSubInfo())
         refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
         
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+//        UIKeyboardWillHideNotification
+        
         tableView.addSubview(refreshController)
     }
+//    
+//    func keyboardWillHide(nofification : NSNotification) {
+//        UIView.animateWithDuration(0.5) { 
+//            keyboardSubView.al
+//        }
+//        
+//        keyboardSubView?.removeFromSuperview()
+//    }
+    
     func keyboardWillShow(nofification : NSNotification){
         let userInfo:NSDictionary = nofification.userInfo!
         let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.CGRectValue()
         let keyboardHeight = keyboardRectangle.height
         
-        print("keyboard : \(keyboardHeight)")
-
+        keyboardSubView = AddSubInfo(frame: CGRect(x: 0,
+                                               y: dummyView.frame.height - keyboardHeight - 150,
+                                               width: dummyView.frame.width,
+                                               height: 150))
         
+        keyboardSubView?.selectColor(4)
+        dummyView.addSubview(keyboardSubView!)
+        
+        print("keyboard : \(keyboardHeight)")
     }
     
     func didRefresh() {
@@ -118,8 +136,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
         }
         
-        UIView.animateWithDuration(0.5) { 
+        UIView.animateWithDuration(0.5, animations: { 
             self.refreshController.alpha = 0.0
+            self.keyboardSubView?.alpha = 0
+        }) { (completed) in
+            if completed {
+                self.keyboardSubView?.removeFromSuperview()
+            }
         }
     
         subviewitem.titleField.endEditing(true)
