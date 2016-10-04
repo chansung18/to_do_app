@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2333a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AgJ-3w-Suw">
+                    <rect key="frame" x="17" y="70" width="90" height="110"/>
+                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="Hn7-Gw-btO"/>
+                        <constraint firstAttribute="width" constant="90" id="fXl-GQ-B1H"/>
+                        <constraint firstAttribute="height" constant="110" id="ptm-bP-DOZ"/>
+                        <constraint firstAttribute="height" constant="110" id="qCi-6e-AHq"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="fXl-GQ-B1H"/>
+                            <exclude reference="ptm-bP-DOZ"/>
+                        </mask>
+                    </variation>
+                </scrollView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs2-JD-eva">
+                    <rect key="frame" x="115" y="70" width="90" height="110"/>
+                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="AcF-84-WMP"/>
+                        <constraint firstAttribute="width" constant="90" id="gr8-2m-e2n"/>
+                        <constraint firstAttribute="height" constant="110" id="jJk-Zy-ClU"/>
+                        <constraint firstAttribute="height" constant="110" id="n53-wa-Xxu"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="gr8-2m-e2n"/>
+                            <exclude reference="n53-wa-Xxu"/>
+                        </mask>
+                    </variation>
+                </scrollView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fwn-Gg-G73">
+                    <rect key="frame" x="213" y="70" width="90" height="110"/>
+                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="7nK-ch-dgH"/>
+                        <constraint firstAttribute="height" constant="110" id="Hap-mZ-8mp"/>
+                        <constraint firstAttribute="height" constant="110" id="UAO-oA-IUA"/>
+                        <constraint firstAttribute="width" constant="90" id="Z0R-pQ-BOS"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="UAO-oA-IUA"/>
+                            <exclude reference="Z0R-pQ-BOS"/>
+                        </mask>
+                    </variation>
+                </scrollView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJg-fY-FPz">
+                    <rect key="frame" x="17" y="8" width="286" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="25t-Um-KyD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="bs2-JD-eva" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="BfN-PG-9jW"/>
+                <constraint firstItem="AgJ-3w-Suw" firstAttribute="centerY" secondItem="bs2-JD-eva" secondAttribute="centerY" id="G12-Qa-UPP"/>
+                <constraint firstItem="AgJ-3w-Suw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="I2s-qX-RBE"/>
+                <constraint firstItem="Fwn-Gg-G73" firstAttribute="centerY" secondItem="bs2-JD-eva" secondAttribute="centerY" id="JGV-XK-Vc5"/>
+                <constraint firstItem="bJg-fY-FPz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="Lov-fL-zUJ"/>
+                <constraint firstItem="bs2-JD-eva" firstAttribute="leading" secondItem="AgJ-3w-Suw" secondAttribute="trailing" constant="8" id="Mab-F5-8dm"/>
+                <constraint firstItem="Fwn-Gg-G73" firstAttribute="leading" secondItem="bs2-JD-eva" secondAttribute="trailing" constant="8" symbolic="YES" id="QSE-XV-UCQ"/>
+                <constraint firstAttribute="trailing" secondItem="bJg-fY-FPz" secondAttribute="trailing" constant="17" id="ZWF-OC-SWS"/>
+                <constraint firstItem="bs2-JD-eva" firstAttribute="leading" secondItem="AgJ-3w-Suw" secondAttribute="trailing" constant="8" id="Ztq-z6-Ysc"/>
+                <constraint firstItem="bs2-JD-eva" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="a8Z-g4-qfS"/>
+                <constraint firstItem="Fwn-Gg-G73" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="bXg-Fu-OcI"/>
+                <constraint firstItem="bJg-fY-FPz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="bon-ZV-ymU"/>
+                <constraint firstItem="Fwn-Gg-G73" firstAttribute="leading" secondItem="bs2-JD-eva" secondAttribute="trailing" constant="8" id="dGS-vm-MfF"/>
+                <constraint firstAttribute="trailing" secondItem="Fwn-Gg-G73" secondAttribute="trailing" constant="17" id="eI3-lS-z9T"/>
+                <constraint firstItem="AgJ-3w-Suw" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="mpx-KN-6jT"/>
+                <constraint firstItem="bs2-JD-eva" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vM5-Rg-xro"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="I2s-qX-RBE"/>
+                    <exclude reference="mpx-KN-6jT"/>
+                    <exclude reference="Mab-F5-8dm"/>
+                    <exclude reference="a8Z-g4-qfS"/>
+                    <exclude reference="QSE-XV-UCQ"/>
+                    <exclude reference="bXg-Fu-OcI"/>
+                    <exclude reference="eI3-lS-z9T"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="471" y="283"/>
+        </view>
+    </objects>
+</document>

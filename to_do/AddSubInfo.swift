@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AddSubInfoDelegate {
+    func addAlarmClicked()
+}
+
 class AddSubInfo: UIView {
     var keyboardHeight:CGFloat?
     
@@ -36,6 +40,8 @@ class AddSubInfo: UIView {
     @IBOutlet weak var fifthColorSelection: UIButton!
     
     var selectedColorIndex = 0
+    
+    var delegate: AddSubInfoDelegate?
     
 //    var selectedColor: colorSelection = .first
     
@@ -135,6 +141,8 @@ class AddSubInfo: UIView {
         fourthAlarmLabel.layer.cornerRadius = fourthAlarmLabel.frame.width / 2.0
         fourthAlarmLabel.layer.masksToBounds = true
         
+        view.layer.cornerRadius = 15
+        
         addSubview(view)
     }
     
@@ -170,4 +178,9 @@ class AddSubInfo: UIView {
         
         selectColor(sender.tag)
     }
+    
+    @IBAction func alarmAddClicked(sender: UIButton) {
+        delegate?.addAlarmClicked()
+    }
+    
 }

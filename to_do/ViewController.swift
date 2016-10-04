@@ -9,7 +9,11 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDoListTableViewCellDelegate {
+class ViewController: UIViewController,
+                      UITableViewDataSource,
+                      UITableViewDelegate,
+                      ToDoListTableViewCellDelegate,
+                      AddSubInfoDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
@@ -22,6 +26,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var isRefreshControlFullyVisible: Bool = false
     
     var keyboardSubView: AddSubInfo?
+    var keyboardAlarmSubView: AlarmSubInfo?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -63,19 +68,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
-//        UIKeyboardWillHideNotification
-        
         tableView.addSubview(refreshController)
     }
-//    
-//    func keyboardWillHide(nofification : NSNotification) {
-//        UIView.animateWithDuration(0.5) { 
-//            keyboardSubView.al
-//        }
-//        
-//        keyboardSubView?.removeFromSuperview()
-//    }
     
     func keyboardWillShow(nofification : NSNotification){
         let userInfo:NSDictionary = nofification.userInfo!
@@ -83,15 +77,44 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let keyboardRectangle = keyboardFrame.CGRectValue()
         let keyboardHeight = keyboardRectangle.height
         
-        keyboardSubView = AddSubInfo(frame: CGRect(x: 0,
-                                               y: dummyView.frame.height - keyboardHeight - 150,
-                                               width: dummyView.frame.width,
-                                               height: 150))
+        if keyboardSubView == nil {
+            keyboardSubView = AddSubInfo(frame: CGRect(x: 0,
+                                                   y: dummyView.frame.height - keyboardHeight - 150,
+                                                   width: dummyView.frame.width,
+                                                   height: 150))
+            keyboardSubView?.delegate = self
+            keyboardSubView?.selectColor(4)
+            dummyView.addSubview(keyboardSubView!)
+        }
+        else {
+            UIView.animateWithDuration(0.2) {
+                self.keyboardSubView?.alpha = 1
+            }
+        }
+            
+        let x = CGFloat(0)
+        let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
+        let width = dummyView.frame.size.width
+        let height = keyboardHeight + 50
         
-        keyboardSubView?.selectColor(4)
-        dummyView.addSubview(keyboardSubView!)
-        
-        print("keyboard : \(keyboardHeight)")
+        if keyboardAlarmSubView == nil {
+            keyboardAlarmSubView = AlarmSubInfo(frame: CGRect(x: x, y: y + height, width: width, height: height))
+            keyboardAlarmSubView?.alpha = 1
+            dummyView.addSubview(keyboardAlarmSubView!)
+            
+            let dummyTapGesture = UITapGestureRecognizer(target: self, action: #selector(keyboardSubViewTapped))
+            keyboardAlarmSubView?.addGestureRecognizer(dummyTapGesture)
+            keyboardSubView?.addGestureRecognizer(dummyTapGesture)
+        }
+        else {
+            UIView.animateWithDuration(0.2) {
+                self.keyboardAlarmSubView?.frame.origin.y = y + height
+            }
+        }
+    }
+    
+    func keyboardSubViewTapped(gesture: UITapGestureRecognizer) {
+        // do nothing
     }
     
     func didRefresh() {
@@ -121,9 +144,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
      function : to cancle refreshview
     */
     func tableViewTapped(gesture: UITapGestureRecognizer) {
-        print("tapped...")
         if isInTheMiddleOfEnteringItem {
-            dismissRefreshControl()
+            if gesture.locationInView(self.dummyView).y < self.keyboardSubView?.frame.origin.y {
+                dismissRefreshControl()
+            }
         }
     }
     /*
@@ -139,9 +163,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         UIView.animateWithDuration(0.5, animations: { 
             self.refreshController.alpha = 0.0
             self.keyboardSubView?.alpha = 0
+            self.keyboardAlarmSubView?.frame.origin.y = self.keyboardAlarmSubView!.frame.origin.y + self.keyboardAlarmSubView!.frame.height
         }) { (completed) in
             if completed {
                 self.keyboardSubView?.removeFromSuperview()
+                self.keyboardAlarmSubView?.removeFromSuperview()
+                
+                self.keyboardSubView = nil
+                self.keyboardAlarmSubView = nil
             }
         }
     
@@ -251,6 +280,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         dolist[index].title = cell.originalTitle
         dolist[index].lineflag = cell.isCrossedOut
+    }
+    
+    //AddSubInfoDelegate
+    func addAlarmClicked() {
+        subviewitem.titleField.endEditing(true)
+        
+        let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
+        UIView.animateWithDuration(0.35) {
+            self.keyboardAlarmSubView?.frame.origin.y = y
+        }
     }
 }
 
