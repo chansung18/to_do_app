@@ -10,6 +10,7 @@ import UIKit
 
 class AlarmSubInfo: UIView {
 
+    @IBOutlet weak var daycount2: UILabel!
     @IBOutlet weak var dayCount: UILabel!
     
     override init(frame: CGRect) {
@@ -25,7 +26,7 @@ class AlarmSubInfo: UIView {
     func commonInitialization() {
         let view = NSBundle.mainBundle().loadNibNamed("AlarmSubInfo", owner: self, options: nil).first as! UIView
         view.frame = bounds
-        
+        daycount2.text = "park lab"
 //        dayCount.layer.cornerRadius = 10
 //        dayCount.layer.masksToBounds = true
 //        dayCount.layer.borderWidth = 2.0
