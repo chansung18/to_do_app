@@ -17,12 +17,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wv0-yS-cGE">
-                    <rect key="frame" x="8" y="0.0" width="259" height="30"/>
+                    <rect key="frame" x="8" y="18" width="259" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-FV-WSB">
-                    <rect key="frame" x="282" y="0.0" width="30" height="30"/>
+                    <rect key="frame" x="282" y="18" width="30" height="30"/>
                     <state key="normal" title="확인"/>
                     <connections>
                         <action selector="whenPressComfirm:" destination="-1" eventType="touchUpInside" id="ZQf-HV-okM"/>
@@ -35,7 +35,7 @@
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="2Tt-ww-ZYT"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="leading" secondItem="wv0-yS-cGE" secondAttribute="trailing" constant="8" id="8DA-AL-Go3"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="centerY" secondItem="wv0-yS-cGE" secondAttribute="centerY" id="AY5-GZ-jOC"/>
-                <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E2p-Sq-iAQ"/>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="E2p-Sq-iAQ"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="leading" secondItem="wv0-yS-cGE" secondAttribute="trailing" constant="15" id="VDC-Tf-J3u"/>
                 <constraint firstAttribute="trailing" secondItem="6cz-FV-WSB" secondAttribute="trailing" constant="8" id="jFa-0m-Rsl"/>
                 <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="nxx-qj-thJ"/>

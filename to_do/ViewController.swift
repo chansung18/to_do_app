@@ -110,6 +110,8 @@ class ViewController: UIViewController,
             UIView.animateWithDuration(0.2) {
                 self.keyboardAlarmSubView?.frame.origin.y = y + height
             }
+            
+            keyboardAlarmSubView?.day = 77 
         }
     }
     

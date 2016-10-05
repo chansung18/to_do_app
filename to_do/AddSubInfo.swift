@@ -26,12 +26,10 @@ class AddSubInfo: UIView {
     @IBOutlet weak var firstAlarmBack: UIButton!
     @IBOutlet weak var secondAlarmBack: UIButton!
     @IBOutlet weak var thirdAlarmBack: UIButton!
-    @IBOutlet weak var fourthAlarmBack: UIButton!
     
     @IBOutlet weak var firstAlarmLabel: UIButton!
     @IBOutlet weak var secondAlarmLabel: UIButton!
     @IBOutlet weak var thirdAlarmLabel: UIButton!
-    @IBOutlet weak var fourthAlarmLabel: UIButton!
     
     @IBOutlet weak var firstColorSelection: UIButton!
     @IBOutlet weak var secondColorSelection: UIButton!
@@ -40,8 +38,9 @@ class AddSubInfo: UIView {
     @IBOutlet weak var fifthColorSelection: UIButton!
     
     var selectedColorIndex = 0
-    
     var delegate: AddSubInfoDelegate?
+    
+    var alarmAddButtonToggle = false
     
 //    var selectedColor: colorSelection = .first
     
@@ -125,10 +124,6 @@ class AddSubInfo: UIView {
         thirdAlarmBack.layer.borderWidth = 2.0
         thirdAlarmBack.layer.borderColor = UIColor.grayColor().CGColor
         
-        fourthAlarmBack.layer.cornerRadius = 13
-        fourthAlarmBack.layer.borderWidth = 2.0
-        fourthAlarmBack.layer.borderColor = UIColor.grayColor().CGColor
-        
         firstAlarmLabel.layer.cornerRadius = firstAlarmLabel.frame.width / 2.0
         firstAlarmLabel.layer.masksToBounds = true
         
@@ -137,9 +132,6 @@ class AddSubInfo: UIView {
         
         thirdAlarmLabel.layer.cornerRadius = thirdAlarmLabel.frame.width / 2.0
         thirdAlarmLabel.layer.masksToBounds = true
-        
-        fourthAlarmLabel.layer.cornerRadius = fourthAlarmLabel.frame.width / 2.0
-        fourthAlarmLabel.layer.masksToBounds = true
         
         view.layer.cornerRadius = 15
         view.layer.shadowOpacity = 0.15
@@ -184,6 +176,21 @@ class AddSubInfo: UIView {
     
     @IBAction func alarmAddClicked(sender: UIButton) {
         delegate?.addAlarmClicked()
+        
+        alarmAddButtonToggle = !alarmAddButtonToggle
+        
+        print("\(alarmAddButtonToggle)")
+        
+        if alarmAddButtonToggle {
+            alarmAddButton.setTitle("×", forState: .Selected)
+            alarmAddButton.setTitle("×", forState: .Normal)
+        }
+        else {
+            alarmAddButton.setTitle("+", forState: .Normal)
+            alarmAddButton.setTitle("+", forState: .Selected)
+        }
+        
+        print("\(alarmAddButton.titleLabel?.text)")
     }
     
 }
