@@ -28,6 +28,8 @@
 		80279E9F1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */; };
 		80279EA01D8782E500ABE0C0 /* Dolist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9E1D8782E500ABE0C0 /* Dolist.swift */; };
 		8056529C1D893DB4008C12F3 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056529B1D893DB4008C12F3 /* CoreDataController.swift */; };
+		80D99EBF1DA54966009BADE5 /* UhBeepuding.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */; };
+		80D99EC01DA54966009BADE5 /* UhBeepudingBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dolist+CoreDataProperties.swift"; path = "../Dolist+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		80279E9E1D8782E500ABE0C0 /* Dolist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dolist.swift; path = ../Dolist.swift; sourceTree = "<group>"; };
 		8056529B1D893DB4008C12F3 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = UhBeepuding.ttf; sourceTree = "<group>"; };
+		80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = UhBeepudingBold.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,8 @@
 				1EFF6E3F1D925FDA00402ECF /* Controllers */,
 				1EFF6E3E1D925FC600402ECF /* Models */,
 				3370A5191D86893700405550 /* AppDelegate.swift */,
+				80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */,
+				80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */,
 				3370A5281D86893700405550 /* Info.plist */,
 			);
 			path = to_do;
@@ -203,7 +209,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80D99EC01DA54966009BADE5 /* UhBeepudingBold.ttf in Resources */,
 				3370A5271D86893700405550 /* LaunchScreen.storyboard in Resources */,
+				80D99EBF1DA54966009BADE5 /* UhBeepuding.ttf in Resources */,
 				3370A5241D86893700405550 /* Assets.xcassets in Resources */,
 				1EBDE36F1DA3BDB100D06160 /* AlarmSubInfo.xib in Resources */,
 				80056B761D94127B00B025BF /* RefreshView.xib in Resources */,
