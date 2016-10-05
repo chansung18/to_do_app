@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2333a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,7 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlarmSubInfo" customModule="to_do" customModuleProvider="target">
             <connections>
-                <outlet property="daycount2" destination="bJg-fY-FPz" id="0Wz-hS-3Db"/>
+                <outlet property="dayCount" destination="bJg-fY-FPz" id="aHQ-De-lKg"/>
+                <outlet property="dayScrollView" destination="AgJ-3w-Suw" id="YEq-at-rnE"/>
+                <outlet property="hourScrollView" destination="bs2-JD-eva" id="Nyx-fR-yM2"/>
+                <outlet property="minuteScrollView" destination="Fwn-Gg-G73" id="llr-1T-xik"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,9 +18,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AgJ-3w-Suw">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgJ-3w-Suw">
                     <rect key="frame" x="17" y="70" width="90" height="110"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="90" id="Hn7-Gw-btO"/>
                         <constraint firstAttribute="width" constant="90" id="fXl-GQ-B1H"/>
@@ -31,9 +33,8 @@
                         </mask>
                     </variation>
                 </scrollView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs2-JD-eva">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bs2-JD-eva">
                     <rect key="frame" x="115" y="70" width="90" height="110"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="90" id="AcF-84-WMP"/>
                         <constraint firstAttribute="width" constant="90" id="gr8-2m-e2n"/>
@@ -47,9 +48,8 @@
                         </mask>
                     </variation>
                 </scrollView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fwn-Gg-G73">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwn-Gg-G73">
                     <rect key="frame" x="213" y="70" width="90" height="110"/>
-                    <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="90" id="7nK-ch-dgH"/>
                         <constraint firstAttribute="height" constant="110" id="Hap-mZ-8mp"/>
@@ -63,34 +63,62 @@
                         </mask>
                     </variation>
                 </scrollView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJg-fY-FPz">
-                    <rect key="frame" x="17" y="8" width="286" height="42"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016. 12. 23.  12:36  (D-78)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJg-fY-FPz">
+                    <rect key="frame" x="17" y="15" width="286" height="42"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="25t-Um-KyD"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rkg-dY-fpc">
+                    <rect key="frame" x="17" y="188" width="90" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hour" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2t-Go-R2x">
+                    <rect key="frame" x="115" y="188" width="90" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGz-w1-lIy">
+                    <rect key="frame" x="213" y="188" width="90" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.94142452348959893" green="0.95074555837563457" blue="0.95074555837563457" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="bJg-fY-FPz" firstAttribute="leading" secondItem="AgJ-3w-Suw" secondAttribute="leading" id="1td-4J-jZr"/>
+                <constraint firstItem="bJg-fY-FPz" firstAttribute="trailing" secondItem="Fwn-Gg-G73" secondAttribute="trailing" id="5fw-PD-74t"/>
+                <constraint firstItem="Rkg-dY-fpc" firstAttribute="top" secondItem="AgJ-3w-Suw" secondAttribute="bottom" constant="8" id="8HV-i7-4yd"/>
                 <constraint firstItem="bs2-JD-eva" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="BfN-PG-9jW"/>
+                <constraint firstItem="oGz-w1-lIy" firstAttribute="width" secondItem="Fwn-Gg-G73" secondAttribute="width" id="Blk-xR-wmU"/>
                 <constraint firstItem="AgJ-3w-Suw" firstAttribute="centerY" secondItem="bs2-JD-eva" secondAttribute="centerY" id="G12-Qa-UPP"/>
                 <constraint firstItem="AgJ-3w-Suw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="I2s-qX-RBE"/>
                 <constraint firstItem="Fwn-Gg-G73" firstAttribute="centerY" secondItem="bs2-JD-eva" secondAttribute="centerY" id="JGV-XK-Vc5"/>
-                <constraint firstItem="bJg-fY-FPz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="Lov-fL-zUJ"/>
+                <constraint firstItem="E2t-Go-R2x" firstAttribute="width" secondItem="bs2-JD-eva" secondAttribute="width" id="K5e-ze-GyV"/>
+                <constraint firstItem="E2t-Go-R2x" firstAttribute="top" secondItem="bs2-JD-eva" secondAttribute="bottom" constant="8" id="KPz-Lk-LxT"/>
                 <constraint firstItem="bs2-JD-eva" firstAttribute="leading" secondItem="AgJ-3w-Suw" secondAttribute="trailing" constant="8" id="Mab-F5-8dm"/>
                 <constraint firstItem="Fwn-Gg-G73" firstAttribute="leading" secondItem="bs2-JD-eva" secondAttribute="trailing" constant="8" symbolic="YES" id="QSE-XV-UCQ"/>
-                <constraint firstAttribute="trailing" secondItem="bJg-fY-FPz" secondAttribute="trailing" constant="17" id="ZWF-OC-SWS"/>
+                <constraint firstItem="E2t-Go-R2x" firstAttribute="leading" secondItem="Rkg-dY-fpc" secondAttribute="trailing" constant="8" id="Urg-BL-A10"/>
                 <constraint firstItem="bs2-JD-eva" firstAttribute="leading" secondItem="AgJ-3w-Suw" secondAttribute="trailing" constant="8" id="Ztq-z6-Ysc"/>
                 <constraint firstItem="bs2-JD-eva" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="a8Z-g4-qfS"/>
                 <constraint firstItem="Fwn-Gg-G73" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="bXg-Fu-OcI"/>
-                <constraint firstItem="bJg-fY-FPz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="bon-ZV-ymU"/>
+                <constraint firstItem="bJg-fY-FPz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="bon-ZV-ymU"/>
                 <constraint firstItem="Fwn-Gg-G73" firstAttribute="leading" secondItem="bs2-JD-eva" secondAttribute="trailing" constant="8" id="dGS-vm-MfF"/>
+                <constraint firstItem="oGz-w1-lIy" firstAttribute="top" secondItem="Fwn-Gg-G73" secondAttribute="bottom" constant="8" id="eGu-Ll-yvh"/>
                 <constraint firstAttribute="trailing" secondItem="Fwn-Gg-G73" secondAttribute="trailing" constant="17" id="eI3-lS-z9T"/>
                 <constraint firstItem="AgJ-3w-Suw" firstAttribute="top" secondItem="bJg-fY-FPz" secondAttribute="bottom" constant="8" id="mpx-KN-6jT"/>
+                <constraint firstItem="E2t-Go-R2x" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oWH-gU-aSd"/>
+                <constraint firstItem="E2t-Go-R2x" firstAttribute="centerX" secondItem="bs2-JD-eva" secondAttribute="centerX" id="obs-zE-o4L"/>
+                <constraint firstItem="oGz-w1-lIy" firstAttribute="leading" secondItem="E2t-Go-R2x" secondAttribute="trailing" constant="8" id="q3P-AI-Sf2"/>
                 <constraint firstItem="bs2-JD-eva" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vM5-Rg-xro"/>
+                <constraint firstItem="Rkg-dY-fpc" firstAttribute="width" secondItem="AgJ-3w-Suw" secondAttribute="width" id="z4f-Yz-MTI"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -100,12 +128,13 @@
                     <exclude reference="mpx-KN-6jT"/>
                     <exclude reference="Mab-F5-8dm"/>
                     <exclude reference="a8Z-g4-qfS"/>
+                    <exclude reference="obs-zE-o4L"/>
                     <exclude reference="QSE-XV-UCQ"/>
                     <exclude reference="bXg-Fu-OcI"/>
                     <exclude reference="eI3-lS-z9T"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="471" y="283"/>
+            <point key="canvasLocation" x="874" y="400"/>
         </view>
     </objects>
 </document>

@@ -142,6 +142,9 @@ class AddSubInfo: UIView {
         fourthAlarmLabel.layer.masksToBounds = true
         
         view.layer.cornerRadius = 15
+        view.layer.shadowOpacity = 0.15
+        view.layer.shadowRadius = 15
+        view.layer.shadowColor = UIColor.blackColor().CGColor
         
         addSubview(view)
     }
