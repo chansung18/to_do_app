@@ -188,4 +188,13 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
         dateFormatter.dateFormat = "yyyy. MM. dd. HH:mm"
         dayCount.text = dateFormatter.stringFromDate(alarmTime)
     }
+    func getAlarmDate()-> NSDate{
+        let currentTime = NSDate()
+        let dayInSeconds = day * 24 * 60 * 60
+        let hourInSeconds = hour * 60 * 60
+        let minuteInSeconds = minute * 60
+        let alarmTime = currentTime.dateByAddingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
+        
+        return alarmTime
+    }
 }

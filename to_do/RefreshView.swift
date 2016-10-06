@@ -9,11 +9,17 @@
 import UIKit
 import CoreData
 
+protocol AddTodoItemDelegate {
+    func pressAddButtom()
+}
+
+
 class RefreshView: UIView {
     
     @IBOutlet var textField: UIView!
     @IBOutlet weak var titleField: UITextField!
     
+    var delegate: AddTodoItemDelegate?
     var textFieldText:String?
     
     var mainViewController: ViewController?
@@ -36,7 +42,11 @@ class RefreshView: UIView {
     }
     
     @IBAction func whenPressComfirm(sender: AnyObject) {
-        print("whenPressComfirm")
+        print("delegate action")
+        delegate?.pressAddButtom()
+
+        
+        /*print("whenPressComfirm")
         mainViewController?.dismissRefreshControl()
         
         let formatter = NSDateFormatter()
@@ -70,6 +80,6 @@ class RefreshView: UIView {
         }
         else {
             print("textFieldText = nil")
-        }
+        }*/
     }
 }

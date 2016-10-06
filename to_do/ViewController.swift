@@ -19,6 +19,7 @@ class ViewController: UIViewController,
     
     var dolist = [Dolist]()
     var refreshController = UIRefreshControl()
+    var alarmdate : NSDate
     
     let subviewitem : RefreshView = RefreshView()
     
@@ -48,7 +49,7 @@ class ViewController: UIViewController,
         
         refreshController.frame.size.width = view.frame.size.width
         refreshController.tintColor = UIColor.clearColor()
-        
+        subviewitem.delegate = self
         subviewitem.mainViewController = self
         subviewitem.frame = refreshController.bounds
         subviewitem.frame.size.width = subviewitem.frame.size.width - 25
@@ -287,11 +288,15 @@ class ViewController: UIViewController,
     //AddSubInfoDelegate
     func addAlarmClicked() {
         subviewitem.titleField.endEditing(true)
+        self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+        
         
         let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
         UIView.animateWithDuration(0.35) {
             self.keyboardAlarmSubView?.frame.origin.y = y
         }
+        print("add alrm")
     }
+    
 }
 
