@@ -139,6 +139,7 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
                                                  width: dayScrollView.bounds.width,
                                                  height: dayScrollView.bounds.height),
                                           animated: true)
+        delegate?.alarmChanged()
     }
     
     func animateHourScrollView() {

@@ -14,7 +14,8 @@ class ViewController: UIViewController,
                       UITableViewDelegate,
                       ToDoListTableViewCellDelegate,
                       AddSubInfoDelegate,
-                      AddTodoItemDelegate {
+                      AddTodoItemDelegate,
+                      AlarmSubinfoDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
@@ -98,7 +99,7 @@ class ViewController: UIViewController,
         let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
         let width = dummyView.frame.size.width
         let height = keyboardHeight + 50
-        
+        self.keyboardSubView?.delegate = self
         if keyboardAlarmSubView == nil {
             keyboardAlarmSubView = AlarmSubInfo(frame: CGRect(x: x, y: y + height, width: width, height: height))
             keyboardAlarmSubView?.alpha = 1
@@ -340,7 +341,9 @@ class ViewController: UIViewController,
         else {
             print("textFieldText = nil")
         }
-
+    }
+    func alarmChanged() {
+        print("timechaged")
         
     }
 }
