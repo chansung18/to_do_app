@@ -302,6 +302,46 @@ class ViewController: UIViewController,
     //AddTodoItemDelegate
     func toDoItemAddClicked() {
         dismissRefreshControl()
+        let textFieldText = subviewitem.getTitleText()
+        
+        print("toDoItemAddClicked")
+        if self.alarmdate == nil {
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
+            let someDate = formatter.dateFromString("2014-12-25 10:25:00")
+            print("somdate  : " + String(someDate))
+            self.alarmdate = someDate
+        }
+        
+        let colorR = arc4random() % 256
+        let colorG = arc4random() % 256
+        let colorB = arc4random() % 256
+        
+        let entityDescription = NSEntityDescription.entityForName("Color",
+                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let color = Color(entity: entityDescription!,
+                          insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        color.r = NSNumber(unsignedInt: colorR)
+        color.g = NSNumber(unsignedInt: colorG)
+        color.b = NSNumber(unsignedInt: colorB)
+        color.a = NSNumber(unsignedInt: colorB)
+        
+        if (textFieldText != "null") {
+            if textFieldText.stringByReplacingOccurrencesOfString(" ", withString: "") != "" {
+                let newItem = CoreDataController.sharedInstace.saveToCoredata(textFieldText, deadline: self.alarmdate!, color: color)
+                self.dolist.append(newItem)
+                self.tableView.reloadData()
+                
+            }
+            else {
+                print("textFieldText = empty")
+            }
+        }
+        else {
+            print("textFieldText = nil")
+        }
+
+        
     }
 }
 
