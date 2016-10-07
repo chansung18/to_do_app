@@ -13,14 +13,16 @@ class ViewController: UIViewController,
                       UITableViewDataSource,
                       UITableViewDelegate,
                       ToDoListTableViewCellDelegate,
-                      AddSubInfoDelegate {
+                      AddSubInfoDelegate,
+                      AddTodoItemDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
     var dolist = [Dolist]()
-    var refreshController = UIRefreshControl()
-    var alarmdate : NSDate
+    var alarmdate : NSDate?
     
+    var refreshController = UIRefreshControl()
     let subviewitem : RefreshView = RefreshView()
     
     var isInTheMiddleOfEnteringItem: Bool = false
@@ -50,7 +52,6 @@ class ViewController: UIViewController,
         refreshController.frame.size.width = view.frame.size.width
         refreshController.tintColor = UIColor.clearColor()
         subviewitem.delegate = self
-        subviewitem.mainViewController = self
         subviewitem.frame = refreshController.bounds
         subviewitem.frame.size.width = subviewitem.frame.size.width - 25
         refreshController.addSubview(subviewitem)
@@ -298,5 +299,9 @@ class ViewController: UIViewController,
         print("add alrm")
     }
     
+    //AddTodoItemDelegate
+    func toDoItemAddClicked() {
+        dismissRefreshControl()
+    }
 }
 

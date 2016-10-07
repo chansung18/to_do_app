@@ -10,19 +10,15 @@ import UIKit
 import CoreData
 
 protocol AddTodoItemDelegate {
-    func pressAddButtom()
+    func toDoItemAddClicked()
 }
 
 
 class RefreshView: UIView {
-    
-    @IBOutlet var textField: UIView!
     @IBOutlet weak var titleField: UITextField!
     
     var delegate: AddTodoItemDelegate?
     var textFieldText:String?
-    
-    var mainViewController: ViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +39,7 @@ class RefreshView: UIView {
     
     @IBAction func whenPressComfirm(sender: AnyObject) {
         print("delegate action")
-        delegate?.pressAddButtom()
+        delegate?.toDoItemAddClicked()
 
         
         /*print("whenPressComfirm")
