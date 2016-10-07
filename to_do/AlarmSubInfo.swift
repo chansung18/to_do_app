@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol AlarmSubinfoDelegate {
+    func alarmChanged()
+}
+
 class AlarmSubInfo: UIView, UIScrollViewDelegate {
 
     @IBOutlet weak var dayCount: UILabel!
     @IBOutlet weak var dayScrollView: UIScrollView!
     @IBOutlet weak var hourScrollView: UIScrollView!
     @IBOutlet weak var minuteScrollView: UIScrollView!
+    var delegate: AlarmSubinfoDelegate?
     
     var day: Int = 0 {
         didSet {
@@ -187,6 +192,7 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy. MM. dd. HH:mm"
         dayCount.text = dateFormatter.stringFromDate(alarmTime)
+        delegate?.alarmChanged()
     }
     func getAlarmDate()-> NSDate{
         let currentTime = NSDate()
