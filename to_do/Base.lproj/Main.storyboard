@@ -6,8 +6,8 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="UhBeepuding.ttf">
-            <string>UhBeepuding</string>
+        <mutableArray key="SeoulHangangB.ttf">
+            <string>SeoulHangangB</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -40,6 +40,14 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4YP-Rq-hqn">
                                                     <rect key="frame" x="0.0" y="0.0" width="496" height="65"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0vM-ac-OP2">
+                                                            <rect key="frame" x="49" y="21" width="503" height="24"/>
+                                                            <fontDescription key="fontDescription" name="SeoulHangangB" family="SeoulHangang" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cjh-1l-1k2">
@@ -58,28 +66,15 @@
                                                         </mask>
                                                     </variation>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0vM-ac-OP2">
-                                                    <rect key="frame" x="49" y="21" width="503" height="24"/>
-                                                    <fontDescription key="fontDescription" name="UhBeepuding" family="UhBee puding" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="0vM-ac-OP2" firstAttribute="centerY" secondItem="RmW-H1-ZJY" secondAttribute="centerY" id="0Nc-Id-B1A"/>
                                                 <constraint firstItem="Cjh-1l-1k2" firstAttribute="top" secondItem="RmW-H1-ZJY" secondAttribute="topMargin" constant="3" id="3Pg-av-g5i"/>
-                                                <constraint firstItem="0vM-ac-OP2" firstAttribute="top" secondItem="RmW-H1-ZJY" secondAttribute="topMargin" constant="-2" id="CVs-yj-jpd"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="0vM-ac-OP2" secondAttribute="trailing" constant="12" id="Eeb-v3-06F"/>
                                                 <constraint firstItem="Cjh-1l-1k2" firstAttribute="leading" secondItem="RmW-H1-ZJY" secondAttribute="leadingMargin" constant="-7" id="Hgp-h2-4Ad"/>
                                                 <constraint firstItem="Cjh-1l-1k2" firstAttribute="centerY" secondItem="RmW-H1-ZJY" secondAttribute="centerY" id="iqb-wo-9BK"/>
-                                                <constraint firstItem="0vM-ac-OP2" firstAttribute="leading" secondItem="Cjh-1l-1k2" secondAttribute="trailing" constant="15" id="jWz-XH-SnL"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="0vM-ac-OP2" secondAttribute="bottom" constant="-4" id="kTo-4r-1tZ"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="3Pg-av-g5i"/>
-                                                    <exclude reference="CVs-yj-jpd"/>
-                                                    <exclude reference="kTo-4r-1tZ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

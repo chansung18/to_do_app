@@ -5,7 +5,9 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>UhBeepuding.ttf</string>
+		<string>KoPubBatang-Regular.ttf</string>
 		<string>UhBeepudingBold.ttf</string>
+		<string>SeoulHangangM.ttf</string>
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string></string>

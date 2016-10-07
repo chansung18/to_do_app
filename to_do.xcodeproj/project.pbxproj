@@ -28,6 +28,18 @@
 		80279E9F1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */; };
 		80279EA01D8782E500ABE0C0 /* Dolist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80279E9E1D8782E500ABE0C0 /* Dolist.swift */; };
 		8056529C1D893DB4008C12F3 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056529B1D893DB4008C12F3 /* CoreDataController.swift */; };
+		80686FCA1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FBE1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf */; };
+		80686FCB1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FBF1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf */; };
+		80686FCC1DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC01DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf */; };
+		80686FCD1DA7E8D700AEC8DC /* SeoulHangangB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC11DA7E8D700AEC8DC /* SeoulHangangB.ttf */; };
+		80686FCE1DA7E8D700AEC8DC /* SeoulHangangEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC21DA7E8D700AEC8DC /* SeoulHangangEB.ttf */; };
+		80686FCF1DA7E8D700AEC8DC /* SeoulHangangL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC31DA7E8D700AEC8DC /* SeoulHangangL.ttf */; };
+		80686FD01DA7E8D700AEC8DC /* SeoulHangangM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC41DA7E8D700AEC8DC /* SeoulHangangM.ttf */; };
+		80686FD11DA7E8D700AEC8DC /* SeoulNamsanB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC51DA7E8D700AEC8DC /* SeoulNamsanB.ttf */; };
+		80686FD21DA7E8D700AEC8DC /* SeoulNamsanEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC61DA7E8D700AEC8DC /* SeoulNamsanEB.ttf */; };
+		80686FD31DA7E8D700AEC8DC /* SeoulNamsanL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC71DA7E8D700AEC8DC /* SeoulNamsanL.ttf */; };
+		80686FD41DA7E8D700AEC8DC /* SeoulNamsanM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC81DA7E8D700AEC8DC /* SeoulNamsanM.ttf */; };
+		80686FD51DA7E8D700AEC8DC /* SeoulNamsanvert.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80686FC91DA7E8D700AEC8DC /* SeoulNamsanvert.ttf */; };
 		80D99EBF1DA54966009BADE5 /* UhBeepuding.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */; };
 		80D99EC01DA54966009BADE5 /* UhBeepudingBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */; };
 /* End PBXBuildFile section */
@@ -56,6 +68,18 @@
 		80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dolist+CoreDataProperties.swift"; path = "../Dolist+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		80279E9E1D8782E500ABE0C0 /* Dolist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dolist.swift; path = ../Dolist.swift; sourceTree = "<group>"; };
 		8056529B1D893DB4008C12F3 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		80686FBE1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KoPubBatang-Bold.ttf"; sourceTree = "<group>"; };
+		80686FBF1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KoPubBatang-Light.ttf"; sourceTree = "<group>"; };
+		80686FC01DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KoPubBatang-Regular.ttf"; sourceTree = "<group>"; };
+		80686FC11DA7E8D700AEC8DC /* SeoulHangangB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulHangangB.ttf; sourceTree = "<group>"; };
+		80686FC21DA7E8D700AEC8DC /* SeoulHangangEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulHangangEB.ttf; sourceTree = "<group>"; };
+		80686FC31DA7E8D700AEC8DC /* SeoulHangangL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulHangangL.ttf; sourceTree = "<group>"; };
+		80686FC41DA7E8D700AEC8DC /* SeoulHangangM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulHangangM.ttf; sourceTree = "<group>"; };
+		80686FC51DA7E8D700AEC8DC /* SeoulNamsanB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulNamsanB.ttf; sourceTree = "<group>"; };
+		80686FC61DA7E8D700AEC8DC /* SeoulNamsanEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulNamsanEB.ttf; sourceTree = "<group>"; };
+		80686FC71DA7E8D700AEC8DC /* SeoulNamsanL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulNamsanL.ttf; sourceTree = "<group>"; };
+		80686FC81DA7E8D700AEC8DC /* SeoulNamsanM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulNamsanM.ttf; sourceTree = "<group>"; };
+		80686FC91DA7E8D700AEC8DC /* SeoulNamsanvert.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulNamsanvert.ttf; sourceTree = "<group>"; };
 		80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = UhBeepuding.ttf; sourceTree = "<group>"; };
 		80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = UhBeepudingBold.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +167,18 @@
 				1EFF6E3F1D925FDA00402ECF /* Controllers */,
 				1EFF6E3E1D925FC600402ECF /* Models */,
 				3370A5191D86893700405550 /* AppDelegate.swift */,
+				80686FBE1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf */,
+				80686FBF1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf */,
+				80686FC01DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf */,
+				80686FC11DA7E8D700AEC8DC /* SeoulHangangB.ttf */,
+				80686FC21DA7E8D700AEC8DC /* SeoulHangangEB.ttf */,
+				80686FC31DA7E8D700AEC8DC /* SeoulHangangL.ttf */,
+				80686FC41DA7E8D700AEC8DC /* SeoulHangangM.ttf */,
+				80686FC51DA7E8D700AEC8DC /* SeoulNamsanB.ttf */,
+				80686FC61DA7E8D700AEC8DC /* SeoulNamsanEB.ttf */,
+				80686FC71DA7E8D700AEC8DC /* SeoulNamsanL.ttf */,
+				80686FC81DA7E8D700AEC8DC /* SeoulNamsanM.ttf */,
+				80686FC91DA7E8D700AEC8DC /* SeoulNamsanvert.ttf */,
 				80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */,
 				80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */,
 				3370A5281D86893700405550 /* Info.plist */,
@@ -209,14 +245,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80686FD21DA7E8D700AEC8DC /* SeoulNamsanEB.ttf in Resources */,
 				80D99EC01DA54966009BADE5 /* UhBeepudingBold.ttf in Resources */,
 				3370A5271D86893700405550 /* LaunchScreen.storyboard in Resources */,
 				80D99EBF1DA54966009BADE5 /* UhBeepuding.ttf in Resources */,
 				3370A5241D86893700405550 /* Assets.xcassets in Resources */,
+				80686FD11DA7E8D700AEC8DC /* SeoulNamsanB.ttf in Resources */,
+				80686FD51DA7E8D700AEC8DC /* SeoulNamsanvert.ttf in Resources */,
+				80686FCB1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf in Resources */,
+				80686FCA1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf in Resources */,
 				1EBDE36F1DA3BDB100D06160 /* AlarmSubInfo.xib in Resources */,
+				80686FCC1DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf in Resources */,
 				80056B761D94127B00B025BF /* RefreshView.xib in Resources */,
+				80686FD41DA7E8D700AEC8DC /* SeoulNamsanM.ttf in Resources */,
+				80686FCF1DA7E8D700AEC8DC /* SeoulHangangL.ttf in Resources */,
+				80686FD31DA7E8D700AEC8DC /* SeoulNamsanL.ttf in Resources */,
 				800CC4B21D97F1580016EDC4 /* AddSubInfo.xib in Resources */,
 				3370A51F1D86893700405550 /* Main.storyboard in Resources */,
+				80686FCE1DA7E8D700AEC8DC /* SeoulHangangEB.ttf in Resources */,
+				80686FCD1DA7E8D700AEC8DC /* SeoulHangangB.ttf in Resources */,
+				80686FD01DA7E8D700AEC8DC /* SeoulHangangM.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
