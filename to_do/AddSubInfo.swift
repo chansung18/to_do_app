@@ -22,6 +22,7 @@ class AddSubInfo: UIView {
     @IBOutlet weak var fifthColor: UIButton!
     
     @IBOutlet weak var alarmAddButton: UIButton!
+    @IBOutlet weak var alarmComfirmButton: UIButton!
     
     @IBOutlet weak var firstAlarmBack: UIButton!
     @IBOutlet weak var secondAlarmBack: UIButton!
@@ -167,6 +168,10 @@ class AddSubInfo: UIView {
             animateColorSelection(true)
         }
     }
+    func setAlarmComfirmbutton(tempString : String) {
+        self.alarmComfirmButton.setTitle(tempString, forState: UIControlState.Normal)
+    }
+    
     
     @IBAction func colorClicked(sender: UIButton) {
         print("tag = \(sender.tag)")

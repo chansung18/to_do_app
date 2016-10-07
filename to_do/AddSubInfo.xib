@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddSubInfo" customModule="to_do" customModuleProvider="target">
             <connections>
                 <outlet property="alarmAddButton" destination="Dxo-Rp-aET" id="DdS-YU-dAl"/>
+                <outlet property="alarmComfirmButton" destination="WTF-2c-IeI" id="fNu-WX-nHr"/>
                 <outlet property="fifthColor" destination="N3C-cq-I1e" id="HiV-pO-BEf"/>
                 <outlet property="fifthColorSelection" destination="a5d-8v-zOo" id="3MS-WS-v66"/>
                 <outlet property="firstAlarmBack" destination="XUu-mP-FXs" id="3Uf-7j-b7C"/>
