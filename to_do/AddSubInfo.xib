@@ -110,20 +110,26 @@
                         <action selector="colorClicked:" destination="-1" eventType="touchUpInside" id="pAd-x9-y7u"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwP-pM-H0f">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwP-pM-H0f">
                     <rect key="frame" x="133" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="55" id="POG-Es-BdS"/>
                         <constraint firstAttribute="height" constant="71" id="qG3-9k-XyO"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="DqQ-bI-bo4"/>
+                    </connections>
                 </button>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVl-yl-2XO">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVl-yl-2XO">
                     <rect key="frame" x="139" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="RcS-QL-ME9"/>
                         <constraint firstAttribute="width" constant="44" id="mEI-XD-QF8"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="Z6a-Dj-73K"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="2WM-c5-oj8">
                     <rect key="frame" x="133" y="122" width="55" height="21"/>
@@ -135,20 +141,26 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-ZV-VnF">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-ZV-VnF">
                     <rect key="frame" x="70" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="71" id="7hB-Dg-Hz9"/>
                         <constraint firstAttribute="width" constant="55" id="h0A-8e-Dtj"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="L5q-HL-nn9"/>
+                    </connections>
                 </button>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dt8-CQ-deH">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dt8-CQ-deH">
                     <rect key="frame" x="76" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Is7-iO-K8L"/>
                         <constraint firstAttribute="width" constant="44" id="q6p-7d-yOO"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="VhK-Sa-9MA"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="wQo-vG-DMb">
                     <rect key="frame" x="70" y="122" width="55" height="21"/>
@@ -160,20 +172,26 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUu-mP-FXs">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUu-mP-FXs">
                     <rect key="frame" x="8" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="71" id="5g5-W5-Nhw"/>
                         <constraint firstAttribute="width" constant="55" id="MjR-cx-bVS"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="Dk5-62-eXS"/>
+                    </connections>
                 </button>
-                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11u-vN-3qe">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11u-vN-3qe">
                     <rect key="frame" x="14" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="54g-ZG-1aT"/>
                         <constraint firstAttribute="height" constant="44" id="IUc-zp-bJl"/>
                     </constraints>
+                    <connections>
+                        <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="eHk-6R-fkj"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="uqa-Kl-LwM">
                     <rect key="frame" x="8" y="122" width="55" height="21"/>

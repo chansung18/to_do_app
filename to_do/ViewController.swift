@@ -290,19 +290,24 @@ class ViewController: UIViewController,
     }
     
     //AddSubInfoDelegate
-    func addAlarmClicked() {
-        if currentDoItem?.alarms?.count <= 3 {
-            if keyboardSubView?.alarmAddButtonToggle == false {
-                subviewitem.titleField.endEditing(true)
-                self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
-                let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
-                UIView.animateWithDuration(0.35) {
-                    self.keyboardAlarmSubView?.frame.origin.y = y
+    func addAlarmClicked(addAction: Bool) {
+        if addAction {
+            if currentDoItem?.alarms?.count <= 3 {
+                if keyboardSubView?.alarmAddButtonToggle == false {
+                    subviewitem.titleField.endEditing(true)
+                    self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+                    let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                    UIView.animateWithDuration(0.35) {
+                        self.keyboardAlarmSubView?.frame.origin.y = y
+                    }
+                }
+                else {
+                    subviewitem.titleField.becomeFirstResponder()
                 }
             }
-            else {
-                subviewitem.titleField.becomeFirstResponder()
-            }
+        }
+        else {
+            
         }
     }
 
@@ -323,6 +328,20 @@ class ViewController: UIViewController,
 //        copy.addObject(<#T##object: AnyObject##AnyObject#>)
 //        currentDoItem!.alarms = copy
 //        currentDoItem?.alarms.se
+    }
+    
+    func alarmSelectionClicked(alarmIndex: Int, appear: Bool) {
+        if appear {
+            subviewitem.titleField.endEditing(true)
+            self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+            let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+            UIView.animateWithDuration(0.35) {
+                self.keyboardAlarmSubView?.frame.origin.y = y
+            }
+        }
+        else {
+            subviewitem.titleField.becomeFirstResponder()
+        }
     }
 
     func colorSelectionClicked(color: UIColor) {
