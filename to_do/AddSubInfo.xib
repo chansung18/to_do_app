@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2338c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,16 +12,19 @@
                 <outlet property="fifthColor" destination="N3C-cq-I1e" id="HiV-pO-BEf"/>
                 <outlet property="fifthColorSelection" destination="a5d-8v-zOo" id="3MS-WS-v66"/>
                 <outlet property="firstAlarmBack" destination="XUu-mP-FXs" id="3Uf-7j-b7C"/>
+                <outlet property="firstAlarmDday" destination="uqa-Kl-LwM" id="U63-17-v3Q"/>
                 <outlet property="firstAlarmLabel" destination="11u-vN-3qe" id="BJ8-DC-erA"/>
                 <outlet property="firstColor" destination="2HD-NP-7Rd" id="9z6-Fv-ejx"/>
                 <outlet property="firstColorSelection" destination="Nbx-Qt-qsa" id="6tp-Vw-J86"/>
                 <outlet property="fourthColor" destination="0Y6-KW-chn" id="bk1-5o-kD3"/>
                 <outlet property="fourthColorSelection" destination="czH-Fk-Ydc" id="qh2-Fd-Ln9"/>
                 <outlet property="secondAlarmBack" destination="6bJ-ZV-VnF" id="w0L-yS-VFh"/>
+                <outlet property="secondAlarmDday" destination="wQo-vG-DMb" id="B33-DJ-2kj"/>
                 <outlet property="secondAlarmLabel" destination="dt8-CQ-deH" id="0Ho-dg-8Fo"/>
                 <outlet property="secondColor" destination="AMi-pv-9k2" id="woz-w8-YL8"/>
                 <outlet property="secondColorSelection" destination="6Gi-AI-lDa" id="Kro-Ud-mRG"/>
                 <outlet property="thirdAlarmBack" destination="dwP-pM-H0f" id="0L1-Fc-MPy"/>
+                <outlet property="thirdAlarmDday" destination="2WM-c5-oj8" id="GJ9-t1-lc9"/>
                 <outlet property="thirdAlarmLabel" destination="gVl-yl-2XO" id="AI2-mv-p1d"/>
                 <outlet property="thirdColor" destination="iG3-S5-pUM" id="0WC-8h-4LC"/>
                 <outlet property="thirdColorSelection" destination="xPc-YJ-N7K" id="57O-kC-JHz"/>
@@ -76,7 +79,7 @@
                         <action selector="colorClicked:" destination="-1" eventType="touchUpInside" id="fOJ-Q6-Aew"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxo-Rp-aET">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxo-Rp-aET">
                     <rect key="frame" x="259" y="76" width="55" height="55"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="3PB-Vc-M4y"/>
@@ -84,8 +87,8 @@
                         <constraint firstAttribute="width" constant="55" id="FRp-fk-C4K"/>
                         <constraint firstAttribute="width" constant="55" id="WDC-1n-j14"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="45"/>
-                    <state key="normal" title="+"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <state key="normal" image="alarm_add"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="3PB-Vc-M4y"/>
@@ -107,14 +110,14 @@
                         <action selector="colorClicked:" destination="-1" eventType="touchUpInside" id="pAd-x9-y7u"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwP-pM-H0f">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwP-pM-H0f">
                     <rect key="frame" x="133" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="55" id="POG-Es-BdS"/>
                         <constraint firstAttribute="height" constant="71" id="qG3-9k-XyO"/>
                     </constraints>
                 </button>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVl-yl-2XO">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVl-yl-2XO">
                     <rect key="frame" x="139" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -122,7 +125,7 @@
                         <constraint firstAttribute="width" constant="44" id="mEI-XD-QF8"/>
                     </constraints>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-78" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="2WM-c5-oj8">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="2WM-c5-oj8">
                     <rect key="frame" x="133" y="122" width="55" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="RYV-T2-EYf"/>
@@ -132,14 +135,14 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-ZV-VnF">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-ZV-VnF">
                     <rect key="frame" x="70" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="71" id="7hB-Dg-Hz9"/>
                         <constraint firstAttribute="width" constant="55" id="h0A-8e-Dtj"/>
                     </constraints>
                 </button>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dt8-CQ-deH">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dt8-CQ-deH">
                     <rect key="frame" x="76" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -147,7 +150,7 @@
                         <constraint firstAttribute="width" constant="44" id="q6p-7d-yOO"/>
                     </constraints>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-78" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="wQo-vG-DMb">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="wQo-vG-DMb">
                     <rect key="frame" x="70" y="122" width="55" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="JS2-uQ-ry8"/>
@@ -157,14 +160,14 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUu-mP-FXs">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUu-mP-FXs">
                     <rect key="frame" x="8" y="72" width="55" height="71"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="71" id="5g5-W5-Nhw"/>
                         <constraint firstAttribute="width" constant="55" id="MjR-cx-bVS"/>
                     </constraints>
                 </button>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11u-vN-3qe">
+                <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11u-vN-3qe">
                     <rect key="frame" x="14" y="78" width="44" height="44"/>
                     <color key="backgroundColor" red="0.81568627449999997" green="0.87450980389999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -172,7 +175,7 @@
                         <constraint firstAttribute="height" constant="44" id="IUc-zp-bJl"/>
                     </constraints>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-78" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="uqa-Kl-LwM">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D-0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="uqa-Kl-LwM">
                     <rect key="frame" x="8" y="122" width="55" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="XmX-a8-6Nf"/>
@@ -217,7 +220,7 @@
                         <constraint firstAttribute="height" constant="55" id="wTu-es-P0f"/>
                     </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTF-2c-IeI">
+                <button opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTF-2c-IeI">
                     <rect key="frame" x="196" y="76" width="55" height="55"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="55" id="Hy8-DU-Lwb"/>
@@ -225,14 +228,17 @@
                         <constraint firstAttribute="height" constant="55" id="wnu-8W-7kk"/>
                         <constraint firstAttribute="height" constant="55" id="xb1-gt-ZlL"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="45"/>
-                    <state key="normal" title="+"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <state key="normal" title="d" image="check"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Hy8-DU-Lwb"/>
                             <exclude reference="xb1-gt-ZlL"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="confirmAlarmClicked:" destination="-1" eventType="touchUpInside" id="qj8-5K-9hx"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.92492985725402832" green="0.93722826242446899" blue="0.93724226951599121" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -300,7 +306,11 @@
                     <exclude reference="xEH-Wi-x6u"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="460" y="236"/>
+            <point key="canvasLocation" x="501" y="103"/>
         </view>
     </objects>
+    <resources>
+        <image name="alarm_add" width="64" height="64"/>
+        <image name="check" width="64" height="64"/>
+    </resources>
 </document>

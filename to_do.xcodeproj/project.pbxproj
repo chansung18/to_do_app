@@ -10,10 +10,10 @@
 		1E9DF6BC1D87757F00C0F3B4 /* ToDoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */; };
 		1E9DF6C71D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */; };
 		1E9DF6C81D8F860400C0F3B4 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */; };
-		1E9DF6CB1D8F890E00C0F3B4 /* Color+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */; };
 		1E9DF6CC1D8F890E00C0F3B4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */; };
 		1EBDE36F1DA3BDB100D06160 /* AlarmSubInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDE36E1DA3BDB100D06160 /* AlarmSubInfo.xib */; };
 		1EBDE3711DA3BF1F00D06160 /* AlarmSubInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDE3701DA3BF1F00D06160 /* AlarmSubInfo.swift */; };
+		1EFD5DA71DAC61BB0049EDDE /* Color+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFD5DA61DAC61BB0049EDDE /* Color+CoreDataProperties.swift */; };
 		1EFF6E431D9260DC00402ECF /* DataDisplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFF6E421D9260DC00402ECF /* DataDisplayHandler.swift */; };
 		3370A51A1D86893700405550 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3370A5191D86893700405550 /* AppDelegate.swift */; };
 		3370A51C1D86893700405550 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3370A51B1D86893700405550 /* ViewController.swift */; };
@@ -48,10 +48,10 @@
 		1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListTableViewCell.swift; sourceTree = "<group>"; };
 		1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alarm+CoreDataProperties.swift"; path = "../Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alarm.swift; path = ../Alarm.swift; sourceTree = "<group>"; };
-		1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Color+CoreDataProperties.swift"; path = "../Color+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = ../Color.swift; sourceTree = "<group>"; };
 		1EBDE36E1DA3BDB100D06160 /* AlarmSubInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmSubInfo.xib; sourceTree = "<group>"; };
 		1EBDE3701DA3BF1F00D06160 /* AlarmSubInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSubInfo.swift; sourceTree = "<group>"; };
+		1EFD5DA61DAC61BB0049EDDE /* Color+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Color+CoreDataProperties.swift"; path = "../Color+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1EFF6E421D9260DC00402ECF /* DataDisplayHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDisplayHandler.swift; sourceTree = "<group>"; };
 		3370A5161D86893700405550 /* to_do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = to_do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3370A5191D86893700405550 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 				3370A5201D86893700405550 /* to_do.xcdatamodeld */,
 				80279E9D1D8782E500ABE0C0 /* Dolist+CoreDataProperties.swift */,
 				80279E9E1D8782E500ABE0C0 /* Dolist.swift */,
-				1E9DF6C91D8F890E00C0F3B4 /* Color+CoreDataProperties.swift */,
+				1EFD5DA61DAC61BB0049EDDE /* Color+CoreDataProperties.swift */,
 				1E9DF6CA1D8F890E00C0F3B4 /* Color.swift */,
 				1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */,
 				1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */,
@@ -280,10 +280,10 @@
 				3370A51C1D86893700405550 /* ViewController.swift in Sources */,
 				1E9DF6CC1D8F890E00C0F3B4 /* Color.swift in Sources */,
 				8056529C1D893DB4008C12F3 /* CoreDataController.swift in Sources */,
-				1E9DF6CB1D8F890E00C0F3B4 /* Color+CoreDataProperties.swift in Sources */,
 				80279EA01D8782E500ABE0C0 /* Dolist.swift in Sources */,
 				80056B741D9411CC00B025BF /* RefreshView.swift in Sources */,
 				1E9DF6C71D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift in Sources */,
+				1EFD5DA71DAC61BB0049EDDE /* Color+CoreDataProperties.swift in Sources */,
 				1EBDE3711DA3BF1F00D06160 /* AlarmSubInfo.swift in Sources */,
 				3370A51A1D86893700405550 /* AppDelegate.swift in Sources */,
 				800CC4B01D97F1360016EDC4 /* AddSubInfo.swift in Sources */,

@@ -10,6 +10,8 @@ import UIKit
 
 protocol AddSubInfoDelegate {
     func addAlarmClicked()
+    func confirmAlarmClicked(alarmIndex: Int)
+    func colorSelectionClicked(color: UIColor)
 }
 
 class AddSubInfo: UIView {
@@ -32,26 +34,72 @@ class AddSubInfo: UIView {
     @IBOutlet weak var secondAlarmLabel: UIButton!
     @IBOutlet weak var thirdAlarmLabel: UIButton!
     
+    @IBOutlet weak var firstAlarmDday: UILabel!
+    @IBOutlet weak var secondAlarmDday: UILabel!
+    @IBOutlet weak var thirdAlarmDday: UILabel!
+    
     @IBOutlet weak var firstColorSelection: UIButton!
     @IBOutlet weak var secondColorSelection: UIButton!
     @IBOutlet weak var thirdColorSelection: UIButton!
     @IBOutlet weak var fourthColorSelection: UIButton!
     @IBOutlet weak var fifthColorSelection: UIButton!
     
-    var selectedColorIndex = 0
+    var selectedColorIndex = 0 {
+        willSet(newColorIndex) {
+            if newColorIndex != selectedColorIndex {
+                animateColorSelection(false)
+            }
+        }
+        
+        didSet(newColorIndex) {
+            if newColorIndex != selectedColorIndex {
+                animateColorSelection(true)
+            }
+        }
+    }
+    
     var delegate: AddSubInfoDelegate?
     
-    var alarmAddButtonToggle = false
+    var alarmAddButtonToggle = false {
+        didSet {
+            //add
+            if alarmAddButtonToggle {
+                alarmAddButton.setImage(UIImage(named: "delete"), forState: .Normal)
+                alarmAddButton.setImage(UIImage(named: "delete"), forState: .Selected)
+                alarmComfirmButton.alpha = 1
+                alarmComfirmButton.userInteractionEnabled = true
+            }
+            //delete
+            else {
+                alarmAddButton.setImage(UIImage(named: "alarm_add"), forState: .Normal)
+                alarmAddButton.setImage(UIImage(named: "alarm_add"), forState: .Selected)
+                alarmComfirmButton.alpha = 0.6
+                alarmComfirmButton.userInteractionEnabled = false
+            }
+        }
+    }
     
-//    var selectedColor: colorSelection = .first
+    var currentSelectedAlarmIndex = 0 {
+        willSet(newAlarmIndex) {
+            if newAlarmIndex != currentSelectedAlarmIndex {
+                animateAlarmSelection(false)
+            }
+        }
+        
+        didSet(newAlarmIndex) {
+            if newAlarmIndex != currentSelectedAlarmIndex {
+                animateAlarmSelection(true)
+            }
+        }
+    }
     
-//    enum colorSelection {
-//        case first
-//        case second
-//        case third
-//        case fourth
-//        case fifth
-//    }
+    var alarmCount = 0 {
+        didSet {
+            if alarmCount < 4 {
+                setVisibleAlarmItems()
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,10 +156,6 @@ class AddSubInfo: UIView {
         fifthColor.layer.cornerRadius = fifthColor.frame.width / 2.0
         fifthColor.layer.masksToBounds = true
         
-        alarmAddButton.layer.cornerRadius = alarmAddButton.frame.width / 2.0
-        alarmAddButton.layer.masksToBounds = true
-        alarmAddButton.layer.borderWidth = 2.0
-        alarmAddButton.layer.borderColor = UIColor.grayColor().CGColor
         
         firstAlarmBack.layer.cornerRadius = 13
         firstAlarmBack.layer.borderWidth = 2.0
@@ -142,6 +186,52 @@ class AddSubInfo: UIView {
         addSubview(view)
     }
     
+    func setVisibleAlarmItems() {
+        if alarmCount >= 0 {
+            firstAlarmBack.alpha = 0.2
+            firstAlarmLabel.alpha = 0.2
+            firstAlarmDday.alpha = 0.2
+            
+            secondAlarmBack.alpha = 0.2
+            secondAlarmLabel.alpha = 0.2
+            secondAlarmDday.alpha = 0.2
+            
+            thirdAlarmBack.alpha = 0.2
+            thirdAlarmLabel.alpha = 0.2
+            thirdAlarmDday.alpha = 0.2
+        }
+        
+        if alarmCount >= 1 {
+            firstAlarmBack.alpha = 1
+            firstAlarmLabel.alpha = 1
+            firstAlarmDday.alpha = 1
+            
+            secondAlarmBack.alpha = 0.2
+            secondAlarmLabel.alpha = 0.2
+            secondAlarmDday.alpha = 0.2
+            
+            thirdAlarmBack.alpha = 0.2
+            thirdAlarmLabel.alpha = 0.2
+            thirdAlarmDday.alpha = 0.2
+        }
+        
+        if alarmCount >= 2 {
+            secondAlarmBack.alpha = 1
+            secondAlarmLabel.alpha = 1
+            secondAlarmDday.alpha = 1
+            
+            thirdAlarmBack.alpha = 0.2
+            thirdAlarmLabel.alpha = 0.2
+            thirdAlarmDday.alpha = 0.2
+        }
+        
+        if alarmCount >= 3 {
+            thirdAlarmBack.alpha = 1
+            thirdAlarmLabel.alpha = 1
+            thirdAlarmDday.alpha = 1
+        }
+    }
+    
     func animateColorSelection(appear: Bool) {
         UIView.animateWithDuration(0.7) {
             switch self.selectedColorIndex {
@@ -161,41 +251,49 @@ class AddSubInfo: UIView {
         }
     }
     
-    func selectColor(selection: Int) {
-        if selection != selectedColorIndex {
-            animateColorSelection(false)
-            selectedColorIndex = selection
-            animateColorSelection(true)
+    func animateAlarmSelection(appear: Bool) {
+        UIView.animateWithDuration(0.7) { 
+            switch self.currentSelectedAlarmIndex {
+            case 1:
+                self.firstAlarmBack.layer.borderColor = appear ? UIColor.cyanColor().CGColor : UIColor.grayColor().CGColor
+            case 2:
+                self.secondAlarmBack.layer.borderColor = appear ? UIColor.cyanColor().CGColor : UIColor.grayColor().CGColor
+            case 3:
+                self.thirdAlarmBack.layer.borderColor = appear ? UIColor.cyanColor().CGColor : UIColor.grayColor().CGColor
+            default:
+                print("")
+            }
         }
     }
-    func setAlarmComfirmbutton(tempString : String) {
-        self.alarmComfirmButton.setTitle(tempString, forState: UIControlState.Normal)
-    }
-    
     
     @IBAction func colorClicked(sender: UIButton) {
-        print("tag = \(sender.tag)")
-        
-        selectColor(sender.tag)
+        selectedColorIndex = sender.tag
+        delegate?.colorSelectionClicked(sender.backgroundColor!)
     }
     
     @IBAction func alarmAddClicked(sender: UIButton) {
-        delegate?.addAlarmClicked()
+        print(".....count ? \(alarmCount)")
         
-        alarmAddButtonToggle = !alarmAddButtonToggle
-        
-        print("\(alarmAddButtonToggle)")
-        
-        if alarmAddButtonToggle {
-            alarmAddButton.setTitle("×", forState: .Selected)
-            alarmAddButton.setTitle("×", forState: .Normal)
+        if alarmCount < 3 {
+            delegate?.addAlarmClicked()
+            alarmAddButtonToggle = !alarmAddButtonToggle
         }
-        else {
-            alarmAddButton.setTitle("+", forState: .Normal)
-            alarmAddButton.setTitle("+", forState: .Selected)
-        }
-        
-        print("\(alarmAddButton.titleLabel?.text)")
     }
     
+    @IBAction func confirmAlarmClicked(sender: UIButton) {
+        delegate?.confirmAlarmClicked(currentSelectedAlarmIndex)
+        
+        alarmAddClicked(sender)
+        alarmCount = alarmCount+1
+        
+        alarmComfirmButton.alpha = 0.6
+        alarmComfirmButton.userInteractionEnabled = false
+        
+        if alarmCount >= 3 {
+            alarmAddButtonToggle = false
+            alarmAddButton.alpha = 0.6
+            alarmAddButton.userInteractionEnabled = false
+            thirdAlarmBack.layer.borderColor = UIColor.grayColor().CGColor
+        }
+    }
 }

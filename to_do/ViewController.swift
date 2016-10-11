@@ -20,6 +20,8 @@ class ViewController: UIViewController,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
+    var currentDoItem: Dolist?
+    
     var dolist = [Dolist]()
     var alarmdate : NSDate?
     
@@ -86,7 +88,10 @@ class ViewController: UIViewController,
                                                    width: dummyView.frame.width,
                                                    height: 150))
             keyboardSubView?.delegate = self
-            keyboardSubView?.selectColor(4)
+            keyboardSubView?.selectedColorIndex = 4
+            if let alarms = currentDoItem?.alarms {
+                keyboardSubView?.alarmCount = alarms.count
+            }
             dummyView.addSubview(keyboardSubView!)
         }
         else {
@@ -118,15 +123,16 @@ class ViewController: UIViewController,
         }
     }
     
-    func keyboardSubViewTapped(gesture: UITapGestureRecognizer) {
-        // do nothing
-    }
+    func keyboardSubViewTapped(gesture: UITapGestureRecognizer) { /* do nothing */ }
     
     func didRefresh() {
         showRefreshControl()
-        print("start refresh action")
-        
         subviewitem.titleField.becomeFirstResponder()
+        
+        let entityDescription = NSEntityDescription.entityForName("Dolist",
+                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        currentDoItem = Dolist(entity: entityDescription!,
+                               insertIntoManagedObjectContext: nil)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -140,9 +146,8 @@ class ViewController: UIViewController,
             refreshController.alpha = 1
             isRefreshControlFullyVisible = true
         }
-        
-        print("alpha = \(refreshController.alpha)")
     }
+    
     /*
      name : tableViewTapped
      parameter : UITapGestureRecognizer(tap)
@@ -152,14 +157,15 @@ class ViewController: UIViewController,
         if isInTheMiddleOfEnteringItem {
             if gesture.locationInView(self.dummyView).y < self.keyboardSubView?.frame.origin.y {
                 dismissRefreshControl()
+                currentDoItem = nil
             }
         }
     }
+    
     /*
      name : dismissRefreshControl
      function : adjust visivble state of dummyview
      */
-
     func dismissRefreshControl() {
         UIView.animateWithDuration(0.5) {
             self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
@@ -186,8 +192,6 @@ class ViewController: UIViewController,
     }
     
     func showRefreshControl() {
-//        self.refreshController.alpha = 1
-        
         UIView.animateWithDuration(0.5) {
             self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
         }
@@ -196,8 +200,6 @@ class ViewController: UIViewController,
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("dolist cont :" + String(dolist.count))
-
         return dolist.count;
     }
     
@@ -289,20 +291,51 @@ class ViewController: UIViewController,
     
     //AddSubInfoDelegate
     func addAlarmClicked() {
-        subviewitem.titleField.endEditing(true)
-        self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
-        
-        
-        let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
-        UIView.animateWithDuration(0.35) {
-            self.keyboardAlarmSubView?.frame.origin.y = y
+        if currentDoItem?.alarms?.count <= 3 {
+            if keyboardSubView?.alarmAddButtonToggle == false {
+                subviewitem.titleField.endEditing(true)
+                self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+                let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                UIView.animateWithDuration(0.35) {
+                    self.keyboardAlarmSubView?.frame.origin.y = y
+                }
+            }
+            else {
+                subviewitem.titleField.becomeFirstResponder()
+            }
         }
-        print("add alrm")
+    }
+
+    func confirmAlarmClicked(alarmIndex: Int) {
+        if alarmIndex >= 3 {
+            subviewitem.titleField.becomeFirstResponder()
+        }
+        
+        let day = keyboardAlarmSubView!.day * 12 * 60 * 60
+        let hour = keyboardAlarmSubView!.hour * 60 * 60
+        let minute = keyboardAlarmSubView!.minute * 60
+        let interval = day + hour + minute
+        
+        print("alarm Index = \(alarmIndex)")
+//        let newAlarm = currentDoItem?.startingDate?.dateByAddingTimeInterval(Double(interval))
+//        
+//        let copy = NSMutableSet.init(set: currentDoItem!.alarms!)
+//        copy.addObject(<#T##object: AnyObject##AnyObject#>)
+//        currentDoItem!.alarms = copy
+//        currentDoItem?.alarms.se
+    }
+
+    func colorSelectionClicked(color: UIColor) {
+        let coreImageColor = CoreImage.CIColor(color: color)
+        currentDoItem?.color?.r = coreImageColor.red
+        currentDoItem?.color?.g = coreImageColor.green
+        currentDoItem?.color?.b = coreImageColor.blue
     }
     
     //AddTodoItemDelegate
     func toDoItemAddClicked() {
         dismissRefreshControl()
+        
         let textFieldText = subviewitem.getTitleText()
         
         print("toDoItemAddClicked")
