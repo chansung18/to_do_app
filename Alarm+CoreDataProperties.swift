@@ -14,7 +14,7 @@ import CoreData
 
 extension Alarm {
 
-    @NSManaged var alarm: NSDate?
+    @NSManaged var alarm: Date?
     @NSManaged var dolist: Dolist?
 
 }

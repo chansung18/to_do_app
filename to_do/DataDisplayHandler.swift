@@ -11,13 +11,13 @@ import Foundation
 class DataDisplayHandler {
     static let sharedInstance = DataDisplayHandler()
     
-    private init() {}
+    fileprivate init() {}
     
-    func searchByTitle(doList:[Dolist], title: String) -> [Dolist] {
+    func searchByTitle(_ doList:[Dolist], title: String) -> [Dolist] {
         var filteredList = [Dolist]()
         
         for item in doList {
-            if item.title!.containsString(title) {
+            if item.title!.contains(title) {
                 filteredList.append(item)
             }
         }

@@ -15,14 +15,14 @@ class CoreDataController {
     //singleton constatant instance
     static let sharedInstace = CoreDataController()
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
     
     //private init for singleton class
-    private init() {}
+    fileprivate init() {}
     
-    func saveToCoredata(title: String, deadline: NSDate, color: Color) -> Dolist {
-        let entityDescription = NSEntityDescription.entityForName("Dolist", inManagedObjectContext: managedObjectContext)
-        let itemObject = Dolist(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+    func saveToCoredata(_ title: String, deadline: Date, color: Color) -> Dolist {
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
+        let itemObject = Dolist(entity: entityDescription!, insertInto: managedObjectContext)
         
         itemObject.title = title
         itemObject.deadline = deadline
@@ -39,16 +39,22 @@ class CoreDataController {
     
     func loadFromCoredata() -> [Dolist]{
         var dolist = [Dolist]()
-        let request = NSFetchRequest(entityName: "Dolist")
-        
+      //  let request = NSFetchRequest(entityName: "Dolist")
+        var request : NSFetchRequest<NSFetchRequestResult>?
+        if #available(iOS 10.0, *) {
+             request  = Dolist.fetchRequest()
+        } else {
+            // Fallback on earlier versions
+             request = nil;
+        }
         let error :NSError? = nil
         do {
-            try dolist = managedObjectContext.executeFetchRequest(request) as! [Dolist]
+            try dolist = managedObjectContext.fetch(request!) as! [Dolist]
         }
         catch {error}
         
         if error != nil {
-            print("Error : " + String(error))
+            print("Error : " + String(describing: error))
         }
         else {
             for doItem in dolist {
@@ -64,8 +70,8 @@ class CoreDataController {
         return dolist
     }
     
-    func removeFromCoreData(doItem: Dolist) {
-        managedObjectContext.deleteObject(doItem)
+    func removeFromCoreData(_ doItem: Dolist) {
+        managedObjectContext.delete(doItem)
         saveContext()
     }
     
@@ -79,7 +85,7 @@ class CoreDataController {
         }
         
         if error != nil {
-            print("Error : " + String(error))
+            print("Error : " + String(describing: error))
         }
         else {
             print("saved")

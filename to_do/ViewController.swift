@@ -8,6 +8,26 @@
 
 import UIKit
 import CoreData
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class ViewController: UIViewController,
                       UITableViewDataSource,
@@ -23,7 +43,7 @@ class ViewController: UIViewController,
     var currentDoItem: Dolist?
     
     var dolist = [Dolist]()
-    var alarmdate : NSDate?
+    var alarmdate : Date?
     
     var refreshController = UIRefreshControl()
     let subviewitem : RefreshView = RefreshView()
@@ -34,7 +54,7 @@ class ViewController: UIViewController,
     var keyboardSubView: AddSubInfo?
     var keyboardAlarmSubView: AlarmSubInfo?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 65, 0)
@@ -53,7 +73,7 @@ class ViewController: UIViewController,
         refreshController.alpha = 0.0
         
         refreshController.frame.size.width = view.frame.size.width
-        refreshController.tintColor = UIColor.clearColor()
+        refreshController.tintColor = UIColor.clear
         subviewitem.delegate = self
         subviewitem.frame = refreshController.bounds
         subviewitem.frame.size.width = subviewitem.frame.size.width - 25
@@ -65,21 +85,21 @@ class ViewController: UIViewController,
         print("refreshControl.bounds = \(refreshController.bounds)")
         
         let margins = refreshController.layoutMarginsGuide
-        subviewitem.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor).active = true
-        subviewitem.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
-        subviewitem.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 1.0)
+        subviewitem.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        subviewitem.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        subviewitem.topAnchor.constraint(equalTo: margins.topAnchor, constant: 1.0)
         
-        refreshController.addTarget(self, action: #selector(didRefresh), forControlEvents: .ValueChanged)
+        refreshController.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         tableView.addSubview(refreshController)
     }
     
-    func keyboardWillShow(nofification : NSNotification){
-        let userInfo:NSDictionary = nofification.userInfo!
-        let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.CGRectValue()
+    func keyboardWillShow(_ nofification : Notification){
+        let userInfo:NSDictionary = (nofification as NSNotification).userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
         
         if keyboardSubView == nil {
@@ -95,9 +115,9 @@ class ViewController: UIViewController,
             dummyView.addSubview(keyboardSubView!)
         }
         else {
-            UIView.animateWithDuration(0.2) {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.keyboardSubView?.alpha = 1
-            }
+            }) 
         }
             
         let x = CGFloat(0)
@@ -115,27 +135,27 @@ class ViewController: UIViewController,
             keyboardSubView?.addGestureRecognizer(dummyTapGesture)
         }
         else {
-            UIView.animateWithDuration(0.2) {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.keyboardAlarmSubView?.frame.origin.y = y + height
-            }
+            }) 
             
             keyboardAlarmSubView?.day = 77 
         }
     }
     
-    func keyboardSubViewTapped(gesture: UITapGestureRecognizer) { /* do nothing */ }
+    func keyboardSubViewTapped(_ gesture: UITapGestureRecognizer) { /* do nothing */ }
     
     func didRefresh() {
         showRefreshControl()
         subviewitem.titleField.becomeFirstResponder()
         
-        let entityDescription = NSEntityDescription.entityForName("Dolist",
-                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Dolist",
+                                                                  in: CoreDataController.sharedInstace.managedObjectContext)
         currentDoItem = Dolist(entity: entityDescription!,
-                               insertIntoManagedObjectContext: nil)
+                               insertInto: nil)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pullDistance = max(0.0, -refreshController.frame.origin.y);
 
         if pullDistance > 0 && isRefreshControlFullyVisible == false {
@@ -153,9 +173,9 @@ class ViewController: UIViewController,
      parameter : UITapGestureRecognizer(tap)
      function : to cancle refreshview
     */
-    func tableViewTapped(gesture: UITapGestureRecognizer) {
+    func tableViewTapped(_ gesture: UITapGestureRecognizer) {
         if isInTheMiddleOfEnteringItem {
-            if gesture.locationInView(self.dummyView).y < self.keyboardSubView?.frame.origin.y {
+            if gesture.location(in: self.dummyView).y < self.keyboardSubView?.frame.origin.y {
                 dismissRefreshControl()
                 currentDoItem = nil
             }
@@ -167,15 +187,15 @@ class ViewController: UIViewController,
      function : adjust visivble state of dummyview
      */
     func dismissRefreshControl() {
-        UIView.animateWithDuration(0.5) {
-            self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
-        }
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.exchangeSubview(at: 0, withSubviewAt: 1)
+        }) 
         
-        UIView.animateWithDuration(0.5, animations: { 
+        UIView.animate(withDuration: 0.5, animations: { 
             self.refreshController.alpha = 0.0
             self.keyboardSubView?.alpha = 0
             self.keyboardAlarmSubView?.frame.origin.y = self.keyboardAlarmSubView!.frame.origin.y + self.keyboardAlarmSubView!.frame.height
-        }) { (completed) in
+        }, completion: { (completed) in
             if completed {
                 self.keyboardSubView?.removeFromSuperview()
                 self.keyboardAlarmSubView?.removeFromSuperview()
@@ -183,7 +203,7 @@ class ViewController: UIViewController,
                 self.keyboardSubView = nil
                 self.keyboardAlarmSubView = nil
             }
-        }
+        }) 
     
         subviewitem.titleField.endEditing(true)
         refreshController.endRefreshing()
@@ -192,19 +212,19 @@ class ViewController: UIViewController,
     }
     
     func showRefreshControl() {
-        UIView.animateWithDuration(0.5) {
-            self.view.exchangeSubviewAtIndex(0, withSubviewAtIndex: 1)
-        }
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.exchangeSubview(at: 0, withSubviewAt: 1)
+        }) 
         
         isInTheMiddleOfEnteringItem = true
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dolist.count;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("todoListCell") as? ToDoListTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as? ToDoListTableViewCell
         
         if let width = cell?.colorButton.bounds.width {
             print("width = \(width)")
@@ -212,13 +232,13 @@ class ViewController: UIViewController,
             cell?.colorButton.layer.masksToBounds = true
         }
         
-        cell?.backgroundColor = UIColor.clearColor()
-        let doItem = dolist[indexPath.row]
+        cell?.backgroundColor = UIColor.clear
+        let doItem = dolist[(indexPath as NSIndexPath).row]
         cell?.originalTitle = doItem.title
-        cell?.index = indexPath.row
+        cell?.index = (indexPath as NSIndexPath).row
         cell?.delegate = self
         
-        if doItem.lineflag == NSNumber(bool: true) {
+        if doItem.lineflag == NSNumber(value: true as Bool) {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: (cell?.originalTitle)!)
             attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
             cell?.titleLabel.attributedText = attributeString
@@ -241,65 +261,65 @@ class ViewController: UIViewController,
         return cell!
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        (tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = true
+        (tableView.cellForRow(at: indexPath) as! ToDoListTableViewCell).isEditingMode = true
         
-        UIButton.appearance().setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        UIButton.appearance().setTitleColor(UIColor.black, for: UIControlState())
         
-        let editAction = UITableViewRowAction(style: .Normal, title: "🖊", handler:{ action, indexpath in
+        let editAction = UITableViewRowAction(style: .normal, title: "🖊", handler:{ action, indexpath in
             //edit Action codes
         });
         
-        editAction.backgroundColor = UIColor.whiteColor()
+        editAction.backgroundColor = UIColor.white
         
-        let deleteAction = UITableViewRowAction(style: .Normal, title: "╳", handler:{ action, indexpath in
+        let deleteAction = UITableViewRowAction(style: .normal, title: "╳", handler:{ action, indexpath in
             //delete action codes
             tableView.beginUpdates()
-            CoreDataController.sharedInstace.removeFromCoreData(self.dolist[indexPath.row])
-            self.dolist.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            CoreDataController.sharedInstace.removeFromCoreData(self.dolist[(indexPath as NSIndexPath).row])
+            self.dolist.remove(at: (indexPath as NSIndexPath).row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         });
-        deleteAction.backgroundColor = UIColor.whiteColor()
+        deleteAction.backgroundColor = UIColor.white
         
         return [deleteAction, editAction]
     }
     
     
-    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
         //(tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = false
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print("cell selection")
     }
     
-    func cellLongPressed(gesture: UILongPressGestureRecognizer) {
+    func cellLongPressed(_ gesture: UILongPressGestureRecognizer) {
         print("long pressed...")
     }
     
     // ToDoListTableViewCellDelegate
-    func cellValueChanged(cell: ToDoListTableViewCell) {
+    func cellValueChanged(_ cell: ToDoListTableViewCell) {
         let index = cell.index
 
         print("cellValueChanged is called on Cell Index \(index)")
         
         dolist[index].title = cell.originalTitle
-        dolist[index].lineflag = cell.isCrossedOut
+        dolist[index].lineflag = cell.isCrossedOut as NSNumber?
     }
     
     //AddSubInfoDelegate
-    func addAlarmClicked(addAction: Bool) {
+    func addAlarmClicked(_ addAction: Bool) {
         if addAction {
             if currentDoItem?.alarms?.count <= 3 {
                 if keyboardSubView?.alarmAddButtonToggle == false {
                     subviewitem.titleField.endEditing(true)
-                    self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+                    self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
                     let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
-                    UIView.animateWithDuration(0.35) {
+                    UIView.animate(withDuration: 0.35, animations: {
                         self.keyboardAlarmSubView?.frame.origin.y = y
-                    }
+                    }) 
                 }
                 else {
                     subviewitem.titleField.becomeFirstResponder()
@@ -311,7 +331,7 @@ class ViewController: UIViewController,
         }
     }
 
-    func confirmAlarmClicked(alarmIndex: Int) {
+    func confirmAlarmClicked(_ alarmIndex: Int) {
         if alarmIndex >= 3 {
             subviewitem.titleField.becomeFirstResponder()
         }
@@ -330,25 +350,25 @@ class ViewController: UIViewController,
 //        currentDoItem?.alarms.se
     }
     
-    func alarmSelectionClicked(alarmIndex: Int, appear: Bool) {
+    func alarmSelectionClicked(_ alarmIndex: Int, appear: Bool) {
         if appear {
             subviewitem.titleField.endEditing(true)
-            self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())!
+            self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
             let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
-            UIView.animateWithDuration(0.35) {
+            UIView.animate(withDuration: 0.35, animations: {
                 self.keyboardAlarmSubView?.frame.origin.y = y
-            }
+            }) 
         }
         else {
             subviewitem.titleField.becomeFirstResponder()
         }
     }
 
-    func colorSelectionClicked(color: UIColor) {
+    func colorSelectionClicked(_ color: UIColor) {
         let coreImageColor = CoreImage.CIColor(color: color)
-        currentDoItem?.color?.r = coreImageColor.red
-        currentDoItem?.color?.g = coreImageColor.green
-        currentDoItem?.color?.b = coreImageColor.blue
+        currentDoItem?.color?.r = coreImageColor.red as NSNumber?
+        currentDoItem?.color?.g = coreImageColor.green as NSNumber?
+        currentDoItem?.color?.b = coreImageColor.blue as NSNumber?
     }
     
     //AddTodoItemDelegate
@@ -359,10 +379,10 @@ class ViewController: UIViewController,
         
         print("toDoItemAddClicked")
         if self.alarmdate == nil {
-            let formatter = NSDateFormatter()
+            let formatter = DateFormatter()
             formatter.dateFormat = "yyyy'-'MM'-'dd HH:mm:ss"
-            let someDate = formatter.dateFromString("2014-12-25 10:25:00")
-            print("somdate  : " + String(someDate))
+            let someDate = formatter.date(from: "2014-12-25 10:25:00")
+            print("somdate  : " + String(describing: someDate))
             self.alarmdate = someDate
         }
         
@@ -370,17 +390,17 @@ class ViewController: UIViewController,
         let colorG = arc4random() % 256
         let colorB = arc4random() % 256
         
-        let entityDescription = NSEntityDescription.entityForName("Color",
-                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Color",
+                                                                  in: CoreDataController.sharedInstace.managedObjectContext)
         let color = Color(entity: entityDescription!,
-                          insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
-        color.r = NSNumber(unsignedInt: colorR)
-        color.g = NSNumber(unsignedInt: colorG)
-        color.b = NSNumber(unsignedInt: colorB)
-        color.a = NSNumber(unsignedInt: colorB)
+                          insertInto: CoreDataController.sharedInstace.managedObjectContext)
+        color.r = NSNumber(value: colorR as UInt32)
+        color.g = NSNumber(value: colorG as UInt32)
+        color.b = NSNumber(value: colorB as UInt32)
+        color.a = NSNumber(value: colorB as UInt32)
         
         if (textFieldText != "null") {
-            if textFieldText.stringByReplacingOccurrencesOfString(" ", withString: "") != "" {
+            if textFieldText.replacingOccurrences(of: " ", with: "") != "" {
                 let newItem = CoreDataController.sharedInstace.saveToCoredata(textFieldText, deadline: self.alarmdate!, color: color)
                 self.dolist.append(newItem)
                 self.tableView.reloadData()

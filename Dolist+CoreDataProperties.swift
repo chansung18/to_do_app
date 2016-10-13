@@ -15,9 +15,9 @@ import CoreData
 extension Dolist {
 
     @NSManaged var context: String?
-    @NSManaged var deadline: NSDate?
+    @NSManaged var deadline: Date?
     @NSManaged var decoration: String?
-    @NSManaged var startingDate: NSDate?
+    @NSManaged var startingDate: Date?
     @NSManaged var title: String?
     @NSManaged var lineflag: NSNumber?
     @NSManaged var alarms: NSSet?

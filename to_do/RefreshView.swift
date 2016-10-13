@@ -31,10 +31,10 @@ class RefreshView: UIView {
     }
     
     func commonInitialization() {
-        let view = NSBundle.mainBundle().loadNibNamed("RefreshView", owner: self, options: nil).first as! UIView
+        let view = Bundle.main.loadNibNamed("RefreshView", owner: self, options: nil)?.first as! UIView
         view.frame = bounds
         addSubview(view)
-        titleField.autocorrectionType = UITextAutocorrectionType.No
+        titleField.autocorrectionType = UITextAutocorrectionType.no
     }
     func getTitleText() -> String {
         if (textFieldText != nil) {
@@ -45,7 +45,7 @@ class RefreshView: UIView {
         }
     }
     
-    @IBAction func whenPressComfirm(sender: AnyObject) {
+    @IBAction func whenPressComfirm(_ sender: AnyObject) {
         print("delegate action")
         textFieldText = titleField.text
         delegate?.toDoItemAddClicked()

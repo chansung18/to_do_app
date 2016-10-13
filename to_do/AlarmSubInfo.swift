@@ -52,7 +52,7 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
     }
     
     func commonInitialization() {
-        let view = NSBundle.mainBundle().loadNibNamed("AlarmSubInfo", owner: self, options: nil).first as! UIView
+        let view = Bundle.main.loadNibNamed("AlarmSubInfo", owner: self, options: nil)?.first as! UIView
         view.frame = bounds
         
         setAlarmDate()
@@ -60,25 +60,25 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
         dayCount.layer.cornerRadius = 10
         dayCount.layer.masksToBounds = true
         dayCount.layer.borderWidth = 2.0
-        dayCount.layer.borderColor = UIColor.lightGrayColor().CGColor
+        dayCount.layer.borderColor = UIColor.lightGray.cgColor
         
         dayScrollView.delegate = self
         dayScrollView.layer.cornerRadius = 10
         dayScrollView.layer.masksToBounds = true
         dayScrollView.layer.borderWidth = 2.0
-        dayScrollView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        dayScrollView.layer.borderColor = UIColor.lightGray.cgColor
 
         hourScrollView.delegate = self
         hourScrollView.layer.cornerRadius = 10
         hourScrollView.layer.masksToBounds = true
         hourScrollView.layer.borderWidth = 2.0
-        hourScrollView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        hourScrollView.layer.borderColor = UIColor.lightGray.cgColor
         
         minuteScrollView.delegate = self
         minuteScrollView.layer.cornerRadius = 10
         minuteScrollView.layer.masksToBounds = true
         minuteScrollView.layer.borderWidth = 2.0
-        minuteScrollView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        minuteScrollView.layer.borderColor = UIColor.lightGray.cgColor
         
         dayScrollView.contentSize = CGSize(width: dayScrollView.frame.size.width,
                                            height: dayScrollView.frame.size.height * 101)
@@ -95,8 +95,8 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
                                               width: dayScrollView.bounds.width,
                                               height: dayScrollView.bounds.height))
             label.text = "\(index)"
-            label.textAlignment = .Center
-            label.font = UIFont.boldSystemFontOfSize(45.0)
+            label.textAlignment = .center
+            label.font = UIFont.boldSystemFont(ofSize: 45.0)
             
             dayScrollView.addSubview(label)
         }
@@ -107,8 +107,8 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
                                               width: hourScrollView.bounds.width,
                                               height: hourScrollView.bounds.height))
             label.text = "\(index)"
-            label.textAlignment = .Center
-            label.font = UIFont.boldSystemFontOfSize(45.0)
+            label.textAlignment = .center
+            label.font = UIFont.boldSystemFont(ofSize: 45.0)
             
             hourScrollView.addSubview(label)
         }
@@ -119,14 +119,14 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
                                               width: minuteScrollView.bounds.width,
                                               height: minuteScrollView.bounds.height))
             label.text = "\(index)"
-            label.textAlignment = .Center
-            label.font = UIFont.boldSystemFontOfSize(45.0)
+            label.textAlignment = .center
+            label.font = UIFont.boldSystemFont(ofSize: 45.0)
             
             minuteScrollView.addSubview(label)
         }
         
         view.layer.cornerRadius = 15
-        view.layer.shadowColor = UIColor.blackColor().CGColor
+        view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 15
         view.layer.shadowOpacity = 0.15
         
@@ -159,7 +159,7 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
     }
     
     //scrollView Delegate
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offSet = scrollView.contentOffset
         let index = Int(offSet.y / scrollView.frame.size.height)
         
@@ -183,24 +183,24 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
     }
     
     func setAlarmDate() {
-        let currentTime = NSDate()
+        let currentTime = Date()
         
         let dayInSeconds = day * 24 * 60 * 60
         let hourInSeconds = hour * 60 * 60
         let minuteInSeconds = minute * 60
-        let alarmTime = currentTime.dateByAddingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
+        let alarmTime = currentTime.addingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy. MM. dd. HH:mm"
-        dayCount.text = dateFormatter.stringFromDate(alarmTime)
+        dayCount.text = dateFormatter.string(from: alarmTime)
         delegate?.alarmChanged()
     }
-    func getAlarmDate()-> NSDate{
-        let currentTime = NSDate()
+    func getAlarmDate()-> Date{
+        let currentTime = Date()
         let dayInSeconds = day * 24 * 60 * 60
         let hourInSeconds = hour * 60 * 60
         let minuteInSeconds = minute * 60
-        let alarmTime = currentTime.dateByAddingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
+        let alarmTime = currentTime.addingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
         
         return alarmTime
     }

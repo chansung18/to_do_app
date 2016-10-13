@@ -30,48 +30,48 @@ class Dolist: NSManagedObject {
 //        print(self.deadline)
 //    }
 
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-        startingDate = NSDate()
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        startingDate = Date()
         
     }
     
     //날짜정하기
-    func addAlarm(when: NSDate, addingAlarmHours: Int, addingAlarmMinutes: Int) {
+    func addAlarm(_ when: Date, addingAlarmHours: Int, addingAlarmMinutes: Int) {
         let secondsInHours = Double(addingAlarmHours) * 60 * 60
         let secondsInMinutes = Double(addingAlarmMinutes) * 60
-        let newAlarm = when.dateByAddingTimeInterval(secondsInHours + secondsInMinutes)
+        let newAlarm = when.addingTimeInterval(secondsInHours + secondsInMinutes)
         
-        let entityDescription = NSEntityDescription.entityForName("Alarm",
-                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Alarm",
+                                                                  in: CoreDataController.sharedInstace.managedObjectContext)
         let itemObject = Alarm(entity: entityDescription!,
-                               insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+                               insertInto: CoreDataController.sharedInstace.managedObjectContext)
         itemObject.alarm = newAlarm
         itemObject.dolist = self
         
         let copy = NSMutableSet.init(set: self.alarms!)
-        copy.addObject(itemObject)
+        copy.add(itemObject)
         self.alarms = copy
         
         CoreDataController.sharedInstace.saveContext()
     }
     
     //날짜로 부터 D-Day
-    func addAlarmForDday(whenToDays: Int, addingAlarmHours: Int, addingAlarmMinutes: Int) {
+    func addAlarmForDday(_ whenToDays: Int, addingAlarmHours: Int, addingAlarmMinutes: Int) {
         let secondsInDays = Double(whenToDays) * 24 * 60 * 60
         let secondsInHours = Double(addingAlarmHours) * 60 * 60
         let secondsInMinutes = Double(addingAlarmMinutes) * 60
-        let newAlarm = self.startingDate!.dateByAddingTimeInterval(secondsInDays + secondsInHours + secondsInMinutes)
+        let newAlarm = self.startingDate!.addingTimeInterval(secondsInDays + secondsInHours + secondsInMinutes)
         
-        let entityDescription = NSEntityDescription.entityForName("Alarm",
-                                                                  inManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Alarm",
+                                                                  in: CoreDataController.sharedInstace.managedObjectContext)
         let itemObject = Alarm(entity: entityDescription!,
-                               insertIntoManagedObjectContext: CoreDataController.sharedInstace.managedObjectContext)
+                               insertInto: CoreDataController.sharedInstace.managedObjectContext)
         itemObject.alarm = newAlarm
         itemObject.dolist = self
         
         let copy = NSMutableSet.init(set: self.alarms!)
-        copy.addObject(itemObject)
+        copy.add(itemObject)
         self.alarms = copy
         
         CoreDataController.sharedInstace.saveContext()
