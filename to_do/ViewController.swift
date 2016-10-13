@@ -327,6 +327,13 @@ class ViewController: UIViewController,
             }
             //close keyboard and open add alarmSubInfoView
             subviewitem.titleField.resignFirstResponder()
+            subviewitem.titleField.endEditing(true)
+            self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
+            let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+            UIView.animate(withDuration: 0.35, animations: {
+                self.keyboardAlarmSubView?.frame.origin.y = y
+            })//end (close keyboard and open add alarmSubInfoView)
+
         }
         else {
             
