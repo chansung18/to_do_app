@@ -148,6 +148,7 @@
 			children = (
 				3370A5181D86893700405550 /* to_do */,
 				3370A5171D86893700405550 /* Products */,
+				80C1AEBE1DAFC76900B4E8F1 /* TextStyle */,
 			);
 			sourceTree = "<group>";
 		};
@@ -167,6 +168,14 @@
 				1EFF6E3F1D925FDA00402ECF /* Controllers */,
 				1EFF6E3E1D925FC600402ECF /* Models */,
 				3370A5191D86893700405550 /* AppDelegate.swift */,
+				3370A5281D86893700405550 /* Info.plist */,
+			);
+			path = to_do;
+			sourceTree = "<group>";
+		};
+		80C1AEBE1DAFC76900B4E8F1 /* TextStyle */ = {
+			isa = PBXGroup;
+			children = (
 				80686FBE1DA7E8D700AEC8DC /* KoPubBatang-Bold.ttf */,
 				80686FBF1DA7E8D700AEC8DC /* KoPubBatang-Light.ttf */,
 				80686FC01DA7E8D700AEC8DC /* KoPubBatang-Regular.ttf */,
@@ -181,8 +190,8 @@
 				80686FC91DA7E8D700AEC8DC /* SeoulNamsanvert.ttf */,
 				80D99EBD1DA54966009BADE5 /* UhBeepuding.ttf */,
 				80D99EBE1DA54966009BADE5 /* UhBeepudingBold.ttf */,
-				3370A5281D86893700405550 /* Info.plist */,
 			);
+			name = TextStyle;
 			path = to_do;
 			sourceTree = "<group>";
 		};

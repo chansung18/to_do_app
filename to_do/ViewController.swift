@@ -325,6 +325,8 @@ class ViewController: UIViewController,
                     subviewitem.titleField.becomeFirstResponder()
                 }
             }
+            //close keyboard and open add alarmSubInfoView
+            subviewitem.titleField.resignFirstResponder()
         }
         else {
             
