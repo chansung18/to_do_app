@@ -314,6 +314,8 @@ class ViewController: UIViewController,
         if addAction {
             if currentDoItem?.alarms?.count <= 3 {
                 if keyboardSubView?.alarmAddButtonToggle == false {
+                    //false?? for when ??
+                    print("keyboardSubView?.alarmAddButtonToggle == false")
                     subviewitem.titleField.endEditing(true)
                     self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
                     let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
@@ -321,18 +323,22 @@ class ViewController: UIViewController,
                         self.keyboardAlarmSubView?.frame.origin.y = y
                     }) 
                 }
+                else if keyboardSubView?.alarmAddButtonToggle == true {
+                    //close keyboard and open add alarmSubInfoView
+                     print("keyboardSubView?.alarmAddButtonToggle == true")
+                     subviewitem.titleField.resignFirstResponder()
+                     subviewitem.titleField.endEditing(true)
+                     self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
+                     let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                     UIView.animate(withDuration: 0.35, animations: {
+                     self.keyboardAlarmSubView?.frame.origin.y = y
+                     })//end (close keyboard and open add alarmSubInfoView)
+                }
                 else {
                     subviewitem.titleField.becomeFirstResponder()
                 }
             }
-            //close keyboard and open add alarmSubInfoView
-            subviewitem.titleField.resignFirstResponder()
-            subviewitem.titleField.endEditing(true)
-            self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
-            let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
-            UIView.animate(withDuration: 0.35, animations: {
-                self.keyboardAlarmSubView?.frame.origin.y = y
-            })//end (close keyboard and open add alarmSubInfoView)
+
 
         }
         else {
