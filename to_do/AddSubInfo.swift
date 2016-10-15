@@ -90,7 +90,16 @@ class AddSubInfo: UIView {
         }
         
         didSet(newAlarmIndex) {
-            if newAlarmIndex != currentSelectedAlarmIndex {
+            print("newAlarmIndex -------", newAlarmIndex)
+            print("currentSelectedAlarmIndex -------", currentSelectedAlarmIndex)
+            let selectmeint : Bool?
+            if currentSelectedAlarmIndex >= 0 {
+                selectmeint = selectedAlarmArray[currentSelectedAlarmIndex+1]
+            }else{
+                selectmeint = false
+            }
+            
+            if newAlarmIndex != currentSelectedAlarmIndex && selectmeint!{
                 animateAlarmSelection(true)
                 alarmAddButtonToggle = true
                 
@@ -98,8 +107,8 @@ class AddSubInfo: UIView {
                 alarmAddButton.isUserInteractionEnabled = true
             }
             else {
-                currentSelectedAlarmIndex = -1
-                alarmAddButtonToggle = false
+                 currentSelectedAlarmIndex = -1
+                 alarmAddButtonToggle = false
                 
                 if alarmCount >= 3 {
                     alarmAddButton.alpha = 0.6
@@ -318,10 +327,10 @@ class AddSubInfo: UIView {
     @IBAction func alarmAddClicked(_ sender: UIButton) {
         print(".....count ? \(alarmCount)")
         
-        if alarmCount < 3 {
+        if alarmCount <= 3 {
             alarmAddButtonToggle = !alarmAddButtonToggle
             delegate?.addAlarmClicked(alarmAddButtonToggle)
-            print("alarmAddButtonToggle  :  ", alarmAddButtonToggle)
+            print("///////////////////alarmAddButtonToggle  :  ", alarmAddButtonToggle)
         }
         if alarmAddButtonToggle == false {
             alarmComfirmButton.alpha = 0.3
