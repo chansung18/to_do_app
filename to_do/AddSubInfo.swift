@@ -292,6 +292,9 @@ class AddSubInfo: UIView {
             return false
         }
     }
+    func getcurrentSelectedAlarmIndex() -> Int {
+        return self.currentSelectedAlarmIndex
+    }
     func animateAlarmSelection(_ appear: Bool) {
         UIView.animate(withDuration: 0.7, animations: { 
             switch self.currentSelectedAlarmIndex {
@@ -318,6 +321,16 @@ class AddSubInfo: UIView {
         if alarmCount < 3 {
             alarmAddButtonToggle = !alarmAddButtonToggle
             delegate?.addAlarmClicked(alarmAddButtonToggle)
+            print("alarmAddButtonToggle  :  ", alarmAddButtonToggle)
+        }
+        if alarmAddButtonToggle == false {
+            alarmComfirmButton.alpha = 0.3
+            alarmComfirmButton.isEnabled = false
+            alarmAddButton.alpha = 1.0
+        }else{
+            alarmComfirmButton.alpha = 1.0
+            alarmComfirmButton.isEnabled = true
+            alarmAddButton.alpha = 0.3
         }
     }
     
@@ -331,6 +344,8 @@ class AddSubInfo: UIView {
         print("electedAlarmArray[alarmCount]" , selectedAlarmArray[alarmCount])
         alarmComfirmButton.alpha = 0.6
         alarmComfirmButton.isUserInteractionEnabled = false
+    
+
         
         if alarmCount >= 3 {
             alarmAddButtonToggle = false
@@ -344,9 +359,13 @@ class AddSubInfo: UIView {
     
     @IBAction func alarmClicked(_ sender: UIButton) {
         currentSelectedAlarmIndex = sender.tag
-        alarmComfirmButton.alpha = 0.6
-        alarmComfirmButton.isEnabled = false
-
+        if alarmAddButtonToggle {
+            alarmComfirmButton.alpha = 0.3
+            alarmComfirmButton.isEnabled = false
+        }else{
+            alarmComfirmButton.alpha = 1.0
+            alarmComfirmButton.isEnabled = true
+        }
         delegate?.alarmSelectionClicked(sender.tag, appear: currentSelectedAlarmIndex != -1 )
         
     }

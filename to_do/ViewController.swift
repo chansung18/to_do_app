@@ -344,9 +344,16 @@ class ViewController: UIViewController,
         }
         else {
             if currentDoItem?.alarms?.count <= 3 {
+                //delete alarm
                 let alarmIndexSlected = keyboardSubView?.getcurrentSelectedAlarmIndexArray()
                 print("alarmIndexSlected   :  ",alarmIndexSlected)
                 if ((keyboardSubView?.alarmAddButtonToggle)! == false && alarmIndexSlected! ){
+                    let alert = UIAlertView()
+                    alert.title = "삭제 하고 싶어요 ? "
+                    alert.message = "삭제 하시겠습니까 ?"
+                    alert.addButton(withTitle: "확인")
+                    alert.show()
+                    
                     print("keyboardSubView?.alarmAddButtonToggle == false")
                     subviewitem.titleField.endEditing(true)
                     self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
@@ -354,11 +361,26 @@ class ViewController: UIViewController,
                     UIView.animate(withDuration: 0.35, animations: {
                         self.keyboardAlarmSubView?.frame.origin.y = y
                     })
-                    let alert = UIAlertView()
-                    alert.title = "삭제 하고 싶어요 ? "
-                    alert.message = "삭제 하시겠습니까 ?"
-                    alert.addButton(withTitle: "확인")
-                    alert.show()
+
+                    subviewitem.titleField.becomeFirstResponder()
+                    keyboardSubView?.alarmCount = (keyboardSubView?.alarmCount)! - 1
+                    
+                    let currentSelectedAlarmIndex = keyboardSubView?.getcurrentSelectedAlarmIndex()
+                    if currentSelectedAlarmIndex == 0 {
+                        keyboardSubView?.firstAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                    }
+                    else if currentSelectedAlarmIndex == 1 {
+                        keyboardSubView?.secondAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                    }
+                    else if currentSelectedAlarmIndex == 2 {
+                        keyboardSubView?.thirdAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                    }
+                    keyboardSubView?.selectedAlarmArray[currentSelectedAlarmIndex! + 1] = false
+                    
+
+                }
+                else{
+                    subviewitem.titleField.becomeFirstResponder()
                     
                 }
             }
