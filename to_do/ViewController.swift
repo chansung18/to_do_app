@@ -41,7 +41,7 @@ class ViewController: UIViewController,
     @IBOutlet weak var dummyView: UIView!
     
     var currentDoItem: Dolist?
-    
+    var currentSelectedAlarmIndex: [Int]?
     var dolist = [Dolist]()
     var alarmdate : Date?
     
@@ -321,7 +321,8 @@ class ViewController: UIViewController,
                     let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
                     UIView.animate(withDuration: 0.35, animations: {
                         self.keyboardAlarmSubView?.frame.origin.y = y
-                    }) 
+                    })
+                
                 }
                 else if keyboardSubView?.alarmAddButtonToggle == true {
                     //close keyboard and open add alarmSubInfoView
@@ -342,6 +343,28 @@ class ViewController: UIViewController,
 
         }
         else {
+            if currentDoItem?.alarms?.count <= 3 {
+                let alarmIndexSlected = keyboardSubView?.getcurrentSelectedAlarmIndexArray()
+                print("alarmIndexSlected   :  ",alarmIndexSlected)
+                if ((keyboardSubView?.alarmAddButtonToggle)! == false && alarmIndexSlected! ){
+                    print("keyboardSubView?.alarmAddButtonToggle == false")
+                    subviewitem.titleField.endEditing(true)
+                    self.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
+                    let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                    UIView.animate(withDuration: 0.35, animations: {
+                        self.keyboardAlarmSubView?.frame.origin.y = y
+                    })
+                    let alert = UIAlertView()
+                    alert.title = "삭제 하고 싶어요 ? "
+                    alert.message = "삭제 하시겠습니까 ?"
+                    alert.addButton(withTitle: "확인")
+                    alert.show()
+                    
+                }
+            }
+
+            
+            
             
         }
     }
@@ -356,6 +379,8 @@ class ViewController: UIViewController,
         let minute = keyboardAlarmSubView!.minute * 60
         let interval = day + hour + minute
         
+        currentSelectedAlarmIndex?[alarmIndex] = 1
+        print("currentSelectedAlarmIndex?[alarmIndex]  : " , currentSelectedAlarmIndex?[alarmIndex])
         print("alarm Index = \(alarmIndex)")
 //        let newAlarm = currentDoItem?.startingDate?.dateByAddingTimeInterval(Double(interval))
 //        

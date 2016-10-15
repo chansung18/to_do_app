@@ -13,6 +13,7 @@ protocol AddSubInfoDelegate {
     func confirmAlarmClicked(_ alarmIndex: Int)
     func colorSelectionClicked(_ color: UIColor)
     func alarmSelectionClicked(_ alarmIndex: Int, appear: Bool)
+    
 }
 
 class AddSubInfo: UIView {
@@ -44,6 +45,8 @@ class AddSubInfo: UIView {
     @IBOutlet weak var thirdColorSelection: UIButton!
     @IBOutlet weak var fourthColorSelection: UIButton!
     @IBOutlet weak var fifthColorSelection: UIButton!
+    
+    
     
     var selectedColorIndex = 0 {
         willSet(newColorIndex) {
@@ -79,6 +82,7 @@ class AddSubInfo: UIView {
             }
         }
     }
+    var selectedAlarmArray = Array(repeating:false, count:4)
     
     var currentSelectedAlarmIndex = -1 {
         willSet(newAlarmIndex) {
@@ -280,7 +284,14 @@ class AddSubInfo: UIView {
             }
         }) 
     }
-    
+    func getcurrentSelectedAlarmIndexArray() -> Bool {
+        print("getcurrentSelectedAlarmIndexArray"  ,currentSelectedAlarmIndex )
+        if currentSelectedAlarmIndex >= 0 {
+            return self.selectedAlarmArray[currentSelectedAlarmIndex+1]
+        }else{
+            return false
+        }
+    }
     func animateAlarmSelection(_ appear: Bool) {
         UIView.animate(withDuration: 0.7, animations: { 
             switch self.currentSelectedAlarmIndex {
@@ -315,7 +326,9 @@ class AddSubInfo: UIView {
         
         alarmAddClicked(sender)
         alarmCount = alarmCount+1
-        
+        print("alarmCount = alarmCount+1  :  " , alarmCount)
+        self.selectedAlarmArray[alarmCount] = true
+        print("electedAlarmArray[alarmCount]" , selectedAlarmArray[alarmCount])
         alarmComfirmButton.alpha = 0.6
         alarmComfirmButton.isUserInteractionEnabled = false
         
@@ -331,6 +344,10 @@ class AddSubInfo: UIView {
     
     @IBAction func alarmClicked(_ sender: UIButton) {
         currentSelectedAlarmIndex = sender.tag
+        alarmComfirmButton.alpha = 0.6
+        alarmComfirmButton.isEnabled = false
+
         delegate?.alarmSelectionClicked(sender.tag, appear: currentSelectedAlarmIndex != -1 )
+        
     }
 }
