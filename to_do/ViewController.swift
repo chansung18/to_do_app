@@ -334,6 +334,7 @@ class ViewController: UIViewController,
                      UIView.animate(withDuration: 0.35, animations: {
                      self.keyboardAlarmSubView?.frame.origin.y = y
                      })//end (close keyboard and open add alarmSubInfoView)
+                     keyboardAlarmSubView?.delegate = self
                 }
                 else {
                     subviewitem.titleField.becomeFirstResponder()
@@ -488,6 +489,8 @@ class ViewController: UIViewController,
     }
     func alarmChanged() {
         print("timechaged")
+        //self.keyboardSubView?.alarmComfirmButton.isEnabled = true
+        //self.keyboardSubView?.alarmComfirmButton.alpha = 1.0
         
     }
 }
