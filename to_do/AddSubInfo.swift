@@ -339,7 +339,7 @@ class AddSubInfo: UIView {
         }else{
             alarmComfirmButton.alpha = 1.0
             alarmComfirmButton.isEnabled = true
-            alarmAddButton.alpha = 0.3
+            alarmAddButton.alpha = 1.0
         }
     }
     
