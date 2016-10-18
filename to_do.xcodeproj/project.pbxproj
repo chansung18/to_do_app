@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0FAD0A1DB63FA400B7C11A /* CustomDelegateActionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0FAD091DB63FA400B7C11A /* CustomDelegateActionHandlers.swift */; };
 		1E9DF6BC1D87757F00C0F3B4 /* ToDoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */; };
 		1E9DF6C71D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */; };
 		1E9DF6C81D8F860400C0F3B4 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E0FAD091DB63FA400B7C11A /* CustomDelegateActionHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDelegateActionHandlers.swift; sourceTree = "<group>"; };
 		1E9DF6BB1D87757F00C0F3B4 /* ToDoListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListTableViewCell.swift; sourceTree = "<group>"; };
 		1E9DF6C51D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alarm+CoreDataProperties.swift"; path = "../Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1E9DF6C61D8F860400C0F3B4 /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alarm.swift; path = ../Alarm.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				80056B731D9411CC00B025BF /* RefreshView.swift */,
 				800CC4AF1D97F1360016EDC4 /* AddSubInfo.swift */,
 				1EBDE3701DA3BF1F00D06160 /* AlarmSubInfo.swift */,
+				1E0FAD091DB63FA400B7C11A /* CustomDelegateActionHandlers.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				1E9DF6C71D8F860400C0F3B4 /* Alarm+CoreDataProperties.swift in Sources */,
 				1EFD5DA71DAC61BB0049EDDE /* Color+CoreDataProperties.swift in Sources */,
 				1EBDE3711DA3BF1F00D06160 /* AlarmSubInfo.swift in Sources */,
+				1E0FAD0A1DB63FA400B7C11A /* CustomDelegateActionHandlers.swift in Sources */,
 				3370A51A1D86893700405550 /* AppDelegate.swift in Sources */,
 				800CC4B01D97F1360016EDC4 /* AddSubInfo.swift in Sources */,
 				1E9DF6C81D8F860400C0F3B4 /* Alarm.swift in Sources */,

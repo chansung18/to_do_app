@@ -46,11 +46,9 @@ class RefreshView: UIView {
     }
     
     @IBAction func whenPressComfirm(_ sender: AnyObject) {
-        print("delegate action")
         textFieldText = titleField.text
         delegate?.toDoItemAddClicked()
         titleField.endEditing(true)
-        
         
         /*print("whenPressComfirm")
          mainViewController?.dismissRefreshControl()
