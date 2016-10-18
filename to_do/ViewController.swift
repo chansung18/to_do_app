@@ -117,7 +117,7 @@ class ViewController: UIViewController,
         else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.keyboardSubView?.alpha = 1
-            }) 
+            })
         }
             
         let x = CGFloat(0)
@@ -225,12 +225,6 @@ class ViewController: UIViewController,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as? ToDoListTableViewCell
-        
-        if let width = cell?.colorButton.bounds.width {
-            print("width = \(width)")
-            cell?.colorButton.layer.cornerRadius = width / 2.0
-            cell?.colorButton.layer.masksToBounds = true
-        }
         
         cell?.backgroundColor = UIColor.clear
         let doItem = dolist[(indexPath as NSIndexPath).row]
@@ -380,8 +374,8 @@ class ViewController: UIViewController,
                          self.subviewitem.titleField.becomeFirstResponder()
                     }
                     let noAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
-                         self.subviewitem.titleField.becomeFirstResponder()
-                        
+//                         self.subviewitem.titleField.becomeFirstResponder()
+
                     }
                     alert.addAction(yesAction)
                     alert.addAction(noAction)

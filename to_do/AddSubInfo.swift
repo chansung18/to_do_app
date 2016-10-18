@@ -46,7 +46,7 @@ class AddSubInfo: UIView {
     @IBOutlet weak var fourthColorSelection: UIButton!
     @IBOutlet weak var fifthColorSelection: UIButton!
     
-    
+    var view: UIView!
     
     var selectedColorIndex = 0 {
         willSet(newColorIndex) {
@@ -135,35 +135,36 @@ class AddSubInfo: UIView {
         super.init(coder: aDecoder)!
         commonInitialization()
     }
-    
+
     func commonInitialization() {
-        let view = Bundle.main.loadNibNamed("AddSubInfo", owner: self, options: nil)?.first as! UIView
-        
+        view = Bundle.main.loadNibNamed("AddSubInfo", owner: self, options: nil)?.first as! UIView
         view.frame = bounds
+        
+        view.layoutIfNeeded()
         
         firstColorSelection.layer.cornerRadius = firstColor.frame.width / 2.0
         firstColorSelection.layer.masksToBounds = true
-        firstColorSelection.layer.borderWidth = 3.0
+        firstColorSelection.layer.borderWidth = 4.0
         firstColorSelection.layer.borderColor = UIColor.cyan.cgColor
        
         secondColorSelection.layer.cornerRadius = secondColor.frame.width / 2.0
         secondColorSelection.layer.masksToBounds = true
-        secondColorSelection.layer.borderWidth = 3.0
+        secondColorSelection.layer.borderWidth = 4.0
         secondColorSelection.layer.borderColor = UIColor.cyan.cgColor
         
         thirdColorSelection.layer.cornerRadius = thirdColor.frame.width / 2.0
         thirdColorSelection.layer.masksToBounds = true
-        thirdColorSelection.layer.borderWidth = 3.0
+        thirdColorSelection.layer.borderWidth = 4.0
         thirdColorSelection.layer.borderColor = UIColor.cyan.cgColor
         
         fourthColorSelection.layer.cornerRadius = fourthColor.frame.width / 2.0
         fourthColorSelection.layer.masksToBounds = true
-        fourthColorSelection.layer.borderWidth = 3.0
+        fourthColorSelection.layer.borderWidth = 4.0
         fourthColorSelection.layer.borderColor = UIColor.cyan.cgColor
         
         fifthColorSelection.layer.cornerRadius = fifthColor.frame.width / 2.0
         fifthColorSelection.layer.masksToBounds = true
-        fifthColorSelection.layer.borderWidth = 3.0
+        fifthColorSelection.layer.borderWidth = 4.0
         fifthColorSelection.layer.borderColor = UIColor.cyan.cgColor
         
         firstColor.layer.cornerRadius = firstColor.frame.width / 2.0

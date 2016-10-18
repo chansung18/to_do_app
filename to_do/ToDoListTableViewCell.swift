@@ -42,6 +42,10 @@ class ToDoListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.layoutIfNeeded()
+        
+        colorButton.layer.cornerRadius = colorButton.bounds.width / 2.0
+        colorButton.layer.masksToBounds = true
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPanned))
         panGesture.delegate = self
@@ -57,7 +61,6 @@ class ToDoListTableViewCell: UITableViewCell {
 //            print("a = \(gesture.velocityInView(self).x)")
             
             starY = gesture.translation(in: self.tableView).y
-            gesture
             if gesture.velocity(in: self).x < 0 {
                 isEditingMode = true
             }
