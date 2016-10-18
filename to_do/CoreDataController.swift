@@ -20,20 +20,17 @@ class CoreDataController {
     //private init for singleton class
     fileprivate init() {}
     
-    func saveToCoredata(_ title: String, deadline: Date, color: Color) -> Dolist {
+    func saveToCoredata(title: String, startingDate: Date, alarms: [Date], color: Color) -> Dolist {
         let entityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
         let itemObject = Dolist(entity: entityDescription!, insertInto: managedObjectContext)
         
         itemObject.title = title
-        itemObject.deadline = deadline
+        itemObject.startingDate = startingDate
         itemObject.color = color
 
+        //copy alarms to itemObject.alarms
+        
         saveContext()
-        
-        //test - adding alarm
-        itemObject.addAlarmForDday(1, addingAlarmHours: 1, addingAlarmMinutes: 1)
-        itemObject.addAlarmForDday(2, addingAlarmHours: 1, addingAlarmMinutes: 1)
-        
         return itemObject
     }
     

@@ -38,7 +38,12 @@ class ViewController: UIViewController,
     
     var customDelegateHandler: CustomDelegateActionHandlers!
     
-    var currentDoItem: Dolist?
+    var currentWorkingTitle: String = String()
+    var currentWorkingColorIndex: Int = 0
+    var currentWorkingColor: UIColor = UIColor.gray
+    var currentWorkingAlarms: [Date] = [Date]()
+    var currentWorkingStartingDate: Date = Date()
+    
     var currentSelectedAlarmIndex: [Int]?
     var dolist = [Dolist]()
     var alarmdate : Date?
@@ -97,6 +102,7 @@ class ViewController: UIViewController,
     }
     
     func keyboardWillShow(_ nofification : Notification){
+        /*Keyboard Infromation Retrieving*/
         let userInfo:NSDictionary = (nofification as NSNotification).userInfo! as NSDictionary
         let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
@@ -108,10 +114,8 @@ class ViewController: UIViewController,
                                                    width: dummyView.frame.width,
                                                    height: 150))
             keyboardSubView?.delegate = customDelegateHandler
-            keyboardSubView?.selectedColorIndex = 4
-            if let alarms = currentDoItem?.alarms {
-                keyboardSubView?.alarmCount = alarms.count
-            }
+            keyboardSubView?.selectedColorIndex = currentWorkingColorIndex
+            keyboardSubView?.alarmCount = currentWorkingAlarms.count
             dummyView.addSubview(keyboardSubView!)
         }
         else {
@@ -149,10 +153,10 @@ class ViewController: UIViewController,
         showRefreshControl()
         subviewitem.titleField.becomeFirstResponder()
         
-        let entityDescription = NSEntityDescription.entity(forEntityName: "Dolist",
-                                                                  in: CoreDataController.sharedInstace.managedObjectContext)
-        currentDoItem = Dolist(entity: entityDescription!,
-                               insertInto: nil)
+        currentWorkingStartingDate = Date()
+        currentWorkingAlarms = [Date]()
+        currentWorkingColorIndex = 0
+        currentWorkingColor = UIColor.gray
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -177,7 +181,6 @@ class ViewController: UIViewController,
         if isInTheMiddleOfEnteringItem {
             if gesture.location(in: self.dummyView).y < self.keyboardSubView?.frame.origin.y {
                 dismissRefreshControl()
-                currentDoItem = nil
             }
         }
     }
@@ -195,7 +198,8 @@ class ViewController: UIViewController,
             self.refreshController.alpha = 0.0
             self.keyboardSubView?.alpha = 0
             self.keyboardAlarmSubView?.frame.origin.y = self.keyboardAlarmSubView!.frame.origin.y + self.keyboardAlarmSubView!.frame.height
-        }, completion: { (completed) in
+        },
+        completion: { (completed) in
             if completed {
                 self.keyboardSubView?.removeFromSuperview()
                 self.keyboardAlarmSubView?.removeFromSuperview()
@@ -256,13 +260,18 @@ class ViewController: UIViewController,
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
         (tableView.cellForRow(at: indexPath) as! ToDoListTableViewCell).isEditingMode = true
-        
         UIButton.appearance().setTitleColor(UIColor.black, for: UIControlState())
+        
+        let currentTodoItem = dolist[indexPath.row]
         
         let editAction = UITableViewRowAction(style: .normal, title: "🖊", handler:{ action, indexpath in
             //edit Action codes
+            self.didRefresh()
+            self.subviewitem.titleField.text = currentTodoItem.title
+            self.currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+            self.currentWorkingStartingDate = currentTodoItem.startingDate!
+            
         });
         
         editAction.backgroundColor = UIColor.white

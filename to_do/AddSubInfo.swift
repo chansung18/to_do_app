@@ -10,10 +10,9 @@ import UIKit
 
 protocol AddSubInfoDelegate {
     func addAlarmClicked(_ addAction: Bool)
-    func confirmAlarmClicked(_ alarmIndex: Int)
-    func colorSelectionClicked(_ color: UIColor)
+    func confirmAlarmClicked(alarmInfoView: AddSubInfo, alarmIndex: Int)
+    func colorSelectionClicked(colorIndex: Int, color: UIColor)
     func alarmSelectionClicked(_ alarmIndex: Int, appear: Bool)
-    
 }
 
 class AddSubInfo: UIView {
@@ -90,8 +89,8 @@ class AddSubInfo: UIView {
         }
         
         didSet(newAlarmIndex) {
-            print("newAlarmIndex -------", newAlarmIndex)
-            print("currentSelectedAlarmIndex -------", currentSelectedAlarmIndex)
+//            print("newAlarmIndex -------", newAlarmIndex)
+//            print("currentSelectedAlarmIndex -------", currentSelectedAlarmIndex)
             let selectmeint : Bool?
             if currentSelectedAlarmIndex >= 0 {
                 selectmeint = selectedAlarmArray[currentSelectedAlarmIndex+1]
@@ -295,7 +294,7 @@ class AddSubInfo: UIView {
         }) 
     }
     func getcurrentSelectedAlarmIndexArray() -> Bool {
-        print("getcurrentSelectedAlarmIndexArray"  ,currentSelectedAlarmIndex )
+//        print("getcurrentSelectedAlarmIndexArray"  ,currentSelectedAlarmIndex )
         if currentSelectedAlarmIndex >= 0 {
             return self.selectedAlarmArray[currentSelectedAlarmIndex+1]
         }else{
@@ -322,16 +321,16 @@ class AddSubInfo: UIView {
     
     @IBAction func colorClicked(_ sender: UIButton) {
         selectedColorIndex = sender.tag
-        delegate?.colorSelectionClicked(sender.backgroundColor!)
+        delegate?.colorSelectionClicked(colorIndex: sender.tag, color: sender.backgroundColor!)
     }
     
     @IBAction func alarmAddClicked(_ sender: UIButton) {
-        print(".....count ? \(alarmCount)")
+//        print(".....count ? \(alarmCount)")
         
         if alarmCount <= 3 {
             alarmAddButtonToggle = !alarmAddButtonToggle
             delegate?.addAlarmClicked(alarmAddButtonToggle)
-            print("///////////////////alarmAddButtonToggle  :  ", alarmAddButtonToggle)
+//            print("///////////////////alarmAddButtonToggle  :  ", alarmAddButtonToggle)
         }
         if alarmAddButtonToggle == false {
             alarmComfirmButton.alpha = 0.3
@@ -345,13 +344,14 @@ class AddSubInfo: UIView {
     }
     
     @IBAction func confirmAlarmClicked(_ sender: UIButton) {
-        delegate?.confirmAlarmClicked(currentSelectedAlarmIndex)
+//        delegate?.confirmAlarmClicked(self, currentSelectedAlarmIndex)
+        delegate?.confirmAlarmClicked(alarmInfoView: self, alarmIndex: currentSelectedAlarmIndex)
         
         alarmAddClicked(sender)
         alarmCount = alarmCount+1
-        print("alarmCount = alarmCount+1  :  " , alarmCount)
+//        print("alarmCount = alarmCount+1  :  " , alarmCount)
         self.selectedAlarmArray[alarmCount] = true
-        print("electedAlarmArray[alarmCount]" , selectedAlarmArray[alarmCount])
+//        print("electedAlarmArray[alarmCount]" , selectedAlarmArray[alarmCount])
         alarmComfirmButton.alpha = 0.6
         alarmComfirmButton.isUserInteractionEnabled = false
     
