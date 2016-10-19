@@ -20,23 +20,43 @@ class CoreDataController {
     //private init for singleton class
     fileprivate init() {}
     
-    func saveToCoredata(title: String, startingDate: Date, alarms: [Date], color: Color) -> Dolist {
-        let entityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
-        let itemObject = Dolist(entity: entityDescription!, insertInto: managedObjectContext)
+    func saveToCoredata(title: String, startingDate: Date, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+        let doListEntityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
+        let doListObject = Dolist(entity: doListEntityDescription!, insertInto: managedObjectContext)
         
-        itemObject.title = title
-        itemObject.startingDate = startingDate
-        itemObject.color = color
-
-        //copy alarms to itemObject.alarms
+        let colorDescription = NSEntityDescription.entity(forEntityName: "Color", in: managedObjectContext)
+        let colorObject = Color(entity: colorDescription!, insertInto: managedObjectContext)
+        
+        doListObject.title = title
+        doListObject.startingDate = startingDate
+        
+        let coreImageColor = CoreImage.CIColor(color: color)
+        colorObject.r = (coreImageColor.red * 256) as NSNumber!
+        colorObject.g = (coreImageColor.green * 256) as NSNumber!
+        colorObject.b = (coreImageColor.blue * 256) as NSNumber!
+        colorObject.a = NSNumber(integerLiteral: 1)
+        colorObject.index = colorIndex as NSNumber!
+        doListObject.color = colorObject
+        
+        for alarm in alarms {
+            let alarmDescription = NSEntityDescription.entity(forEntityName: "Alarm", in: managedObjectContext)
+            let alarmObject = Alarm(entity: alarmDescription!, insertInto: managedObjectContext)
+            alarmObject.alarm = alarm
+            
+            if let alarmsInDoList = doListObject.alarms {
+                let tmpAlarmsInDoList = NSMutableSet(set: alarmsInDoList)
+                tmpAlarmsInDoList.addObjects(from: [alarmObject])
+                doListObject.alarms = tmpAlarmsInDoList
+            }
+        }
         
         saveContext()
-        return itemObject
+        return doListObject
     }
     
     func loadFromCoredata() -> [Dolist]{
         var dolist = [Dolist]()
-      //  let request = NSFetchRequest(entityName: "Dolist")
+        
         var request : NSFetchRequest<NSFetchRequestResult>?
         if #available(iOS 10.0, *) {
              request  = Dolist.fetchRequest()
@@ -44,6 +64,7 @@ class CoreDataController {
             // Fallback on earlier versions
              request = nil;
         }
+        
         let error :NSError? = nil
         do {
             try dolist = managedObjectContext.fetch(request!) as! [Dolist]

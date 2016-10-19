@@ -180,25 +180,14 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let alarms = mainViewController.currentWorkingAlarms
         
         let textFieldText = subviewitem.getTitleText()
-        
-        let entityDescription = NSEntityDescription.entity(forEntityName: "Color", in: CoreDataController.sharedInstace.managedObjectContext)
-        let colorLabel = Color(entity: entityDescription!, insertInto: CoreDataController.sharedInstace.managedObjectContext)
-        
-        let coreImageColor = CoreImage.CIColor(color: color)
-        colorLabel.r = (coreImageColor.red * 256) as NSNumber!
-        colorLabel.g = (coreImageColor.green * 256) as NSNumber!
-        colorLabel.b = (coreImageColor.blue * 256) as NSNumber!
-        colorLabel.a = NSNumber(integerLiteral: 1)
-        colorLabel.index = colorIndex as NSNumber!
-        
-        print("color = \(coreImageColor.red as NSNumber?), \(coreImageColor.green as NSNumber?), \(coreImageColor.blue as NSNumber?)")
-        
+
         if (textFieldText != "null") {
             if textFieldText.replacingOccurrences(of: " ", with: "") != "" {
                 let newItem = CoreDataController.sharedInstace.saveToCoredata(title: textFieldText,
                                                                               startingDate: startingDate,
                                                                               alarms: alarms,
-                                                                              color: colorLabel)
+                                                                              colorIndex: colorIndex,
+                                                                              color: color)
                 mainViewController.dolist.append(newItem)
                 mainViewController.tableView.reloadData()
             }

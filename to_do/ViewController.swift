@@ -8,26 +8,6 @@
 
 import UIKit
 import CoreData
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l <= r
-  default:
-    return !(rhs < lhs)
-  }
-}
-
 
 class ViewController: UIViewController,
                       UITableViewDataSource,
@@ -53,6 +33,7 @@ class ViewController: UIViewController,
     
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
+    var isInTheMiddleOfLongPressing: Bool = false
     
     var keyboardSubView: AddSubInfo?
     var keyboardAlarmSubView: AlarmSubInfo?
@@ -84,11 +65,6 @@ class ViewController: UIViewController,
         subviewitem.frame.size.width = subviewitem.frame.size.width - 25
         refreshController.addSubview(subviewitem)
         
-        print("view.frame = \(view.frame)")
-        print("tbl.frame = \(tableView.frame)")
-        print("refreshView.frame = \(subviewitem.frame)")
-        print("refreshControl.bounds = \(refreshController.bounds)")
-        
         let margins = refreshController.layoutMarginsGuide
         subviewitem.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         subviewitem.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
@@ -116,6 +92,7 @@ class ViewController: UIViewController,
             keyboardSubView?.delegate = customDelegateHandler
             keyboardSubView?.selectedColorIndex = currentWorkingColorIndex
             keyboardSubView?.alarmCount = currentWorkingAlarms.count
+            subviewitem.titleField.text = currentWorkingTitle
             dummyView.addSubview(keyboardSubView!)
         }
         else {
@@ -152,11 +129,6 @@ class ViewController: UIViewController,
     func didRefresh() {
         showRefreshControl()
         subviewitem.titleField.becomeFirstResponder()
-        
-        currentWorkingStartingDate = Date()
-        currentWorkingAlarms = [Date]()
-        currentWorkingColorIndex = 0
-        currentWorkingColor = UIColor.gray
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -179,7 +151,7 @@ class ViewController: UIViewController,
     */
     func tableViewTapped(_ gesture: UITapGestureRecognizer) {
         if isInTheMiddleOfEnteringItem {
-            if gesture.location(in: self.dummyView).y < self.keyboardSubView?.frame.origin.y {
+            if gesture.location(in: self.dummyView).y < (self.keyboardSubView?.frame.origin.y)! {
                 dismissRefreshControl()
             }
         }
@@ -207,18 +179,36 @@ class ViewController: UIViewController,
                 self.keyboardSubView = nil
                 self.keyboardAlarmSubView = nil
             }
-        }) 
+        })
+        
+        let newOffset = CGPoint(x: 0, y: 0)
+        tableView.setContentOffset(newOffset, animated: true)
     
         subviewitem.titleField.endEditing(true)
         refreshController.endRefreshing()
         isInTheMiddleOfEnteringItem = false
         isRefreshControlFullyVisible = false
+        isInTheMiddleOfLongPressing = false
+        
+        currentWorkingStartingDate = Date()
+        currentWorkingAlarms = [Date]()
+        currentWorkingColorIndex = 0
+        currentWorkingColor = UIColor.gray
     }
     
     func showRefreshControl() {
+        print("[0] = \(self.view.subviews[0].tag), [1] = \(self.view.subviews[1].tag)")
+
         UIView.animate(withDuration: 0.5, animations: {
+        })
+        
+        UIView.animate(withDuration: 0.5, animations: { 
             self.view.exchangeSubview(at: 0, withSubviewAt: 1)
-        }) 
+        }) { (completed) in
+            if completed {
+                print("after completed > [0] = \(self.view.subviews[0].tag), [1] = \(self.view.subviews[1].tag)")
+            }
+        }
         
         isInTheMiddleOfEnteringItem = true
     }
@@ -234,7 +224,7 @@ class ViewController: UIViewController,
         
         cell?.backgroundColor = UIColor.clear
         cell?.originalTitle = doItem.title
-        cell?.index = (indexPath as NSIndexPath).row
+        cell?.index = indexPath.row
         cell?.delegate = customDelegateHandler
         
         if doItem.lineflag == NSNumber(value: true as Bool) {
@@ -255,6 +245,7 @@ class ViewController: UIViewController,
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
         lpgr.minimumPressDuration = 1.0
         cell?.addGestureRecognizer(lpgr)
+        cell?.tag = indexPath.row
         
         return cell!
     }
@@ -262,19 +253,6 @@ class ViewController: UIViewController,
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         (tableView.cellForRow(at: indexPath) as! ToDoListTableViewCell).isEditingMode = true
         UIButton.appearance().setTitleColor(UIColor.black, for: UIControlState())
-        
-        let currentTodoItem = dolist[indexPath.row]
-        
-        let editAction = UITableViewRowAction(style: .normal, title: "🖊", handler:{ action, indexpath in
-            //edit Action codes
-            self.didRefresh()
-            self.subviewitem.titleField.text = currentTodoItem.title
-            self.currentWorkingColorIndex = currentTodoItem.color?.index as! Int
-            self.currentWorkingStartingDate = currentTodoItem.startingDate!
-            
-        });
-        
-        editAction.backgroundColor = UIColor.white
         
         let deleteAction = UITableViewRowAction(style: .normal, title: "╳", handler:{ action, indexpath in
             //delete action codes
@@ -286,7 +264,7 @@ class ViewController: UIViewController,
         });
         deleteAction.backgroundColor = UIColor.white
         
-        return [deleteAction, editAction]
+        return [deleteAction]
     }
     
     
@@ -299,7 +277,28 @@ class ViewController: UIViewController,
     }
     
     func cellLongPressed(_ gesture: UILongPressGestureRecognizer) {
-        print("long pressed...")
+        if !isInTheMiddleOfLongPressing {
+            print("long pressed...\(gesture.view!.tag)")
+            
+            let currentTodoItem = dolist[gesture.view!.tag]
+            
+            self.currentWorkingTitle = currentTodoItem.title!
+            self.currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+            self.currentWorkingStartingDate = currentTodoItem.startingDate!
+            
+            for alarm in currentTodoItem.alarms! {
+                self.currentWorkingAlarms.append((alarm as! Alarm).alarm!)
+            }
+
+//            refreshController.beginRefreshing()
+            let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshController.frame.size.height*2))
+            tableView.setContentOffset(newOffset, animated: true)
+            didRefresh()
+            
+            
+            self.subviewitem.titleField.text = currentTodoItem.title
+            isInTheMiddleOfLongPressing = true
+        }
     }
 }
 
