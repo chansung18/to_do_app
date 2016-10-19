@@ -282,12 +282,12 @@ class ViewController: UIViewController,
             
             let currentTodoItem = dolist[gesture.view!.tag]
             
-            self.currentWorkingTitle = currentTodoItem.title!
-            self.currentWorkingColorIndex = currentTodoItem.color?.index as! Int
-            self.currentWorkingStartingDate = currentTodoItem.startingDate!
+            currentWorkingTitle = currentTodoItem.title!
+            currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+            currentWorkingStartingDate = currentTodoItem.startingDate!
             
             for alarm in currentTodoItem.alarms! {
-                self.currentWorkingAlarms.append((alarm as! Alarm).alarm!)
+                currentWorkingAlarms.append((alarm as! Alarm).alarm!)
             }
 
 //            refreshController.beginRefreshing()
@@ -295,8 +295,7 @@ class ViewController: UIViewController,
             tableView.setContentOffset(newOffset, animated: true)
             didRefresh()
             
-            
-            self.subviewitem.titleField.text = currentTodoItem.title
+            subviewitem.titleField.text = currentTodoItem.title
             isInTheMiddleOfLongPressing = true
         }
     }

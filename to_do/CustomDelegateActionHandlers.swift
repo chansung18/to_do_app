@@ -172,7 +172,6 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
      - toDoItemAddClicked()
     */
     func toDoItemAddClicked() {
-        mainViewController.dismissRefreshControl()
         let subviewitem = mainViewController.subviewitem
         let color = mainViewController.currentWorkingColor
         let colorIndex = mainViewController.currentWorkingColorIndex
@@ -194,6 +193,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         }
         
         mainViewController.subviewitem.titleField.text = ""
+        mainViewController.dismissRefreshControl()
     }
 
 }
