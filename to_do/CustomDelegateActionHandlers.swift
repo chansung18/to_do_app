@@ -23,8 +23,6 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
     func cellValueChanged(_ cell: ToDoListTableViewCell) {
         let index = cell.index
         
-        print("cellValueChanged is called on Cell Index \(index)")
-        
         mainViewController.dolist[index].title = cell.originalTitle
         mainViewController.dolist[index].lineflag = cell.isCrossedOut as NSNumber?
     }
@@ -37,64 +35,64 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
      - alarmSelectionClicked(_ alarmIndex: Int, appear: Bool)
     */
     func addAlarmClicked(_ addAction: Bool) {
-        let keyboardSubView = mainViewController.keyboardSubView
-        let keyboardAlarmSubView = mainViewController.keyboardAlarmSubView
-        let subviewitem = mainViewController.subviewitem
+        let colorAlarmSelectionView = mainViewController.colorAlarmSelectionView
+        let alarmDateChoosingView = mainViewController.alarmDateChoosingView
+        let refreshView = mainViewController.refreshView
         var alarms = mainViewController.currentWorkingAlarms
         
         if addAction {
             if alarms.count <= 3 {
-                if keyboardSubView?.alarmAddButtonToggle == false {
-                    print("keyboardSubView?.alarmAddButtonToggle == false")
-                    subviewitem.titleField.endEditing(true)
-                    mainViewController.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
-                    let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                if colorAlarmSelectionView?.alarmAddButtonToggle == false {
+                    print("colorAlarmSelectionView?.alarmAddButtonToggle == false")
+                    refreshView.titleField.endEditing(true)
+                    mainViewController.alarmdate = (alarmDateChoosingView?.getAlarmDate())! as Date
+                    let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 5
                     UIView.animate(withDuration: 0.35, animations: {
-                        self.mainViewController.keyboardAlarmSubView?.frame.origin.y = y
+                        self.mainViewController.alarmDateChoosingView?.frame.origin.y = y
                     })
                 }
                 else {
-                    print("keyboardSubView?.alarmAddButtonToggle == true")
-                    subviewitem.titleField.resignFirstResponder()
-                    subviewitem.titleField.endEditing(true)
-                    mainViewController.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
-                    let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+                    print("colorAlarmSelectionView?.alarmAddButtonToggle == true")
+                    refreshView.titleField.resignFirstResponder()
+                    refreshView.titleField.endEditing(true)
+                    mainViewController.alarmdate = (alarmDateChoosingView?.getAlarmDate())! as Date
+                    let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 5
                     UIView.animate(withDuration: 0.35, animations: {
-                        self.mainViewController.keyboardAlarmSubView?.frame.origin.y = y
+                        self.mainViewController.alarmDateChoosingView?.frame.origin.y = y
                     })
                     
-                    keyboardAlarmSubView?.delegate = self
+                    alarmDateChoosingView?.delegate = self
                 }
             }
         }
         else {
             if alarms.count <= 3 {
                 //delete alarm
-                let alarmIndexSelected = keyboardSubView?.getcurrentSelectedAlarmIndexArray()
+                let alarmIndexSelected = colorAlarmSelectionView?.getcurrentSelectedAlarmIndexArray()
 //                                    print("alarmIndexSlected   :  ",alarmIndexSelected)
                 
-                if ((keyboardSubView?.alarmAddButtonToggle)! == false && alarmIndexSelected! ){
+                if ((colorAlarmSelectionView?.alarmAddButtonToggle)! == false && alarmIndexSelected! ){
                     let alert = UIAlertController(title: "박사장님 짱", message: "지울꺼야 ㅜㅜ", preferredStyle: UIAlertControllerStyle.alert)
                     
                     let yesAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-                        keyboardSubView?.alarmCount = (keyboardSubView?.alarmCount)! - 1
+                        colorAlarmSelectionView?.alarmCount = (colorAlarmSelectionView?.alarmCount)! - 1
                         
-                        let currentSelectedAlarmIndex = keyboardSubView?.getcurrentSelectedAlarmIndex()
+                        let currentSelectedAlarmIndex = colorAlarmSelectionView?.getcurrentSelectedAlarmIndex()
                         
                         switch currentSelectedAlarmIndex! {
                         case 0 :
-                            keyboardSubView?.firstAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                            colorAlarmSelectionView?.firstAlarmBack.layer.borderColor = UIColor.gray.cgColor
                         case 1 :
-                            keyboardSubView?.secondAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                            colorAlarmSelectionView?.secondAlarmBack.layer.borderColor = UIColor.gray.cgColor
                         case 2 :
-                            keyboardSubView?.thirdAlarmBack.layer.borderColor = UIColor.gray.cgColor
+                            colorAlarmSelectionView?.thirdAlarmBack.layer.borderColor = UIColor.gray.cgColor
                         default:
                             print("Out of Range")
                         }
             
-                        keyboardSubView?.selectedAlarmArray[currentSelectedAlarmIndex! + 1] = false
+                        colorAlarmSelectionView?.selectedAlarmArray[currentSelectedAlarmIndex! + 1] = false
                         
-                        subviewitem.titleField.becomeFirstResponder()
+                        refreshView.titleField.becomeFirstResponder()
                         
                         alarms.remove(at: currentSelectedAlarmIndex!)
                         print("after deleting alarm list\n \(alarms)")
@@ -107,24 +105,24 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
                     self.mainViewController.present(alert, animated: true, completion: nil)
                 }
                 else{
-                    subviewitem.titleField.becomeFirstResponder()
+                    refreshView.titleField.becomeFirstResponder()
                 }
             }
         }
     }
     
     func confirmAlarmClicked(alarmInfoView: AddSubInfo, alarmIndex: Int) {
-        let keyboardAlarmSubView = mainViewController.keyboardAlarmSubView
-        let subviewitem = mainViewController.subviewitem
+        let alarmDateChoosingView = mainViewController.alarmDateChoosingView
+        let refreshView = mainViewController.refreshView
         var currentSelectedAlarmIndex = mainViewController.currentSelectedAlarmIndex
         
         if alarmIndex >= 3 {
-            subviewitem.titleField.becomeFirstResponder()
+            refreshView.titleField.becomeFirstResponder()
         }
         
-        let day = keyboardAlarmSubView!.day * 12 * 60 * 60
-        let hour = keyboardAlarmSubView!.hour * 60 * 60
-        let minute = keyboardAlarmSubView!.minute * 60
+        let day = alarmDateChoosingView!.day * 12 * 60 * 60
+        let hour = alarmDateChoosingView!.hour * 60 * 60
+        let minute = alarmDateChoosingView!.minute * 60
         let interval = day + hour + minute
         
         currentSelectedAlarmIndex?[alarmIndex] = 1
@@ -138,20 +136,20 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
     }
     
     func alarmSelectionClicked(_ alarmIndex: Int, appear: Bool) {
-        let keyboardSubView = mainViewController.keyboardSubView
-        let keyboardAlarmSubView = mainViewController.keyboardAlarmSubView
-        let subviewitem = mainViewController.subviewitem
+        let colorAlarmSelectionView = mainViewController.colorAlarmSelectionView
+        let alarmDateChoosingView = mainViewController.alarmDateChoosingView
+        let refreshView = mainViewController.refreshView
         
         if appear {
-            subviewitem.titleField.endEditing(true)
-            self.mainViewController.alarmdate = (keyboardAlarmSubView?.getAlarmDate())! as Date
-            let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 5
+            refreshView.titleField.endEditing(true)
+            self.mainViewController.alarmdate = (alarmDateChoosingView?.getAlarmDate())! as Date
+            let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 5
             UIView.animate(withDuration: 0.35, animations: {
-                self.mainViewController.keyboardAlarmSubView?.frame.origin.y = y
+                self.mainViewController.alarmDateChoosingView?.frame.origin.y = y
             })
         }
         else {
-            subviewitem.titleField.becomeFirstResponder()
+            refreshView.titleField.becomeFirstResponder()
         }
     }
     
@@ -164,21 +162,20 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
      AlarmSubinfoDelegate Methods
      - alarmChanged()
     */
-    func alarmChanged() {
-    }
+    func alarmChanged() { }
     
     /*
      AddTodoItemDelegate Methods
      - toDoItemAddClicked()
     */
     func toDoItemAddClicked() {
-        let subviewitem = mainViewController.subviewitem
+        let refreshView = mainViewController.refreshView
         let color = mainViewController.currentWorkingColor
         let colorIndex = mainViewController.currentWorkingColorIndex
         let startingDate = mainViewController.currentWorkingStartingDate
         let alarms = mainViewController.currentWorkingAlarms
         
-        let textFieldText = subviewitem.getTitleText()
+        let textFieldText = refreshView.getTitleText()
 
         if (textFieldText != "null") {
             if textFieldText.replacingOccurrences(of: " ", with: "") != "" {
@@ -192,7 +189,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
             }
         }
         
-        mainViewController.subviewitem.titleField.text = ""
+        mainViewController.refreshView.titleField.text = ""
         mainViewController.dismissRefreshControl()
     }
 

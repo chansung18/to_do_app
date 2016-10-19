@@ -16,8 +16,16 @@ class ViewController: UIViewController,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dummyView: UIView!
     
+    /* 
+     Delegate Methods in Custom UI,
+     all is implemented in CustomDelegateActionHandlers 
+    */
     var customDelegateHandler: CustomDelegateActionHandlers!
     
+    /* 
+     current* something variable is currently working data
+     while editing Dolist or creating new Dolist item
+    */
     var currentWorkingTitle: String = String()
     var currentWorkingColorIndex: Int = 0
     var currentWorkingColor: UIColor = UIColor.gray
@@ -28,16 +36,20 @@ class ViewController: UIViewController,
     var dolist = [Dolist]()
     var alarmdate : Date?
     
-    var refreshController = UIRefreshControl()
-    let subviewitem : RefreshView = RefreshView()
-    
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
     var isInTheMiddleOfLongPressing: Bool = false
     
-    var keyboardSubView: AddSubInfo?
-    var keyboardAlarmSubView: AlarmSubInfo?
+    /* RefreshControl and Custom RefreshView in it */
+    var refreshControl = UIRefreshControl()
+    let refreshView : RefreshView = RefreshView()
+   
+    /* Color/Alarm Selection View */
+    var colorAlarmSelectionView: AddSubInfo?
     
+    /* Alarm date choosing View */
+    var alarmDateChoosingView: AlarmSubInfo?
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -52,94 +64,100 @@ class ViewController: UIViewController,
         
         customDelegateHandler = CustomDelegateActionHandlers(viewController: self)
         
-        //make UITapGestureRecognizer when tapping dummyview which is for fake
+        // make UITapGestureRecognizer when tapping dummyview which is for fake
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         dummyView.addGestureRecognizer(tapGesture)
         
-        refreshController.alpha = 0.0
+        refreshControl.alpha = 0.0
+        refreshControl.frame.size.width = view.frame.size.width
+        refreshControl.tintColor = UIColor.clear
         
-        refreshController.frame.size.width = view.frame.size.width
-        refreshController.tintColor = UIColor.clear
-        subviewitem.delegate = customDelegateHandler
-        subviewitem.frame = refreshController.bounds
-        subviewitem.frame.size.width = subviewitem.frame.size.width - 25
-        refreshController.addSubview(subviewitem)
+        refreshView.delegate = customDelegateHandler
+        refreshView.frame = refreshControl.bounds
+        refreshView.frame.size.width = refreshView.frame.size.width - 25
+        refreshControl.addSubview(refreshView)
+
+        // deleted in order to check if these constraints are in need
+        // when it is ok to be decided, it will gone in later version
         
-        let margins = refreshController.layoutMarginsGuide
-        subviewitem.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        subviewitem.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-        subviewitem.topAnchor.constraint(equalTo: margins.topAnchor, constant: 1.0)
+//        let margins = refreshControl.layoutMarginsGuide
+//        refreshView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+//        refreshView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+//        refreshView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 1.0)
         
-        refreshController.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
-        tableView.addSubview(refreshController)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
     }
     
     func keyboardWillShow(_ nofification : Notification){
-        /*Keyboard Infromation Retrieving*/
-        let userInfo:NSDictionary = (nofification as NSNotification).userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height
+        /* Keyboard Infromation Retrieving */
+        let userInfo: NSDictionary = (nofification as NSNotification).userInfo! as NSDictionary
+        let keyboardFrame: NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardArea = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardArea.height
         
-        if keyboardSubView == nil {
-            keyboardSubView = AddSubInfo(frame: CGRect(x: 0,
+        if colorAlarmSelectionView == nil {
+            colorAlarmSelectionView = AddSubInfo(frame: CGRect(x: 0,
                                                    y: dummyView.frame.height - keyboardHeight - 150,
                                                    width: dummyView.frame.width,
                                                    height: 150))
-            keyboardSubView?.delegate = customDelegateHandler
-            keyboardSubView?.selectedColorIndex = currentWorkingColorIndex
-            keyboardSubView?.alarmCount = currentWorkingAlarms.count
-            subviewitem.titleField.text = currentWorkingTitle
-            dummyView.addSubview(keyboardSubView!)
+            colorAlarmSelectionView?.delegate = customDelegateHandler
+            colorAlarmSelectionView?.selectedColorIndex = currentWorkingColorIndex
+            colorAlarmSelectionView?.alarmCount = currentWorkingAlarms.count
+            refreshView.titleField.text = currentWorkingTitle
+            dummyView.addSubview(colorAlarmSelectionView!)
         }
         else {
             UIView.animate(withDuration: 0.2, animations: {
-                self.keyboardSubView?.alpha = 1
+                self.colorAlarmSelectionView?.alpha = 1
             })
         }
             
         let x = CGFloat(0)
-        let y = keyboardSubView!.frame.origin.y + keyboardSubView!.frame.size.height - 10
+        let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 10
         let width = dummyView.frame.size.width
         let height = keyboardHeight + 50
-        self.keyboardSubView?.delegate = customDelegateHandler
-        if keyboardAlarmSubView == nil {
-            keyboardAlarmSubView = AlarmSubInfo(frame: CGRect(x: x, y: y + height, width: width, height: height))
-            keyboardAlarmSubView?.alpha = 1
-            dummyView.addSubview(keyboardAlarmSubView!)
+        self.colorAlarmSelectionView?.delegate = customDelegateHandler
+        
+        if alarmDateChoosingView == nil {
+            alarmDateChoosingView = AlarmSubInfo(frame: CGRect(x: x, y: y + height, width: width, height: height))
+            alarmDateChoosingView?.alpha = 1
+            dummyView.addSubview(alarmDateChoosingView!)
             
-            let dummyTapGesture = UITapGestureRecognizer(target: self, action: #selector(keyboardSubViewTapped))
-            keyboardAlarmSubView?.addGestureRecognizer(dummyTapGesture)
-            keyboardSubView?.addGestureRecognizer(dummyTapGesture)
+            let dummyTapGesture = UITapGestureRecognizer(target: self, action: #selector(colorAlarmSelectionViewTapped))
+            alarmDateChoosingView?.addGestureRecognizer(dummyTapGesture)
+            colorAlarmSelectionView?.addGestureRecognizer(dummyTapGesture)
         }
         else {
             UIView.animate(withDuration: 0.2, animations: {
-                self.keyboardAlarmSubView?.frame.origin.y = y + height
+                self.alarmDateChoosingView?.frame.origin.y = y + height
             }) 
             
-            keyboardAlarmSubView?.day = 77 
+            alarmDateChoosingView?.day = 77 
         }
     }
     
-    func keyboardSubViewTapped(_ gesture: UITapGestureRecognizer) { /* do nothing */ }
+    func colorAlarmSelectionViewTapped(_ gesture: UITapGestureRecognizer) { /* do nothing */ }
     
     func didRefresh() {
         showRefreshControl()
-        subviewitem.titleField.becomeFirstResponder()
+        refreshView.titleField.becomeFirstResponder()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pullDistance = max(0.0, -refreshController.frame.origin.y);
+        let pullDistance = max(0.0, -refreshControl.frame.origin.y);
 
         if pullDistance > 0 && isRefreshControlFullyVisible == false {
-            refreshController.alpha = pullDistance * 0.01
+            refreshControl.alpha = pullDistance * 0.01
         }
         
-        if refreshController.alpha >= 1 {
-            refreshController.alpha = 1
+        if refreshControl.alpha >= 1 {
+            refreshControl.alpha = 1
             isRefreshControlFullyVisible = true
         }
     }
@@ -151,7 +169,7 @@ class ViewController: UIViewController,
     */
     func tableViewTapped(_ gesture: UITapGestureRecognizer) {
         if isInTheMiddleOfEnteringItem {
-            if gesture.location(in: self.dummyView).y < (self.keyboardSubView?.frame.origin.y)! {
+            if gesture.location(in: self.dummyView).y < (self.colorAlarmSelectionView?.frame.origin.y)! {
                 dismissRefreshControl()
             }
         }
@@ -167,25 +185,25 @@ class ViewController: UIViewController,
         }) 
         
         UIView.animate(withDuration: 0.5, animations: { 
-            self.refreshController.alpha = 0.0
-            self.keyboardSubView?.alpha = 0
-            self.keyboardAlarmSubView?.frame.origin.y = self.keyboardAlarmSubView!.frame.origin.y + self.keyboardAlarmSubView!.frame.height
+            self.refreshControl.alpha = 0.0
+            self.colorAlarmSelectionView?.alpha = 0
+            self.alarmDateChoosingView?.frame.origin.y = self.alarmDateChoosingView!.frame.origin.y + self.alarmDateChoosingView!.frame.height
         },
         completion: { (completed) in
             if completed {
-                self.keyboardSubView?.removeFromSuperview()
-                self.keyboardAlarmSubView?.removeFromSuperview()
+                self.colorAlarmSelectionView?.removeFromSuperview()
+                self.alarmDateChoosingView?.removeFromSuperview()
                 
-                self.keyboardSubView = nil
-                self.keyboardAlarmSubView = nil
+                self.colorAlarmSelectionView = nil
+                self.alarmDateChoosingView = nil
             }
         })
         
         let newOffset = CGPoint(x: 0, y: 0)
         tableView.setContentOffset(newOffset, animated: true)
     
-        subviewitem.titleField.endEditing(true)
-        refreshController.endRefreshing()
+        refreshView.titleField.endEditing(true)
+        refreshControl.endRefreshing()
         isInTheMiddleOfEnteringItem = false
         isRefreshControlFullyVisible = false
         isInTheMiddleOfLongPressing = false
@@ -197,18 +215,9 @@ class ViewController: UIViewController,
     }
     
     func showRefreshControl() {
-        print("[0] = \(self.view.subviews[0].tag), [1] = \(self.view.subviews[1].tag)")
-
         UIView.animate(withDuration: 0.5, animations: {
-        })
-        
-        UIView.animate(withDuration: 0.5, animations: { 
             self.view.exchangeSubview(at: 0, withSubviewAt: 1)
-        }) { (completed) in
-            if completed {
-                print("after completed > [0] = \(self.view.subviews[0].tag), [1] = \(self.view.subviews[1].tag)")
-            }
-        }
+        })
         
         isInTheMiddleOfEnteringItem = true
     }
@@ -290,12 +299,11 @@ class ViewController: UIViewController,
                 currentWorkingAlarms.append((alarm as! Alarm).alarm!)
             }
 
-//            refreshController.beginRefreshing()
-            let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshController.frame.size.height*2))
+            let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshControl.frame.size.height*2))
             tableView.setContentOffset(newOffset, animated: true)
             didRefresh()
             
-            subviewitem.titleField.text = currentTodoItem.title
+            refreshView.titleField.text = currentTodoItem.title
             isInTheMiddleOfLongPressing = true
         }
     }

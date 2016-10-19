@@ -21,14 +21,13 @@ class CoreDataController {
     fileprivate init() {}
     
     func saveToCoredata(title: String, startingDate: Date, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+        /* Create Dolist CoreData Object */
         let doListEntityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
         let doListObject = Dolist(entity: doListEntityDescription!, insertInto: managedObjectContext)
         
+        /* Create Color CoreData Object */
         let colorDescription = NSEntityDescription.entity(forEntityName: "Color", in: managedObjectContext)
         let colorObject = Color(entity: colorDescription!, insertInto: managedObjectContext)
-        
-        doListObject.title = title
-        doListObject.startingDate = startingDate
         
         let coreImageColor = CoreImage.CIColor(color: color)
         colorObject.r = (coreImageColor.red * 256) as NSNumber!
@@ -36,14 +35,22 @@ class CoreDataController {
         colorObject.b = (coreImageColor.blue * 256) as NSNumber!
         colorObject.a = NSNumber(integerLiteral: 1)
         colorObject.index = colorIndex as NSNumber!
-        doListObject.color = colorObject
+
+        doListObject.title = title
+        doListObject.startingDate = startingDate
+        doListObject.color = colorObject            // hooking up Dolist with Color CoreData Object (relation)
         
         for alarm in alarms {
+            /* Create Alarm CoreData Object */
             let alarmDescription = NSEntityDescription.entity(forEntityName: "Alarm", in: managedObjectContext)
             let alarmObject = Alarm(entity: alarmDescription!, insertInto: managedObjectContext)
             alarmObject.alarm = alarm
             
             if let alarmsInDoList = doListObject.alarms {
+                /* 
+                   datatype for alarms list in Dolist is NSSet
+                   make the NSSet mutable to store alarms 
+                 */
                 let tmpAlarmsInDoList = NSMutableSet(set: alarmsInDoList)
                 tmpAlarmsInDoList.addObjects(from: [alarmObject])
                 doListObject.alarms = tmpAlarmsInDoList
@@ -56,33 +63,27 @@ class CoreDataController {
     
     func loadFromCoredata() -> [Dolist]{
         var dolist = [Dolist]()
+        var request: NSFetchRequest<NSFetchRequestResult>?
         
-        var request : NSFetchRequest<NSFetchRequestResult>?
         if #available(iOS 10.0, *) {
-             request  = Dolist.fetchRequest()
+            request = Dolist.fetchRequest()
         } else {
-            // Fallback on earlier versions
-             request = nil;
+            request = NSFetchRequest(entityName: "Dolist")
         }
         
-        let error :NSError? = nil
-        do {
-            try dolist = managedObjectContext.fetch(request!) as! [Dolist]
-        }
-        catch {error}
-        
-        if error != nil {
-            print("Error : " + String(describing: error))
-        }
-        else {
-            for doItem in dolist {
-                print("doItem : \(doItem.title)")
-                
-                for alarm in doItem.alarms! {
-                    let a = alarm as! Alarm
-                    print("alarm : \(a.alarm?.description)")
-                }
+        if let request = request {
+            do {
+                dolist = try managedObjectContext.fetch(request) as! [Dolist]
             }
+            catch {
+                fatalError("Error while loading dolist from coredata storage")
+            }
+        }
+        
+        if !dolist.isEmpty {
+            //for doItem in dolist {
+            //  do something to print or check if wanting to inspect dolist data
+            //}
         }
         
         return dolist
@@ -94,19 +95,11 @@ class CoreDataController {
     }
     
     func saveContext() {
-        let error :NSError? = nil
         do {
             try managedObjectContext.save()
         }
         catch {
-            error
-        }
-        
-        if error != nil {
-            print("Error : " + String(describing: error))
-        }
-        else {
-            print("saved")
+            fatalError("Error while saving data into Coredata Storage")
         }
     }
 }
