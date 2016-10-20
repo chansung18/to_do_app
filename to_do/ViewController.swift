@@ -26,6 +26,7 @@ class ViewController: UIViewController,
      current* something variable is currently working data
      while editing Dolist or creating new Dolist item
     */
+    var fixDolist : Bool = false
     var currentWorkingTitle: String = String()
     var currentWorkingColorIndex: Int = 0
     var currentWorkingColor: UIColor = UIColor.gray
@@ -259,7 +260,7 @@ class ViewController: UIViewController,
         gaugeView.alpha = 0.2
         cell?.contentView.subviews[0].addSubview(gaugeView)
         cell?.contentView.subviews[0].sendSubview(toBack: gaugeView)
-        
+       
         print("\(cell?.contentView.subviews[0].subviews.count)")
         
         return cell!
@@ -290,25 +291,38 @@ class ViewController: UIViewController,
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print("cell selection")
     }
+    func getSelectedAlarmBoolean() -> Array<Bool>{
+        return (colorAlarmSelectionView?.selectedAlarmArray)!
+    }
     
     func cellLongPressed(_ gesture: UILongPressGestureRecognizer) {
         if !isInTheMiddleOfLongPressing {
             print("long pressed...\(gesture.view!.tag)")
             
             let currentTodoItem = dolist[gesture.view!.tag]
-            
+            fixDolist = true
             currentWorkingTitle = currentTodoItem.title!
             currentWorkingColorIndex = currentTodoItem.color?.index as! Int
             currentWorkingStartingDate = currentTodoItem.startingDate!
-            
+            var alarmIndex = 1
             for alarm in currentTodoItem.alarms! {
                 currentWorkingAlarms.append((alarm as! Alarm).alarm!)
+                print("\n\n\ncurntl alarm : " + String(describing: alarm) + "\n")
+                print("currentWorkingColorIndex  :  ", currentWorkingColorIndex)
+                colorAlarmSelectionView?.selectedAlarmArray[alarmIndex] = true
+                print("colorAlarmSelectionView?.selectedAlarmArray[alarmIndex] = true  :  " , colorAlarmSelectionView?.selectedAlarmArray[alarmIndex])
+                colorAlarmSelectionView?.setAlarmFlag(index: alarmIndex)
+                alarmIndex = alarmIndex + 1
             }
+
 
             let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshControl.frame.size.height*2))
             tableView.setContentOffset(newOffset, animated: true)
             didRefresh()
             
+            colorAlarmSelectionView?.selectedAlarmArray = Array(repeating:true, count:alarmIndex)
+            print("\n\n\ncolorAlarmSelectionView?.selectedAlarmArray   : ", colorAlarmSelectionView?.selectedAlarmArray)
+            colorAlarmSelectionView?.fixAlarmFlag = true
             refreshView.titleField.text = currentTodoItem.title
             isInTheMiddleOfLongPressing = true
         }

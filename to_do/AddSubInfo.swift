@@ -17,7 +17,7 @@ protocol AddSubInfoDelegate {
 
 class AddSubInfo: UIView {
     var keyboardHeight:CGFloat?
-    
+    var fixAlarmFlag :Bool = false
     @IBOutlet weak var firstColor: UIButton!
     @IBOutlet weak var secondColor: UIButton!
     @IBOutlet weak var thirdColor: UIButton!
@@ -66,6 +66,7 @@ class AddSubInfo: UIView {
     var alarmAddButtonToggle = false {
         didSet {
             //add
+            print("alarmAddButtonToggle :" ,alarmAddButtonToggle)
             if alarmAddButtonToggle {
                 alarmAddButton.setImage(UIImage(named: "delete"), for: UIControlState())
                 alarmAddButton.setImage(UIImage(named: "delete"), for: .selected)
@@ -81,7 +82,11 @@ class AddSubInfo: UIView {
             }
         }
     }
-    var selectedAlarmArray = Array(repeating:false, count:4)
+    var selectedAlarmArray = Array(repeating:false, count:4){
+        didSet {
+            print("sibacva c va")
+        }
+    }
     
     var currentSelectedAlarmIndex = -1 {
         willSet(newAlarmIndex) {
@@ -89,9 +94,10 @@ class AddSubInfo: UIView {
         }
         
         didSet(newAlarmIndex) {
-//            print("newAlarmIndex -------", newAlarmIndex)
-//            print("currentSelectedAlarmIndex -------", currentSelectedAlarmIndex)
+            print("newAlarmIndex -------", newAlarmIndex)
+            print("currentSelectedAlarmIndex -------", currentSelectedAlarmIndex)
             let selectmeint : Bool?
+   //         print("selectedAlarmArray[currentSelectedAlarmIndex+1]  : " ,selectedAlarmArray[currentSelectedAlarmIndex])
             if currentSelectedAlarmIndex >= 0 {
                 selectmeint = selectedAlarmArray[currentSelectedAlarmIndex+1]
             }else{
@@ -99,6 +105,7 @@ class AddSubInfo: UIView {
             }
             
             if newAlarmIndex != currentSelectedAlarmIndex && selectmeint!{
+                print("alarmAddButtonToggle = true~~~~~~~~~~~~~~")
                 animateAlarmSelection(true)
                 alarmAddButtonToggle = true
                 
@@ -208,7 +215,13 @@ class AddSubInfo: UIView {
         view.layer.shadowRadius = 15
         view.layer.shadowColor = UIColor.black.cgColor
         
+        
+        
         addSubview(view)
+    }
+    func setAlarmFlag( index : Int){
+        
+        self.selectedAlarmArray[index] = true
     }
     
     func setVisibleAlarmItems() {
@@ -330,7 +343,7 @@ class AddSubInfo: UIView {
         if alarmCount <= 3 {
             alarmAddButtonToggle = !alarmAddButtonToggle
             delegate?.addAlarmClicked(alarmAddButtonToggle)
-//            print("///////////////////alarmAddButtonToggle  :  ", alarmAddButtonToggle)
+//           print("///////////////////alarmAddButtonToggle  :  ", alarmAddButtonToggle)
         }
         if alarmAddButtonToggle == false {
             alarmComfirmButton.alpha = 0.3
@@ -369,7 +382,9 @@ class AddSubInfo: UIView {
     
     @IBAction func alarmClicked(_ sender: UIButton) {
         currentSelectedAlarmIndex = sender.tag
-        if alarmAddButtonToggle {
+        
+        if alarmAddButtonToggle || fixAlarmFlag{
+            print("hello")
             alarmComfirmButton.alpha = 0.3
             alarmComfirmButton.isEnabled = false
         }else{

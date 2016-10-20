@@ -40,6 +40,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let refreshView = mainViewController.refreshView
         var alarms = mainViewController.currentWorkingAlarms
         
+
         if addAction {
             if alarms.count <= 3 {
                 if colorAlarmSelectionView?.alarmAddButtonToggle == false {
@@ -140,6 +141,9 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let alarmDateChoosingView = mainViewController.alarmDateChoosingView
         let refreshView = mainViewController.refreshView
         
+        
+        
+        
         if appear {
             refreshView.titleField.endEditing(true)
             self.mainViewController.alarmdate = (alarmDateChoosingView?.getAlarmDate())! as Date
@@ -174,6 +178,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let colorIndex = mainViewController.currentWorkingColorIndex
         let startingDate = mainViewController.currentWorkingStartingDate
         let alarms = mainViewController.currentWorkingAlarms
+        //let selectedAlarmArray = mainViewController.colorAlarmSelectionView?.selectedAlarmArray
         
         let textFieldText = refreshView.getTitleText()
 

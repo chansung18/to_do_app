@@ -195,6 +195,7 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
         dayCount.text = dateFormatter.string(from: alarmTime)
         delegate?.alarmChanged()
     }
+
     func getAlarmDate()-> Date{
         let currentTime = Date()
         let dayInSeconds = day * 24 * 60 * 60
