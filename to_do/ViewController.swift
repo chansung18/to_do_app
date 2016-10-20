@@ -228,7 +228,7 @@ class ViewController: UIViewController,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as? ToDoListTableViewCell
-
+        
         let doItem = dolist[(indexPath as NSIndexPath).row]
         
         cell?.backgroundColor = UIColor.clear
@@ -242,19 +242,25 @@ class ViewController: UIViewController,
             cell?.titleLabel.attributedText = attributeString
         }
         
-        if let color = doItem.color {
-            let colorR = CGFloat(color.r!) / 255
-            let colorG = CGFloat(color.g!) / 255
-            let colorB = CGFloat(color.b!) / 255
+        let colorR = CGFloat(doItem.color!.r!) / 255
+        let colorG = CGFloat(doItem.color!.g!) / 255
+        let colorB = CGFloat(doItem.color!.b!) / 255
         
-            let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
-            cell?.colorButton.backgroundColor = labelColor
-        }
+        let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
+        cell?.colorButton.backgroundColor = labelColor
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
         lpgr.minimumPressDuration = 1.0
         cell?.addGestureRecognizer(lpgr)
         cell?.tag = indexPath.row
+        
+        let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: cell!.frame.height))
+        gaugeView.backgroundColor = labelColor
+        gaugeView.alpha = 0.2
+        cell?.contentView.subviews[0].addSubview(gaugeView)
+        cell?.contentView.subviews[0].sendSubview(toBack: gaugeView)
+        
+        print("\(cell?.contentView.subviews[0].subviews.count)")
         
         return cell!
     }
