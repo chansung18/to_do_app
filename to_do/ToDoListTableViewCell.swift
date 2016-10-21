@@ -122,7 +122,6 @@ class ToDoListTableViewCell: UITableViewCell {
     func didSwipeToRight(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == UISwipeGestureRecognizerDirection.right {
             
-            
            print("hey there, right swipe gesture? - \(gesture.location(in: self))")
             if isCrossedOut {
                 let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)

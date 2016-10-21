@@ -26,12 +26,12 @@ class ViewController: UIViewController,
      current* something variable is currently working data
      while editing Dolist or creating new Dolist item
     */
-    var fixDolist : Bool = false
     var currentWorkingTitle: String = String()
     var currentWorkingColorIndex: Int = 0
     var currentWorkingColor: UIColor = UIColor.gray
     var currentWorkingAlarms: [Date] = [Date]()
     var currentWorkingStartingDate: Date = Date()
+    var isCurrentWorkingNewItem: Bool = true
     
     var currentSelectedAlarmIndex: [Int]?
     var dolist = [Dolist]()
@@ -77,14 +77,6 @@ class ViewController: UIViewController,
         refreshView.frame = refreshControl.bounds
         refreshView.frame.size.width = refreshView.frame.size.width - 25
         refreshControl.addSubview(refreshView)
-
-        // deleted in order to check if these constraints are in need
-        // when it is ok to be decided, it will gone in later version
-        
-//        let margins = refreshControl.layoutMarginsGuide
-//        refreshView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-//        refreshView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-//        refreshView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 1.0)
         
         refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -208,6 +200,7 @@ class ViewController: UIViewController,
         isInTheMiddleOfEnteringItem = false
         isRefreshControlFullyVisible = false
         isInTheMiddleOfLongPressing = false
+        isCurrentWorkingNewItem = true
         
         currentWorkingStartingDate = Date()
         currentWorkingAlarms = [Date]()
@@ -283,16 +276,8 @@ class ViewController: UIViewController,
         return [deleteAction]
     }
     
-    
-    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-        //(tableView.cellForRowAtIndexPath(indexPath) as! ToDoListTableViewCell).isEditingMode = false
-    }
-    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print("cell selection")
-    }
-    func getSelectedAlarmBoolean() -> Array<Bool>{
-        return (colorAlarmSelectionView?.selectedAlarmArray)!
     }
     
     func cellLongPressed(_ gesture: UILongPressGestureRecognizer) {
@@ -300,32 +285,30 @@ class ViewController: UIViewController,
             print("long pressed...\(gesture.view!.tag)")
             
             let currentTodoItem = dolist[gesture.view!.tag]
-            fixDolist = true
             currentWorkingTitle = currentTodoItem.title!
             currentWorkingColorIndex = currentTodoItem.color?.index as! Int
             currentWorkingStartingDate = currentTodoItem.startingDate!
-            var alarmIndex = 1
+            
             for alarm in currentTodoItem.alarms! {
                 currentWorkingAlarms.append((alarm as! Alarm).alarm!)
-                print("\n\n\ncurntl alarm : " + String(describing: alarm) + "\n")
-                print("currentWorkingColorIndex  :  ", currentWorkingColorIndex)
-                colorAlarmSelectionView?.selectedAlarmArray[alarmIndex] = true
-                print("colorAlarmSelectionView?.selectedAlarmArray[alarmIndex] = true  :  " , colorAlarmSelectionView?.selectedAlarmArray[alarmIndex])
-                colorAlarmSelectionView?.setAlarmFlag(index: alarmIndex)
-                alarmIndex = alarmIndex + 1
             }
-
 
             let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshControl.frame.size.height*2))
             tableView.setContentOffset(newOffset, animated: true)
             didRefresh()
             
-            colorAlarmSelectionView?.selectedAlarmArray = Array(repeating:true, count:alarmIndex)
-            print("\n\n\ncolorAlarmSelectionView?.selectedAlarmArray   : ", colorAlarmSelectionView?.selectedAlarmArray)
-            colorAlarmSelectionView?.fixAlarmFlag = true
             refreshView.titleField.text = currentTodoItem.title
             isInTheMiddleOfLongPressing = true
         }
+    }
+    
+    func showAlarmDateChoosingView() {
+        refreshView.titleField.endEditing(true)
+        let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 5
+        
+        UIView.animate(withDuration: 0.35, animations: {
+            self.alarmDateChoosingView!.frame.origin.y = y
+        })
     }
 }
 
