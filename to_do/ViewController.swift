@@ -299,21 +299,25 @@ class ViewController: UIViewController,
         if !isInTheMiddleOfLongPressing {
             print("long pressed...\(gesture.view!.tag)")
             
-            let currentTodoItem = dolist[gesture.view!.tag]
-            currentWorkingTitle = currentTodoItem.title!
-            currentWorkingColorIndex = currentTodoItem.color?.index as! Int
-            
-            for alarm in currentTodoItem.alarms! {
-                currentWorkingAlarms.append((alarm as! Alarm).alarm!)
+            let touchPoint = gesture.location(in: tableView)
+            let row = tableView.indexPathForRow(at: touchPoint)
+            if row != nil {
+                let currentTodoItem = dolist[row!.row]
+                currentWorkingTitle = currentTodoItem.title!
+                currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+                
+                for alarm in currentTodoItem.alarms! {
+                    currentWorkingAlarms.append((alarm as! Alarm).alarm!)
+                }
+                
+                let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshControl.frame.size.height*2))
+                tableView.setContentOffset(newOffset, animated: true)
+                didRefresh()
+                
+                currentWorkingStartingDate = currentTodoItem.startingDate!
+                refreshView.titleField.text = currentTodoItem.title
+                isInTheMiddleOfLongPressing = true
             }
-
-            let newOffset = CGPoint(x: 0, y: tableView.contentOffset.y-(refreshControl.frame.size.height*2))
-            tableView.setContentOffset(newOffset, animated: true)
-            didRefresh()
-            
-            currentWorkingStartingDate = currentTodoItem.startingDate!
-            refreshView.titleField.text = currentTodoItem.title
-            isInTheMiddleOfLongPressing = true
         }
     }
     
