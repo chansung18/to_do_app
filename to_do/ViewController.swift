@@ -30,7 +30,11 @@ class ViewController: UIViewController,
     var currentWorkingColorIndex: Int = 0
     var currentWorkingColor: UIColor = UIColor.gray
     var currentWorkingAlarms: [Date] = [Date]()
-    var currentWorkingStartingDate: Date = Date()
+    var currentWorkingStartingDate: Date = Date() {
+        didSet {
+            print("\n\n currentWorkingStartingDate set \n\n")
+        }
+    }
     var isCurrentWorkingNewItem: Bool = true
     
     var currentSelectedAlarmIndex: [Int]?
@@ -125,13 +129,15 @@ class ViewController: UIViewController,
             let dummyTapGesture = UITapGestureRecognizer(target: self, action: #selector(colorAlarmSelectionViewTapped))
             alarmDateChoosingView?.addGestureRecognizer(dummyTapGesture)
             colorAlarmSelectionView?.addGestureRecognizer(dummyTapGesture)
+            
+            if currentWorkingAlarms.count >= 3 {
+                colorAlarmSelectionView?.alarmAddButtonToggle = false
+            }
         }
         else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.alarmDateChoosingView?.frame.origin.y = y + height
-            }) 
-            
-            alarmDateChoosingView?.day = 77 
+            })
         }
     }
     
@@ -202,7 +208,6 @@ class ViewController: UIViewController,
         isInTheMiddleOfLongPressing = false
         isCurrentWorkingNewItem = true
         
-        currentWorkingStartingDate = Date()
         currentWorkingAlarms = [Date]()
         currentWorkingColorIndex = 0
         currentWorkingColor = UIColor.gray
@@ -216,6 +221,7 @@ class ViewController: UIViewController,
         })
         
         isInTheMiddleOfEnteringItem = true
+        currentWorkingStartingDate = Date()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -225,7 +231,11 @@ class ViewController: UIViewController,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as! ToDoListTableViewCell
         
-        let doItem = dolist[(indexPath as NSIndexPath).row]
+        let doItem = dolist[indexPath.row]
+        
+        if let recentestAlarm = getRecentestAlarm(item: doItem) {
+            print("recentestAlarm at[\(indexPath.row)] = \(recentestAlarm)")
+        }
         
         cell.backgroundColor = UIColor.clear
         cell.originalTitle = doItem.title
@@ -292,7 +302,6 @@ class ViewController: UIViewController,
             let currentTodoItem = dolist[gesture.view!.tag]
             currentWorkingTitle = currentTodoItem.title!
             currentWorkingColorIndex = currentTodoItem.color?.index as! Int
-            currentWorkingStartingDate = currentTodoItem.startingDate!
             
             for alarm in currentTodoItem.alarms! {
                 currentWorkingAlarms.append((alarm as! Alarm).alarm!)
@@ -302,6 +311,7 @@ class ViewController: UIViewController,
             tableView.setContentOffset(newOffset, animated: true)
             didRefresh()
             
+            currentWorkingStartingDate = currentTodoItem.startingDate!
             refreshView.titleField.text = currentTodoItem.title
             isInTheMiddleOfLongPressing = true
         }
@@ -316,8 +326,15 @@ class ViewController: UIViewController,
         })
     }
     
-    func getLatestAlarm(item: Dolist) -> Date {
-        return Date()
+    func getRecentestAlarm(item: Dolist) -> Date? {
+        if let alarms = item.alarms?.allObjects as? [Alarm] {
+            if alarms.count > 0 {
+                let result = alarms.sorted { $0.alarm! < $1.alarm! }
+                return result[0].alarm
+            }
+        }
+        
+        return nil
     }
 }
 

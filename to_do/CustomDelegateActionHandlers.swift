@@ -35,12 +35,16 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
      - colorSelectionClicked(colorIndex: Int, color: UIColor)
      - alarmSelectionClicked(_ alarmIndex: Int, appear: Bool)
     */
-    func addAlarmClicked(addAction: Bool, isNewAlarmSelected: Bool, alarmIndex: Int) {
+    func addAlarmClicked(addSubInfoView: AddSubInfo, addAction: Bool, isNewAlarmSelected: Bool, alarmIndex: Int) {
         let colorAlarmSelectionView = mainViewController.colorAlarmSelectionView
         let refreshView = mainViewController.refreshView
         var alarms = mainViewController.currentWorkingAlarms
         
         if addAction {
+            mainViewController.alarmDateChoosingView?.day = 0
+            mainViewController.alarmDateChoosingView?.hour = 0
+            mainViewController.alarmDateChoosingView?.minute = 0
+            
             mainViewController.showAlarmDateChoosingView()
         }
         else {
@@ -58,6 +62,8 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
                     colorAlarmSelectionView?.currentSelectedAlarmIndex = -1
                     
                     self.mainViewController.currentWorkingAlarms = alarms
+                    addSubInfoView.alarmAddButtonToggle = false
+                    addSubInfoView.isNewAlarmSelected = true
                 }
 
                 let noAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
@@ -75,32 +81,47 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
     }
     
     func confirmAlarmClicked(alarmInfoView: AddSubInfo, alarmIndex: Int) {
+        print("confirmAlarmClicked index = \(alarmIndex)")
+        
         let alarmDateChoosingView = mainViewController.alarmDateChoosingView
         let refreshView = mainViewController.refreshView
-        var currentSelectedAlarmIndex = mainViewController.currentSelectedAlarmIndex
         
-        if alarmIndex >= 3 {
-            refreshView.titleField.becomeFirstResponder()
-        }
+        refreshView.titleField.becomeFirstResponder()
         
-        let day = alarmDateChoosingView!.day * 12 * 60 * 60
+        let day = alarmDateChoosingView!.day * 24 * 60 * 60
         let hour = alarmDateChoosingView!.hour * 60 * 60
         let minute = alarmDateChoosingView!.minute * 60
         let interval = day + hour + minute
         
-        currentSelectedAlarmIndex?[alarmIndex] = 1
-        
         let newAlarm = mainViewController.currentWorkingStartingDate.addingTimeInterval(TimeInterval(interval))
-        mainViewController.currentWorkingAlarms.append(newAlarm)
+        
+        if alarmIndex == -1 {
+            mainViewController.currentWorkingAlarms.append(newAlarm)
+        }
+        else {
+            mainViewController.currentWorkingAlarms[alarmIndex] = newAlarm
+        }
 
         print("alarms list\n \(mainViewController.currentWorkingAlarms)")
     }
     
     func alarmSelectionClicked(alarmIndex: Int, appear: Bool) {
+        let startingDate = mainViewController.currentWorkingStartingDate
+        let alarms = mainViewController.currentWorkingAlarms
+        let alarm = alarms[alarmIndex]
         let refreshView = mainViewController.refreshView
         
         if appear {
             mainViewController.showAlarmDateChoosingView()
+            
+            let interval = alarm.timeIntervalSince(startingDate)
+            let d = div(Int32(interval), 86400);
+            let h = div(d.rem, 3600);
+            let m = div(h.rem, 60);
+            
+            mainViewController.alarmDateChoosingView?.day = Int(d.quot)
+            mainViewController.alarmDateChoosingView?.hour = Int(h.quot)
+            mainViewController.alarmDateChoosingView?.minute = Int(m.quot)
         }
         else {
             refreshView.titleField.becomeFirstResponder()

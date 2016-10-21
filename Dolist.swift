@@ -11,8 +11,4 @@ import CoreData
 
 
 class Dolist: NSManagedObject {
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
-        startingDate = Date()
-    }
 }
