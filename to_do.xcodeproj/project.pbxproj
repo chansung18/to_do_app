@@ -230,7 +230,7 @@
 				TargetAttributes = {
 					3370A5151D86893700405550 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = U8GPEN359C;
+						DevelopmentTeam = RDVXN3AWZE;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -422,11 +422,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: CHANSUNG PARK (U9BRB25QQL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = RDVXN3AWZE;
 				INFOPLIST_FILE = to_do/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chansung.eunkyo.to-do";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chansung.eunkyo.to-dojjj";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -439,11 +440,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: CHANSUNG PARK (U9BRB25QQL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = RDVXN3AWZE;
 				INFOPLIST_FILE = to_do/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chansung.eunkyo.to-do";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chansung.eunkyo.to-dojjj";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;

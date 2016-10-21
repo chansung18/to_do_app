@@ -103,18 +103,22 @@ class ViewController: UIViewController,
                                                    y: dummyView.frame.height - keyboardHeight - 150,
                                                    width: dummyView.frame.width,
                                                    height: 150))
+            dummyView.addSubview(colorAlarmSelectionView!)
             colorAlarmSelectionView?.delegate = customDelegateHandler
             colorAlarmSelectionView?.selectedColorIndex = currentWorkingColorIndex
             colorAlarmSelectionView?.alarmCount = currentWorkingAlarms.count
             refreshView.titleField.text = currentWorkingTitle
-            dummyView.addSubview(colorAlarmSelectionView!)
         }
         else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.colorAlarmSelectionView?.alpha = 1
             })
+            colorAlarmSelectionView?.selectedColorIndex = currentWorkingColorIndex
+            colorAlarmSelectionView?.alarmCount = currentWorkingAlarms.count
+            refreshView.titleField.text = currentWorkingTitle
+
         }
-            
+        
         let x = CGFloat(0)
         let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 10
         let width = dummyView.frame.size.width
@@ -149,15 +153,19 @@ class ViewController: UIViewController,
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pullDistance = max(0.0, -refreshControl.frame.origin.y);
-
-        if pullDistance > 0 && isRefreshControlFullyVisible == false {
-            refreshControl.alpha = pullDistance * 0.01
+        print("\(scrollView.contentOffset.y), \(refreshControl.alpha)")
+        
+        if scrollView.contentOffset.y == 0 {
+            refreshControl.alpha = 0.0
         }
         
-        if refreshControl.alpha >= 1 {
-            refreshControl.alpha = 1
-            isRefreshControlFullyVisible = true
+        if refreshControl.alpha >= 1.0 {
+            refreshControl.alpha = 1.0
+        }
+        else {
+            if scrollView.contentOffset.y < -30  {
+                refreshControl.alpha = -scrollView.contentOffset.y * 0.008
+            }
         }
     }
     
@@ -180,11 +188,8 @@ class ViewController: UIViewController,
      */
     func dismissRefreshControl() {
         UIView.animate(withDuration: 0.5, animations: {
+            self.refreshControl.alpha = 0
             self.view.exchangeSubview(at: 0, withSubviewAt: 1)
-        }) 
-        
-        UIView.animate(withDuration: 0.5, animations: { 
-            self.refreshControl.alpha = 0.0
             self.colorAlarmSelectionView?.alpha = 0
             self.alarmDateChoosingView?.frame.origin.y = self.alarmDateChoosingView!.frame.origin.y + self.alarmDateChoosingView!.frame.height
         },
@@ -195,24 +200,24 @@ class ViewController: UIViewController,
                 
                 self.colorAlarmSelectionView = nil
                 self.alarmDateChoosingView = nil
+                
+                let newOffset = CGPoint(x: 0, y: 0)
+                self.tableView.setContentOffset(newOffset, animated: true)
+                
+                self.refreshView.titleField.endEditing(true)
+                self.isInTheMiddleOfEnteringItem = false
+                self.isRefreshControlFullyVisible = false
+                self.isInTheMiddleOfLongPressing = false
+                self.isCurrentWorkingNewItem = true
+                
+                self.currentWorkingAlarms = [Date]()
+                self.currentWorkingColorIndex = 0
+                self.currentWorkingColor = UIColor.gray
+                
+                self.refreshView.titleField.text = ""
+                self.refreshControl.endRefreshing()
             }
         })
-        
-        let newOffset = CGPoint(x: 0, y: 0)
-        tableView.setContentOffset(newOffset, animated: true)
-    
-        refreshView.titleField.endEditing(true)
-        refreshControl.endRefreshing()
-        isInTheMiddleOfEnteringItem = false
-        isRefreshControlFullyVisible = false
-        isInTheMiddleOfLongPressing = false
-        isCurrentWorkingNewItem = true
-        
-        currentWorkingAlarms = [Date]()
-        currentWorkingColorIndex = 0
-        currentWorkingColor = UIColor.gray
-        
-        refreshView.titleField.text = ""
     }
     
     func showRefreshControl() {
@@ -222,6 +227,8 @@ class ViewController: UIViewController,
         
         isInTheMiddleOfEnteringItem = true
         currentWorkingStartingDate = Date()
+        refreshControl.alpha = 1.0
+        isRefreshControlFullyVisible = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -303,8 +310,6 @@ class ViewController: UIViewController,
             let row = tableView.indexPathForRow(at: touchPoint)
             if row != nil {
                 let currentTodoItem = dolist[row!.row]
-                currentWorkingTitle = currentTodoItem.title!
-                currentWorkingColorIndex = currentTodoItem.color?.index as! Int
                 
                 for alarm in currentTodoItem.alarms! {
                     currentWorkingAlarms.append((alarm as! Alarm).alarm!)
@@ -315,6 +320,9 @@ class ViewController: UIViewController,
                 didRefresh()
                 
                 currentWorkingStartingDate = currentTodoItem.startingDate!
+                currentWorkingTitle = currentTodoItem.title!
+                currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+                print("currentWorkingColorIndex = \(currentWorkingColorIndex)")
                 refreshView.titleField.text = currentTodoItem.title
                 isInTheMiddleOfLongPressing = true
             }
