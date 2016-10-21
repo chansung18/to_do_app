@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="16B2338c" minimumToolsVersion="Automatic">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2338c" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
-        <attribute name="alarm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="alarm" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="dolist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dolist" inverseName="alarms" inverseEntity="Dolist" syncable="YES"/>
     </entity>
     <entity name="Color" representedClassName=".Color" syncable="YES">
-        <attribute name="a" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="b" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="g" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="r" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="a" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="b" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="g" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="r" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="dolist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dolist" inverseName="color" inverseEntity="Dolist" syncable="YES"/>
     </entity>
     <entity name="Dolist" representedClassName=".Dolist" syncable="YES">
         <attribute name="context" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="deadline" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="decoration" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lineflag" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="startingDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lineflag" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="startingDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alarm" inverseName="dolist" inverseEntity="Alarm" syncable="YES"/>
         <relationship name="color" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Color" inverseName="dolist" inverseEntity="Color" syncable="YES"/>

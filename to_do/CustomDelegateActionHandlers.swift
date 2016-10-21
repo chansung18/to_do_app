@@ -14,6 +14,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
                                     AddSubInfoDelegate,
                                     AlarmSubinfoDelegate,
                                     AddTodoItemDelegate {
+    
     let mainViewController: ViewController!
     
     init(viewController: ViewController) {
@@ -45,14 +46,18 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         else {
             /* when tring to delete existing alarm */
             if !isNewAlarmSelected {
-                let alert = UIAlertController(title: "박사장님 짱", message: "지울꺼야 ㅜㅜ", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "박사장님 짱",
+                                              message: "지울꺼야 ㅜㅜ",
+                                              preferredStyle: UIAlertControllerStyle.alert)
 
                 let yesAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
                     refreshView.titleField.becomeFirstResponder()
 
                     alarms.remove(at: alarmIndex)
-                    colorAlarmSelectionView?.alarmCount = (colorAlarmSelectionView?.alarmCount)! - 1
+                    colorAlarmSelectionView?.alarmCount -= 1
                     colorAlarmSelectionView?.currentSelectedAlarmIndex = -1
+                    
+                    self.mainViewController.currentWorkingAlarms = alarms
                 }
 
                 let noAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
@@ -123,23 +128,45 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let colorIndex = mainViewController.currentWorkingColorIndex
         let startingDate = mainViewController.currentWorkingStartingDate
         let alarms = mainViewController.currentWorkingAlarms
+        let itemList = mainViewController.dolist
+        
+        print("new alarm size = \(alarms.count)")
         
         let textFieldText = refreshView.getTitleText()
 
-        if (textFieldText != "null") {
-            if textFieldText.replacingOccurrences(of: " ", with: "") != "" {
-                let newItem = CoreDataController.sharedInstace.saveToCoredata(title: textFieldText,
-                                                                              startingDate: startingDate,
-                                                                              alarms: alarms,
-                                                                              colorIndex: colorIndex,
-                                                                              color: color)
-                mainViewController.dolist.append(newItem)
-                mainViewController.tableView.reloadData()
+        if textFieldText != "null" &&
+            textFieldText.replacingOccurrences(of: " ", with: "") != "" {
+            
+            let result = isThereDuplicateItem(list: itemList, key: startingDate)
+            
+            if let item = result.item {
+                let replacedItem = CoreDataController.sharedInstace.replaceToDoList(item: item, title: textFieldText, alarms: alarms, colorIndex: colorIndex, color: color)
+                mainViewController.dolist[result.index] = replacedItem
+            
             }
+            else {
+                let newItem = CoreDataController.sharedInstace.addToDoList(title: textFieldText,
+                                                                           startingDate: startingDate,
+                                                                           alarms: alarms,
+                                                                           colorIndex: colorIndex,
+                                                                           color: color)
+                mainViewController.dolist.append(newItem)
+            }
+
+            mainViewController.tableView.reloadData()
         }
         
         mainViewController.refreshView.titleField.text = ""
         mainViewController.dismissRefreshControl()
     }
 
+    func isThereDuplicateItem(list: [Dolist], key: Date) -> (item: Dolist?, index: Int) {
+        for index in 0..<list.count {
+            if list[index].startingDate == key {
+                return (list[index], index)
+            }
+        }
+    
+        return (nil, -1)
+    }
 }

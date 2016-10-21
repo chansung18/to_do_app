@@ -206,6 +206,8 @@ class ViewController: UIViewController,
         currentWorkingAlarms = [Date]()
         currentWorkingColorIndex = 0
         currentWorkingColor = UIColor.gray
+        
+        refreshView.titleField.text = ""
     }
     
     func showRefreshControl() {
@@ -221,19 +223,19 @@ class ViewController: UIViewController,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as? ToDoListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoListCell") as! ToDoListTableViewCell
         
         let doItem = dolist[(indexPath as NSIndexPath).row]
         
-        cell?.backgroundColor = UIColor.clear
-        cell?.originalTitle = doItem.title
-        cell?.index = indexPath.row
-        cell?.delegate = customDelegateHandler
+        cell.backgroundColor = UIColor.clear
+        cell.originalTitle = doItem.title
+        cell.index = indexPath.row
+        cell.delegate = customDelegateHandler
         
         if doItem.lineflag == NSNumber(value: true as Bool) {
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: (cell?.originalTitle)!)
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: (cell.originalTitle)!)
             attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
-            cell?.titleLabel.attributedText = attributeString
+            cell.titleLabel.attributedText = attributeString
         }
         
         let colorR = CGFloat(doItem.color!.r!) / 255
@@ -241,22 +243,25 @@ class ViewController: UIViewController,
         let colorB = CGFloat(doItem.color!.b!) / 255
         
         let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
-        cell?.colorButton.backgroundColor = labelColor
+        cell.colorButton.backgroundColor = labelColor
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
         lpgr.minimumPressDuration = 1.0
-        cell?.addGestureRecognizer(lpgr)
-        cell?.tag = indexPath.row
+        cell.addGestureRecognizer(lpgr)
+        cell.tag = indexPath.row
         
-        let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: cell!.frame.height))
-        gaugeView.backgroundColor = labelColor
-        gaugeView.alpha = 0.2
-        cell?.contentView.subviews[0].addSubview(gaugeView)
-        cell?.contentView.subviews[0].sendSubview(toBack: gaugeView)
-       
-        print("\(cell?.contentView.subviews[0].subviews.count)")
+        if cell.contentView.subviews[0].subviews.count < 3 {
+            let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: cell.frame.height))
+            gaugeView.backgroundColor = labelColor
+            gaugeView.alpha = 0.2
+            cell.contentView.subviews[0].addSubview(gaugeView)
+            cell.contentView.subviews[0].sendSubview(toBack: gaugeView)
+        }
+        else {
+            cell.contentView.subviews[0].subviews[0].backgroundColor = labelColor
+        }
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -309,6 +314,10 @@ class ViewController: UIViewController,
         UIView.animate(withDuration: 0.35, animations: {
             self.alarmDateChoosingView!.frame.origin.y = y
         })
+    }
+    
+    func getLatestAlarm(item: Dolist) -> Date {
+        return Date()
     }
 }
 

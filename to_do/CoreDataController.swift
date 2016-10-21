@@ -20,7 +20,42 @@ class CoreDataController {
     //private init for singleton class
     fileprivate init() {}
     
-    func saveToCoredata(title: String, startingDate: Date, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+    func replaceToDoList(item: Dolist, title: String, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+        item.title = title
+        
+        let coreImageColor = CoreImage.CIColor(color: color)
+        item.color!.r = (coreImageColor.red * 256) as NSNumber!
+        item.color!.g = (coreImageColor.green * 256) as NSNumber!
+        item.color!.b = (coreImageColor.blue * 256) as NSNumber!
+        item.color!.a = NSNumber(integerLiteral: 1)
+        item.color!.index = colorIndex as NSNumber!
+        
+        for alarm in item.alarms! {
+            managedObjectContext.delete(alarm as! NSManagedObject)
+        }
+        
+        let tmpAlarmsInDoList = NSMutableSet(set: item.alarms!)
+        tmpAlarmsInDoList.removeAllObjects()
+        item.alarms = tmpAlarmsInDoList
+        
+        print("item.alarms size = \(item.alarms!.count)")
+        
+        for alarm in alarms {
+            /* Create Alarm CoreData Object */
+            let alarmDescription = NSEntityDescription.entity(forEntityName: "Alarm", in: managedObjectContext)
+            let alarmObject = Alarm(entity: alarmDescription!, insertInto: managedObjectContext)
+            alarmObject.alarm = alarm
+            
+            let tmpAlarmsInDoList = NSMutableSet(set: item.alarms!)
+            tmpAlarmsInDoList.addObjects(from: [alarmObject])
+            item.alarms = tmpAlarmsInDoList
+        }
+        
+        saveContext()
+        return item
+    }
+    
+    func addToDoList(title: String, startingDate: Date, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
         /* Create Dolist CoreData Object */
         let doListEntityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
         let doListObject = Dolist(entity: doListEntityDescription!, insertInto: managedObjectContext)
@@ -35,7 +70,7 @@ class CoreDataController {
         colorObject.b = (coreImageColor.blue * 256) as NSNumber!
         colorObject.a = NSNumber(integerLiteral: 1)
         colorObject.index = colorIndex as NSNumber!
-
+        
         doListObject.title = title
         doListObject.startingDate = startingDate
         doListObject.color = colorObject            // hooking up Dolist with Color CoreData Object (relation)
@@ -47,9 +82,9 @@ class CoreDataController {
             alarmObject.alarm = alarm
             
             if let alarmsInDoList = doListObject.alarms {
-                /* 
-                   datatype for alarms list in Dolist is NSSet
-                   make the NSSet mutable to store alarms 
+                /*
+                 datatype for alarms list in Dolist is NSSet
+                 make the NSSet mutable to store alarms
                  */
                 let tmpAlarmsInDoList = NSMutableSet(set: alarmsInDoList)
                 tmpAlarmsInDoList.addObjects(from: [alarmObject])
