@@ -268,7 +268,34 @@ class ViewController: UIViewController,
         cell.tag = indexPath.row
         
         if cell.contentView.subviews[0].subviews.count < 3 {
-            let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: cell.frame.height))
+           // print("sigabta  ::  \(doItem.alarms?.allObjects)")
+         //   let array : [Date] = doItem.alarms?.allObjects as! [Date]
+          //  print("subview  :   \(array)")
+            // cell color
+            var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
+            for alarm in (doItem.alarms?.allObjects)! {
+                let nsAlarm = alarm as! Alarm
+                if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
+                    minAlarm = nsAlarm.alarm!
+                }
+            }
+            
+            let minInterval = minAlarm.timeIntervalSinceNow
+            let startingDateInterval = minAlarm.timeIntervalSince(doItem.startingDate!)
+
+            var cellFrameWidth : Int?
+            
+            //onday 86386
+            if(minInterval > 0 ){
+                cellFrameWidth = Int(cell.frame.width) - Int(Double(minInterval/startingDateInterval)*Double(cell.frame.width))
+                print("\n\n 1114 Int(Int(cell.frame.width)/Int(minInterval))  :  \(cellFrameWidth)")
+            }
+            else{
+                cellFrameWidth = Int(cell.frame.width)
+            }
+            
+            
+            let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width:Int(cellFrameWidth!), height: Int(cell.frame.height)))
             gaugeView.backgroundColor = labelColor
             gaugeView.alpha = 0.2
             cell.contentView.subviews[0].addSubview(gaugeView)

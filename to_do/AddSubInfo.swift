@@ -349,12 +349,16 @@ class AddSubInfo: UIView {
     
     @IBAction func alarmClicked(_ sender: UIButton) {
         print("isNewAlarmSelected = \(isNewAlarmSelected)")
-        
+        print("alarmAddButtonToggle = \(alarmAddButtonToggle)")
         if isNewAlarmSelected {
             alarmAddButtonToggle = !alarmAddButtonToggle
+            isNewAlarmSelected = true
+        }
+        else{
+            isNewAlarmSelected = false
         }
         
-        isNewAlarmSelected = false
+        
         
         if currentSelectedAlarmIndex == sender.tag {
             delegate?.alarmSelectionClicked(alarmIndex: currentSelectedAlarmIndex, appear: false)

@@ -92,17 +92,35 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let hour = alarmDateChoosingView!.hour * 60 * 60
         let minute = alarmDateChoosingView!.minute * 60
         let interval = day + hour + minute
-        
+        var exgistAlarmFlag : Bool = false
         let newAlarm = mainViewController.currentWorkingStartingDate.addingTimeInterval(TimeInterval(interval))
+   
+        //when inputing same alarm
+        for oldAarm in mainViewController.currentWorkingAlarms{
+            let interval = oldAarm.timeIntervalSince(newAlarm)
+            if (interval == 0){
+                print("\n zero ninterval  :   ", interval )
+                let alertController = UIAlertController(title: "alarm erro",
+                                              message: "지울꺼야 ㅜㅜ",
+                                              preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+                mainViewController.present(alertController, animated: true, completion: nil)
+                exgistAlarmFlag = true
+            }
+            
+        }
         
-        if alarmIndex == -1 {
-            mainViewController.currentWorkingAlarms.append(newAlarm)
-        }
-        else {
-            mainViewController.currentWorkingAlarms[alarmIndex] = newAlarm
-        }
+        if !exgistAlarmFlag {
+            if alarmIndex == -1 {
+                mainViewController.currentWorkingAlarms.append(newAlarm)
+            
+            }
+            else {
+                mainViewController.currentWorkingAlarms[alarmIndex] = newAlarm
+            }
 
-        print("alarms list\n \(mainViewController.currentWorkingAlarms)")
+            print("alarms list\n \(mainViewController.currentWorkingAlarms)")
+        }
     }
     
     func alarmSelectionClicked(alarmIndex: Int, appear: Bool) {
