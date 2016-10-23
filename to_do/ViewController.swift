@@ -153,33 +153,12 @@ class ViewController: UIViewController,
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         if isRefreshControlFullyVisible {
             refreshControl.alpha = 1.0
         }
         else {
             refreshControl.alpha = -scrollView.contentOffset.y * 0.001
         }
-
-        
-//        print("\(scrollView.contentOffset.y), \(refreshControl.alpha), \(isRefreshControlFullyVisible)")
-//        
-//        if scrollView.contentOffset.y == 0 {
-//            refreshControl.alpha = 0.0
-//            print("==\(refreshControl.alpha)")
-//        }
-//        
-//        if scrollView.contentOffset.y < -50 {
-//            if refreshControl.alpha >= 1.0 {
-//                refreshControl.alpha = 1.0
-//            }
-//            else {
-//                refreshControl.alpha = -scrollView.contentOffset.y * 0.01
-//            }
-//        }
-//        else if scrollView.contentOffset.y < -30 {
-//            refreshControl.alpha = -scrollView.contentOffset.y * 0.05
-//        }
     }
     
     /*
@@ -253,19 +232,15 @@ class ViewController: UIViewController,
         
         let doItem = dolist[indexPath.row]
         
-        if let recentestAlarm = getRecentestAlarm(item: doItem) {
-            print("recentestAlarm at[\(indexPath.row)] = \(recentestAlarm)")
-        }
-        
         cell.backgroundColor = UIColor.clear
+        cell.item = doItem
         cell.originalTitle = doItem.title
-        cell.index = indexPath.row
-        cell.delegate = customDelegateHandler
         
         if doItem.lineflag == NSNumber(value: true as Bool) {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: (cell.originalTitle)!)
             attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
             cell.titleLabel.attributedText = attributeString
+            cell.isCrossedOut = true
         }
         
         let colorR = CGFloat(doItem.color!.r!) / 255
@@ -278,41 +253,37 @@ class ViewController: UIViewController,
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
         lpgr.minimumPressDuration = 1.0
         cell.addGestureRecognizer(lpgr)
-        cell.tag = indexPath.row
         
         if cell.contentView.subviews[0].subviews.count < 3 {
-           // print("sigabta  ::  \(doItem.alarms?.allObjects)")
-         //   let array : [Date] = doItem.alarms?.allObjects as! [Date]
-          //  print("subview  :   \(array)")
-            // cell color
-            var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
-            for alarm in (doItem.alarms?.allObjects)! {
-                let nsAlarm = alarm as! Alarm
-                if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
-                    minAlarm = nsAlarm.alarm!
+            if doItem.alarms != nil && doItem.alarms!.count > 0 {
+                var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
+                
+                for alarm in (doItem.alarms?.allObjects)! {
+                    let nsAlarm = alarm as! Alarm
+                    if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
+                        minAlarm = nsAlarm.alarm!
+                    }
                 }
-            }
-            
-            let minInterval = minAlarm.timeIntervalSinceNow
-            let startingDateInterval = minAlarm.timeIntervalSince(doItem.startingDate!)
+                
+                let minInterval = minAlarm.timeIntervalSinceNow
+                let startingDateInterval = minAlarm.timeIntervalSince(doItem.startingDate!)
 
-            var cellFrameWidth : Int?
-            
-            //onday 86386
-            if(minInterval > 0 ){
-                cellFrameWidth = Int(cell.frame.width) - Int(Double(minInterval/startingDateInterval)*Double(cell.frame.width))
-                print("\n\n 1114 Int(Int(cell.frame.width)/Int(minInterval))  :  \(cellFrameWidth)")
+                var cellFrameWidth : Int?
+                
+                //onday 86386
+                if(minInterval > 0 ){
+                    cellFrameWidth = Int(cell.frame.width) - Int(Double(minInterval/startingDateInterval)*Double(cell.frame.width))
+                }
+                else{
+                    cellFrameWidth = Int(cell.frame.width)
+                }
+                
+                let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width:Int(cellFrameWidth!), height: Int(cell.frame.height)))
+                gaugeView.backgroundColor = labelColor
+                gaugeView.alpha = 0.2
+                cell.contentView.subviews[0].addSubview(gaugeView)
+                cell.contentView.subviews[0].sendSubview(toBack: gaugeView)
             }
-            else{
-                cellFrameWidth = Int(cell.frame.width)
-            }
-            
-            
-            let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width:Int(cellFrameWidth!), height: Int(cell.frame.height)))
-            gaugeView.backgroundColor = labelColor
-            gaugeView.alpha = 0.2
-            cell.contentView.subviews[0].addSubview(gaugeView)
-            cell.contentView.subviews[0].sendSubview(toBack: gaugeView)
         }
         else {
             cell.contentView.subviews[0].subviews[0].backgroundColor = labelColor
@@ -381,7 +352,7 @@ class ViewController: UIViewController,
     func getRecentestAlarm(item: Dolist) -> Date? {
         if let alarms = item.alarms?.allObjects as? [Alarm] {
             if alarms.count > 0 {
-                let result = alarms.sorted { $0.alarm! < $1.alarm! }
+                let result = alarms.sorted { $0.alarm! > $1.alarm! }
                 return result[0].alarm
             }
         }

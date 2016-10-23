@@ -10,8 +10,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
-                                    AddSubInfoDelegate,
+class CustomDelegateActionHandlers: AddSubInfoDelegate,
                                     AlarmSubinfoDelegate,
                                     AddTodoItemDelegate {
     
@@ -20,14 +19,7 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
     init(viewController: ViewController) {
         self.mainViewController = viewController
     }
-    
-    func cellValueChanged(_ cell: ToDoListTableViewCell) {
-        let index = cell.index
-        
-        mainViewController.dolist[index].title = cell.originalTitle
-        mainViewController.dolist[index].lineflag = cell.isCrossedOut as NSNumber?
-    }
-    
+
     /*
      AddSubInfoDelegate Methods
      - addAlarmClicked(_ addAction: Bool)
@@ -86,40 +78,55 @@ class CustomDelegateActionHandlers: ToDoListTableViewCellDelegate,
         let alarmDateChoosingView = mainViewController.alarmDateChoosingView
         let refreshView = mainViewController.refreshView
         
-        refreshView.titleField.becomeFirstResponder()
-        
         let day = alarmDateChoosingView!.day * 24 * 60 * 60
         let hour = alarmDateChoosingView!.hour * 60 * 60
         let minute = alarmDateChoosingView!.minute * 60
         let interval = day + hour + minute
-        var exgistAlarmFlag : Bool = false
+        var existingAlarmFlag : Bool = false
         let newAlarm = mainViewController.currentWorkingStartingDate.addingTimeInterval(TimeInterval(interval))
    
-        //when inputing same alarm
-        for oldAarm in mainViewController.currentWorkingAlarms{
-            let interval = oldAarm.timeIntervalSince(newAlarm)
-            if (interval == 0){
-                print("\n zero ninterval  :   ", interval )
-                let alertController = UIAlertController(title: "alarm erro",
-                                              message: "지울꺼야 ㅜㅜ",
-                                              preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-                mainViewController.present(alertController, animated: true, completion: nil)
-                exgistAlarmFlag = true
+        //when inputing 0 interval alarm
+        if day == 0 && hour == 0 && minute == 0 {
+            let alertController = UIAlertController(title: "Zero Alarm",
+                                                    message: "No Interval Input",
+                                                    preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+                refreshView.titleField.becomeFirstResponder()
+            }))
+                
+            mainViewController.present(alertController, animated: true, completion: nil)
+        }
+        else {
+            //when inputing same alarm
+            for oldAarm in mainViewController.currentWorkingAlarms{
+                let interval = oldAarm.timeIntervalSince(newAlarm)
+                
+                if (interval == 0){
+                    existingAlarmFlag = true
+                }
             }
             
-        }
-        
-        if !exgistAlarmFlag {
-            if alarmIndex == -1 {
-                mainViewController.currentWorkingAlarms.append(newAlarm)
-            
+            if !existingAlarmFlag {
+                refreshView.titleField.becomeFirstResponder()
+                
+                if alarmIndex == -1 {
+                    mainViewController.currentWorkingAlarms.append(newAlarm)
+                }
+                else {
+                    mainViewController.currentWorkingAlarms[alarmIndex] = newAlarm
+                }
+
+                print("alarms list\n \(mainViewController.currentWorkingAlarms)")
             }
             else {
-                mainViewController.currentWorkingAlarms[alarmIndex] = newAlarm
+                let alertController = UIAlertController(title: "Duplicate Alarm",
+                                                        message: "Same Alarm Date Not Allowed",
+                                                        preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+                    refreshView.titleField.becomeFirstResponder()
+                }))
+                mainViewController.present(alertController, animated: true, completion: nil)
             }
-
-            print("alarms list\n \(mainViewController.currentWorkingAlarms)")
         }
     }
     

@@ -8,35 +8,41 @@
 
 import UIKit
 
-var starY: CGFloat?
-var EndY: CGFloat?
-
-protocol ToDoListTableViewCellDelegate{
-    func cellValueChanged(_ cell: ToDoListTableViewCell);
-}
-
 class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
+    var item: Dolist? {
+        didSet(newItem) {
+            if let newItem = newItem {
+                originalTitle = newItem.title!
+                isCrossedOut = newItem.lineflag!.boolValue
+            }
+        }
+    }
+    
     var index: Int = 0
-    var delegate : ToDoListTableViewCellDelegate?
     
     var directionOfRight: Bool = false
     var tableView: UITableView?
     
-    var isEditingMode: Bool  = false
+    var isEditingMode: Bool = true
+    var isPanGestureStarted: Bool = false
+    var isMultiGestureAllowed: Bool = true
+    var isInTheMiddleOfCrossingOut: Bool = false
+    var startY: CGFloat = 0
+    var endY: CGFloat = 0
     
     var isCrossedOut: Bool = false {
         didSet {
-            delegate?.cellValueChanged(self)
+            item?.lineflag = NSNumber(value: isCrossedOut)
         }
     }
     
     var originalTitle: String? {
         didSet {
             titleLabel.text = originalTitle
-            delegate?.cellValueChanged(self)
+            item?.title = originalTitle
         }
     } 
     
@@ -58,81 +64,114 @@ class ToDoListTableViewCell: UITableViewCell {
     
     func didPanned(_ gesture: UIPanGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.began {
-//            print("a = \(gesture.velocityInView(self).x)")
-            
-            starY = gesture.translation(in: self.tableView).y
-            if gesture.velocity(in: self).x < 0 {
-                isEditingMode = true
-            }
-            else if gesture.velocity(in: self).x > 0 {
-                directionOfRight = true
-            }
+            isPanGestureStarted = true
+            startY = gesture.translation(in: self.tableView).y
         }
         
         else if gesture.state == .changed {
-            EndY = gesture.translation(in: self.tableView).y
-//            print("start Y - end Y = " + String(abs(starY! - EndY!)) )
+            endY = gesture.translation(in: self.tableView).y
             
-            if isEditingMode == false && isCrossedOut == false && abs(starY! - EndY!) < 10 && directionOfRight == true {
-                let titleLength = originalTitle!.characters.count
-                let tmpIndex = Int(gesture.location(in: self).x * 10 / CGFloat(titleLength)) - 10
-                
-                if tmpIndex < titleLength && tmpIndex >= 0 {
-                    let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                    attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, tmpIndex))
-                    titleLabel.attributedText = attributeString
-                }
+            if abs(endY-startY) > 0 && !isInTheMiddleOfCrossingOut {
+                isMultiGestureAllowed = false
+                isEditingMode = false
             }
-            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 10 ) && directionOfRight == true {
-                let titleLength = originalTitle!.characters.count
-                let tmpIndex = Int(gesture.location(in: self).x * 10 / CGFloat(titleLength)) - 10
-                
-//                print("tmpIndex = \(gesture.locationInView(self).x), \(titleLength), \(tmpIndex)")
-                
-                if tmpIndex < titleLength && tmpIndex >= 0 {
-                    let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                    attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length - tmpIndex))
-                    titleLabel.attributedText = attributeString
+            else if abs(endY-startY) > 5 && isPanGestureStarted {
+                isEditingMode = false
+            }
+            else if gesture.velocity(in: self).x < 0 && isPanGestureStarted {
+                isEditingMode = false
+            }
+            
+            isPanGestureStarted = false
+            
+            if isEditingMode {
+                if gesture.location(in: self).x > 0 {
+                    isInTheMiddleOfCrossingOut = true
+                    
+                    if isCrossedOut == false {
+                        let titleLength = originalTitle!.characters.count
+                        
+                        var tmpIndex = 0
+                        
+                        if titleLength > 10 {
+                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                        }
+                        else {
+                            tmpIndex = Int(gesture.location(in: self).x / CGFloat(titleLength)) - 2
+                        }
+                        
+                        print("tmpIndex = \(tmpIndex)")
+                        
+                        if tmpIndex <= titleLength && tmpIndex >= 0 {
+                            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, tmpIndex))
+                            titleLabel.attributedText = attributeString
+                        }
+                    }
+                    else {
+                        let titleLength = originalTitle!.characters.count
+                        
+                        var tmpIndex = 0
+                        
+                        if titleLength > 10 {
+                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                        }
+                        else {
+                            tmpIndex = Int(gesture.location(in: self).x / CGFloat(titleLength)) - 2
+                        }
+                        
+                        if tmpIndex <= titleLength && tmpIndex >= 0 {
+                            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                            attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length - tmpIndex))
+                            titleLabel.attributedText = attributeString
+                        }
+                    }
                 }
             }
         }
         else if gesture.state == .ended {
-            EndY = gesture.translation(in: self.tableView).y
-//            print("start Y - end dddY = " + String(abs(starY! - EndY!)) )
+            if isEditingMode {
+                if isCrossedOut == false {
+                    if gesture.velocity(in: self).x > 0 {
+                        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+                        titleLabel.attributedText = attributeString
+                        isCrossedOut = true
+                    }
+                    else {
+                        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, 0))
+                        titleLabel.attributedText = attributeString
+                        isCrossedOut = false
+                    }
+                }
+                else {
+                    if gesture.velocity(in: self).x <= 0 {
+                        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+                        titleLabel.attributedText = attributeString
+                        isCrossedOut = true
+                    }
+                    else {
+                        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
+                        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, 0))
+                        titleLabel.attributedText = attributeString
+                        isCrossedOut = false
+                    }
+                }
+            }
             
-            if isEditingMode == false && isCrossedOut == false && (abs(starY! - EndY!) < 10 && directionOfRight == true){
-                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
-                titleLabel.attributedText = attributeString
-                isCrossedOut = true
-            }
-            else if isEditingMode == false && isCrossedOut == true && (abs(starY! - EndY!) < 10) && directionOfRight == true{
-                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, 0))
-                titleLabel.attributedText = attributeString
-                isCrossedOut = false
-            }
+            isEditingMode = true
+            isPanGestureStarted = false
+            isMultiGestureAllowed = true
+            isInTheMiddleOfCrossingOut = false
         }
     }
     
-    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
-    func didSwipeToRight(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == UISwipeGestureRecognizerDirection.right {
-            
-           print("hey there, right swipe gesture? - \(gesture.location(in: self))")
-            if isCrossedOut {
-                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
-                titleLabel.attributedText = attributeString
-            }
-            else {
-                let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
-                attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
-                titleLabel.attributedText = attributeString
-            }
-        }
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                    shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return isMultiGestureAllowed
     }
 }
+
+

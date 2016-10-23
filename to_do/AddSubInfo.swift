@@ -114,6 +114,8 @@ class AddSubInfo: UIView {
     
     var alarmCount = 0 {
         didSet {
+            print("alarmCount \(alarmCount)")
+            
             if alarmCount < 4 {
                 setVisibleAlarmItems()
             }
@@ -323,9 +325,9 @@ class AddSubInfo: UIView {
         if alarmCount <= 3 {
             alarmAddButtonToggle = !alarmAddButtonToggle
             
-            if alarmAddButtonToggle {
-                isNewAlarmSelected = true
-            }
+//            if alarmAddButtonToggle {
+//                isNewAlarmSelected = true
+//            }
             
             delegate?.addAlarmClicked(addSubInfoView: self,
                                       addAction: alarmAddButtonToggle,
@@ -345,20 +347,30 @@ class AddSubInfo: UIView {
         
         currentSelectedAlarmIndex = -1
         isNewAlarmSelected = true
+        
+        if alarmCount >= 3 {
+            alarmAddButton.alpha = 0.6
+            alarmAddButton.isUserInteractionEnabled = false
+        }
+        else {
+            alarmAddButton.alpha = 1
+            alarmAddButton.isUserInteractionEnabled = true
+        }
     }
     
     @IBAction func alarmClicked(_ sender: UIButton) {
         print("isNewAlarmSelected = \(isNewAlarmSelected)")
         print("alarmAddButtonToggle = \(alarmAddButtonToggle)")
-        if isNewAlarmSelected {
+        
+//        if isNewAlarmSelected {
             alarmAddButtonToggle = !alarmAddButtonToggle
-            isNewAlarmSelected = true
-        }
-        else{
-            isNewAlarmSelected = false
-        }
+//            isNewAlarmSelected = true
+//        }
+//        else{
+//            isNewAlarmSelected = false
+//        }
         
-        
+        isNewAlarmSelected = false
         
         if currentSelectedAlarmIndex == sender.tag {
             delegate?.alarmSelectionClicked(alarmIndex: currentSelectedAlarmIndex, appear: false)
