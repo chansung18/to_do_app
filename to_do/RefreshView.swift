@@ -34,8 +34,14 @@ class RefreshView: UIView {
         let view = Bundle.main.loadNibNamed("RefreshView", owner: self, options: nil)?.first as! UIView
         view.frame = bounds
         addSubview(view)
+        
         titleField.autocorrectionType = UITextAutocorrectionType.no
+        titleField.layer.cornerRadius = 5.0;
+        titleField.layer.borderColor = UIColor.gray.cgColor
+        titleField.layer.borderWidth = 1.5
+        titleField.tintColor = UIColor.purple
     }
+    
     func getTitleText() -> String {
         if (textFieldText != nil) {
             return textFieldText!

@@ -153,20 +153,33 @@ class ViewController: UIViewController,
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("\(scrollView.contentOffset.y), \(refreshControl.alpha)")
         
-        if scrollView.contentOffset.y == 0 {
-            refreshControl.alpha = 0.0
-        }
-        
-        if refreshControl.alpha >= 1.0 {
+        if isRefreshControlFullyVisible {
             refreshControl.alpha = 1.0
         }
         else {
-            if scrollView.contentOffset.y < -30  {
-                refreshControl.alpha = -scrollView.contentOffset.y * 0.008
-            }
+            refreshControl.alpha = -scrollView.contentOffset.y * 0.001
         }
+
+        
+//        print("\(scrollView.contentOffset.y), \(refreshControl.alpha), \(isRefreshControlFullyVisible)")
+//        
+//        if scrollView.contentOffset.y == 0 {
+//            refreshControl.alpha = 0.0
+//            print("==\(refreshControl.alpha)")
+//        }
+//        
+//        if scrollView.contentOffset.y < -50 {
+//            if refreshControl.alpha >= 1.0 {
+//                refreshControl.alpha = 1.0
+//            }
+//            else {
+//                refreshControl.alpha = -scrollView.contentOffset.y * 0.01
+//            }
+//        }
+//        else if scrollView.contentOffset.y < -30 {
+//            refreshControl.alpha = -scrollView.contentOffset.y * 0.05
+//        }
     }
     
     /*
@@ -188,7 +201,6 @@ class ViewController: UIViewController,
      */
     func dismissRefreshControl() {
         UIView.animate(withDuration: 0.5, animations: {
-            self.refreshControl.alpha = 0
             self.view.exchangeSubview(at: 0, withSubviewAt: 1)
             self.colorAlarmSelectionView?.alpha = 0
             self.alarmDateChoosingView?.frame.origin.y = self.alarmDateChoosingView!.frame.origin.y + self.alarmDateChoosingView!.frame.height
@@ -213,6 +225,7 @@ class ViewController: UIViewController,
                 self.currentWorkingAlarms = [Date]()
                 self.currentWorkingColorIndex = 0
                 self.currentWorkingColor = UIColor.gray
+                self.currentWorkingTitle = ""
                 
                 self.refreshView.titleField.text = ""
                 self.refreshControl.endRefreshing()

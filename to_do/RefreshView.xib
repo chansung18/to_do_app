@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2338c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -16,14 +16,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wv0-yS-cGE">
-                    <frame key="frameInset" minX="8" minY="18" width="259" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wv0-yS-cGE">
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-FV-WSB">
-                    <frame key="frameInset" minX="282" minY="18" width="30" height="30"/>
-                    <state key="normal" title="확인"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-FV-WSB">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="EWA-88-D8J"/>
+                        <constraint firstAttribute="height" constant="40" id="eKK-x7-WKJ"/>
+                    </constraints>
+                    <state key="normal" image="item_save"/>
                     <connections>
                         <action selector="whenPressComfirm:" destination="-1" eventType="touchUpInside" id="ZQf-HV-okM"/>
                     </connections>
@@ -33,6 +35,7 @@
             <constraints>
                 <constraint firstItem="wv0-yS-cGE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="2Mn-iu-C3e"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="2Tt-ww-ZYT"/>
+                <constraint firstItem="wv0-yS-cGE" firstAttribute="height" secondItem="6cz-FV-WSB" secondAttribute="height" id="6HS-ne-v9J"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="leading" secondItem="wv0-yS-cGE" secondAttribute="trailing" constant="8" id="8DA-AL-Go3"/>
                 <constraint firstItem="6cz-FV-WSB" firstAttribute="centerY" secondItem="wv0-yS-cGE" secondAttribute="centerY" id="AY5-GZ-jOC"/>
                 <constraint firstItem="wv0-yS-cGE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="E2p-Sq-iAQ"/>
@@ -55,4 +58,7 @@
             <point key="canvasLocation" x="-120" y="88"/>
         </view>
     </objects>
+    <resources>
+        <image name="item_save" width="64" height="64"/>
+    </resources>
 </document>
