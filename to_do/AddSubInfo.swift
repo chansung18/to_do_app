@@ -365,23 +365,21 @@ class AddSubInfo: UIView {
         print("sender.tag = \(sender.tag)")
         print("currentSelectedAlarmIndex = \(currentSelectedAlarmIndex)")
         
-        
-        alarmAddButtonToggle = !alarmAddButtonToggle
-      
-
-
-        isNewAlarmSelected = false
-        
         if currentSelectedAlarmIndex == sender.tag {
             delegate?.alarmSelectionClicked(alarmIndex: currentSelectedAlarmIndex, appear: false)
             currentSelectedAlarmIndex = -1
             isNewAlarmSelected = true
-            selectAlarmIndex[sender.tag] = false
+            alarmAddButtonToggle = !alarmAddButtonToggle
         }
         else {
             delegate?.alarmSelectionClicked(alarmIndex: sender.tag, appear: true)
             currentSelectedAlarmIndex = sender.tag
-            selectAlarmIndex[sender.tag] = true
+            
+            if isNewAlarmSelected {
+               alarmAddButtonToggle = !alarmAddButtonToggle
+            }
+            
+            isNewAlarmSelected = false
         }
     }
 }
