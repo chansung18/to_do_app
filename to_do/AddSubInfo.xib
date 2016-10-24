@@ -120,6 +120,10 @@
                         <constraint firstAttribute="height" constant="44" id="RcS-QL-ME9"/>
                         <constraint firstAttribute="width" constant="44" id="mEI-XD-QF8"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <state key="normal" title="3">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="Z6a-Dj-73K"/>
                     </connections>
@@ -148,6 +152,10 @@
                         <constraint firstAttribute="height" constant="44" id="Is7-iO-K8L"/>
                         <constraint firstAttribute="width" constant="44" id="q6p-7d-yOO"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <state key="normal" title="2">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="VhK-Sa-9MA"/>
                     </connections>
@@ -176,6 +184,10 @@
                         <constraint firstAttribute="width" constant="44" id="54g-ZG-1aT"/>
                         <constraint firstAttribute="height" constant="44" id="IUc-zp-bJl"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <state key="normal" title="1">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="alarmClicked:" destination="-1" eventType="touchUpInside" id="eHk-6R-fkj"/>
                     </connections>
@@ -296,11 +308,11 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="xEH-Wi-x6u"/>
                     <exclude reference="cVG-Ej-dpb"/>
                     <exclude reference="cum-lb-xWb"/>
                     <exclude reference="rAQ-5G-YGE"/>
                     <exclude reference="rTi-aE-E6Z"/>
-                    <exclude reference="xEH-Wi-x6u"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="501" y="103"/>

@@ -89,6 +89,13 @@ class ViewController: UIViewController,
                                                selector: #selector(keyboardWillShow),
                                                name: NSNotification.Name.UIKeyboardWillShow,
                                                object: nil)
+        
+        Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(updateAlarmGauge), userInfo: nil, repeats: true)
+    }
+    
+    func updateAlarmGauge() {
+        let notification = Notification(name: NSNotification.Name(rawValue: "CustomCellUpdate"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(notification)
     }
     
     func keyboardWillShow(_ nofification : Notification){
@@ -113,9 +120,9 @@ class ViewController: UIViewController,
             UIView.animate(withDuration: 0.2, animations: {
                 self.colorAlarmSelectionView?.alpha = 1
             })
-            colorAlarmSelectionView?.selectedColorIndex = currentWorkingColorIndex
-            colorAlarmSelectionView?.alarmCount = currentWorkingAlarms.count
-            refreshView.titleField.text = currentWorkingTitle
+//            colorAlarmSelectionView?.selectedColorIndex = currentWorkingColorIndex
+//            colorAlarmSelectionView?.alarmCount = currentWorkingAlarms.count
+//            refreshView.titleField.text = currentWorkingTitle
 
         }
         
@@ -234,6 +241,7 @@ class ViewController: UIViewController,
         
         cell.backgroundColor = UIColor.clear
         cell.item = doItem
+        cell.isCrossedOut = doItem.lineflag!.boolValue
         cell.originalTitle = doItem.title
         
         if doItem.lineflag == NSNumber(value: true as Bool) {
@@ -253,41 +261,6 @@ class ViewController: UIViewController,
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.cellLongPressed))
         lpgr.minimumPressDuration = 1.0
         cell.addGestureRecognizer(lpgr)
-        
-        if cell.contentView.subviews[0].subviews.count < 3 {
-            if doItem.alarms != nil && doItem.alarms!.count > 0 {
-                var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
-                
-                for alarm in (doItem.alarms?.allObjects)! {
-                    let nsAlarm = alarm as! Alarm
-                    if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
-                        minAlarm = nsAlarm.alarm!
-                    }
-                }
-                
-                let minInterval = minAlarm.timeIntervalSinceNow
-                let startingDateInterval = minAlarm.timeIntervalSince(doItem.startingDate!)
-
-                var cellFrameWidth : Int?
-                
-                //onday 86386
-                if(minInterval > 0 ){
-                    cellFrameWidth = Int(cell.frame.width) - Int(Double(minInterval/startingDateInterval)*Double(cell.frame.width))
-                }
-                else{
-                    cellFrameWidth = Int(cell.frame.width)
-                }
-                
-                let gaugeView = UIView(frame: CGRect(x: 0, y: 0, width:Int(cellFrameWidth!), height: Int(cell.frame.height)))
-                gaugeView.backgroundColor = labelColor
-                gaugeView.alpha = 0.2
-                cell.contentView.subviews[0].addSubview(gaugeView)
-                cell.contentView.subviews[0].sendSubview(toBack: gaugeView)
-            }
-        }
-        else {
-            cell.contentView.subviews[0].subviews[0].backgroundColor = labelColor
-        }
         
         return cell
     }
@@ -321,6 +294,12 @@ class ViewController: UIViewController,
             let row = tableView.indexPathForRow(at: touchPoint)
             if row != nil {
                 let currentTodoItem = dolist[row!.row]
+                currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+                let red = (currentTodoItem.color?.r as! CGFloat) / 256
+                let green = (currentTodoItem.color?.g as! CGFloat) / 256
+                let blue = (currentTodoItem.color?.b as! CGFloat) / 256
+                
+                currentWorkingColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
                 
                 for alarm in currentTodoItem.alarms! {
                     currentWorkingAlarms.append((alarm as! Alarm).alarm!)
@@ -332,7 +311,7 @@ class ViewController: UIViewController,
                 
                 currentWorkingStartingDate = currentTodoItem.startingDate!
                 currentWorkingTitle = currentTodoItem.title!
-                currentWorkingColorIndex = currentTodoItem.color?.index as! Int
+                
                 print("currentWorkingColorIndex = \(currentWorkingColorIndex)")
                 refreshView.titleField.text = currentTodoItem.title
                 isInTheMiddleOfLongPressing = true

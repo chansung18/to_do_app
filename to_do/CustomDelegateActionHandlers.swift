@@ -67,6 +67,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
                 mainViewController.present(alert, animated: true, completion: nil)
             }
             else {
+                mainViewController.currentWorkingTitle = refreshView.titleField.text!
                 refreshView.titleField.becomeFirstResponder()
             }
         }

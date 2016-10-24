@@ -12,14 +12,7 @@ class ToDoListTableViewCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var item: Dolist? {
-        didSet(newItem) {
-            if let newItem = newItem {
-                originalTitle = newItem.title!
-                isCrossedOut = newItem.lineflag!.boolValue
-            }
-        }
-    }
+    var item: Dolist? 
     
     var index: Int = 0
     
@@ -33,6 +26,8 @@ class ToDoListTableViewCell: UITableViewCell {
     var startY: CGFloat = 0
     var endY: CGFloat = 0
     
+    var gaugeView: UIView?
+    
     var isCrossedOut: Bool = false {
         didSet {
             item?.lineflag = NSNumber(value: isCrossedOut)
@@ -44,7 +39,7 @@ class ToDoListTableViewCell: UITableViewCell {
             titleLabel.text = originalTitle
             item?.title = originalTitle
         }
-    } 
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,6 +51,61 @@ class ToDoListTableViewCell: UITableViewCell {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPanned))
         panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(updateUI), name: NSNotification.Name(rawValue: "CustomCellUpdate"), object: nil)
+    }
+    
+    func updateUI() {
+        let colorR = CGFloat(item!.color!.r!) / 255
+        let colorG = CGFloat(item!.color!.g!) / 255
+        let colorB = CGFloat(item!.color!.b!) / 255
+        
+        let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
+        
+            if item!.alarms != nil && item!.alarms!.count > 0 {
+                var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
+                
+                for alarm in (item!.alarms?.allObjects)! {
+                    let nsAlarm = alarm as! Alarm
+                    if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
+                        minAlarm = nsAlarm.alarm!
+                    }
+                }
+                
+                let minInterval = minAlarm.timeIntervalSinceNow
+                let startingDateInterval = minAlarm.timeIntervalSince(item!.startingDate!)
+                
+                var cellFrameWidth : Int?
+                
+                //onday 86386
+                if(minInterval > 0 ){
+                    cellFrameWidth = Int(self.frame.width) - Int(Double(minInterval/startingDateInterval)*Double(self.frame.width))
+                }
+                else{
+                    cellFrameWidth = Int(self.frame.width)
+                }
+                
+                if self.contentView.subviews[0].subviews.count < 3 {
+                    if gaugeView == nil {
+                        gaugeView = UIView(frame: CGRect(x: 0, y: 0, width:0, height: Int(self.frame.height)))
+                        self.contentView.subviews[0].addSubview(gaugeView!)
+                        self.contentView.subviews[0].sendSubview(toBack: gaugeView!)
+                    }
+                    
+                    gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
+                    print("width = \(gaugeView!.frame.size.width)")
+                    gaugeView!.backgroundColor = labelColor
+                    gaugeView!.alpha = 0.2
+                }
+                else {
+                    self.contentView.subviews[0].subviews[0].backgroundColor = labelColor
+                    gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
+                    print("width = \(gaugeView!.frame.size.width)")
+                    gaugeView!.backgroundColor = labelColor
+                    gaugeView!.alpha = 0.2
+                }
+            }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -94,13 +144,13 @@ class ToDoListTableViewCell: UITableViewCell {
                         var tmpIndex = 0
                         
                         if titleLength > 10 {
-                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                            tmpIndex = Int(gesture.location(in: self).x * 3 / CGFloat(titleLength)) - 10
                         }
                         else {
                             tmpIndex = Int(gesture.location(in: self).x / CGFloat(titleLength)) - 2
                         }
                         
-                        print("tmpIndex = \(tmpIndex)")
+//                        print("tmpIndex = \(tmpIndex)")
                         
                         if tmpIndex <= titleLength && tmpIndex >= 0 {
                             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: titleLabel.text!)
@@ -114,7 +164,7 @@ class ToDoListTableViewCell: UITableViewCell {
                         var tmpIndex = 0
                         
                         if titleLength > 10 {
-                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                            tmpIndex = Int(gesture.location(in: self).x * 3 / CGFloat(titleLength)) - 10
                         }
                         else {
                             tmpIndex = Int(gesture.location(in: self).x / CGFloat(titleLength)) - 2

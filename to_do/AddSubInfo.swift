@@ -374,11 +374,12 @@ class AddSubInfo: UIView {
         
         if currentSelectedAlarmIndex == sender.tag {
             delegate?.alarmSelectionClicked(alarmIndex: currentSelectedAlarmIndex, appear: false)
+            currentSelectedAlarmIndex = -1
+            isNewAlarmSelected = true
         }
         else {
             delegate?.alarmSelectionClicked(alarmIndex: sender.tag, appear: true)
+            currentSelectedAlarmIndex = sender.tag
         }
-        
-        currentSelectedAlarmIndex = sender.tag
     }
 }

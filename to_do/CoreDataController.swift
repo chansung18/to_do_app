@@ -73,6 +73,7 @@ class CoreDataController {
         
         doListObject.title = title
         doListObject.startingDate = startingDate
+        doListObject.lineflag = NSNumber(value: false)
         doListObject.color = colorObject            // hooking up Dolist with Color CoreData Object (relation)
         
         for alarm in alarms {
