@@ -28,7 +28,7 @@ class ViewController: UIViewController,
     */
     var currentWorkingTitle: String = String()
     var currentWorkingColorIndex: Int = 0
-    var currentWorkingColor: UIColor = UIColor.gray
+    var currentWorkingColor: UIColor = UIColor(red: 238.0, green: 96.0, blue: 35.0, alpha: 1)
     var currentWorkingAlarms: [Date] = [Date]()
     var currentWorkingStartingDate: Date = Date() {
         didSet {
@@ -44,6 +44,7 @@ class ViewController: UIViewController,
     var isInTheMiddleOfEnteringItem: Bool = false
     var isRefreshControlFullyVisible: Bool = false
     var isInTheMiddleOfLongPressing: Bool = false
+    var isScrollUp: Bool = false
     
     /* RefreshControl and Custom RefreshView in it */
     var refreshControl = UIRefreshControl()
@@ -59,13 +60,19 @@ class ViewController: UIViewController,
         super.viewDidAppear(animated)
         
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 65, 0)
-        
-        dolist = CoreDataController.sharedInstace.loadFromCoredata()
-        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore {
+            dolist = CoreDataController.sharedInstace.loadFromCoredata()
+        }
+        else {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            setupInitialItems()
+        }
         
         customDelegateHandler = CustomDelegateActionHandlers(viewController: self)
         
@@ -134,7 +141,9 @@ class ViewController: UIViewController,
         
         if alarmDateChoosingView == nil {
             alarmDateChoosingView = AlarmSubInfo(frame: CGRect(x: x, y: y + height, width: width, height: height))
+            alarmDateChoosingView?.startingDate = currentWorkingStartingDate
             alarmDateChoosingView?.alpha = 1
+            
             dummyView.addSubview(alarmDateChoosingView!)
             
             let dummyTapGesture = UITapGestureRecognizer(target: self, action: #selector(colorAlarmSelectionViewTapped))
@@ -149,6 +158,8 @@ class ViewController: UIViewController,
             UIView.animate(withDuration: 0.2, animations: {
                 self.alarmDateChoosingView?.frame.origin.y = y + height
             })
+            
+            alarmDateChoosingView?.startingDate = currentWorkingStartingDate
         }
     }
     
@@ -157,14 +168,22 @@ class ViewController: UIViewController,
     func didRefresh() {
         showRefreshControl()
         refreshView.titleField.becomeFirstResponder()
+        isScrollUp = true
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("\(refreshControl.alpha)")
+        
         if isRefreshControlFullyVisible {
             refreshControl.alpha = 1.0
         }
         else {
-            refreshControl.alpha = -scrollView.contentOffset.y * 0.001
+            if isScrollUp {
+                refreshControl.alpha = -scrollView.contentOffset.y * 0.01
+            }
+            else {
+                refreshControl.alpha = -scrollView.contentOffset.y * 0.005
+            }
         }
     }
     
@@ -177,6 +196,7 @@ class ViewController: UIViewController,
         if isInTheMiddleOfEnteringItem {
             if gesture.location(in: self.dummyView).y < (self.colorAlarmSelectionView?.frame.origin.y)! {
                 dismissRefreshControl()
+                self.refreshControl.endRefreshing()
             }
         }
     }
@@ -210,10 +230,10 @@ class ViewController: UIViewController,
                 
                 self.currentWorkingAlarms = [Date]()
                 self.currentWorkingColorIndex = 0
-                self.currentWorkingColor = UIColor.gray
+                self.currentWorkingColor = UIColor(red: 238.0, green: 96.0, blue: 35.0, alpha: 1)
                 self.currentWorkingTitle = ""
                 
-                self.refreshView.titleField.text = ""
+                self.isScrollUp = false
                 self.refreshControl.endRefreshing()
             }
         })
@@ -225,9 +245,12 @@ class ViewController: UIViewController,
         })
         
         isInTheMiddleOfEnteringItem = true
-        currentWorkingStartingDate = Date()
         refreshControl.alpha = 1.0
         isRefreshControlFullyVisible = true
+        
+        if !isInTheMiddleOfLongPressing {
+            currentWorkingStartingDate = Date()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -274,6 +297,7 @@ class ViewController: UIViewController,
             tableView.beginUpdates()
             CoreDataController.sharedInstace.removeFromCoreData(self.dolist[(indexPath as NSIndexPath).row])
             self.dolist.remove(at: (indexPath as NSIndexPath).row)
+            (tableView.cellForRow(at: indexPath) as! ToDoListTableViewCell).item = nil
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         });
@@ -289,6 +313,8 @@ class ViewController: UIViewController,
     func cellLongPressed(_ gesture: UILongPressGestureRecognizer) {
         if !isInTheMiddleOfLongPressing {
             print("long pressed...\(gesture.view!.tag)")
+            
+            isInTheMiddleOfLongPressing = true
             
             let touchPoint = gesture.location(in: tableView)
             let row = tableView.indexPathForRow(at: touchPoint)
@@ -314,7 +340,6 @@ class ViewController: UIViewController,
                 
                 print("currentWorkingColorIndex = \(currentWorkingColorIndex)")
                 refreshView.titleField.text = currentTodoItem.title
-                isInTheMiddleOfLongPressing = true
             }
         }
     }
@@ -337,6 +362,63 @@ class ViewController: UIViewController,
         }
         
         return nil
+    }
+    
+    func setupInitialItems() {
+        var dummy: AddSubInfo? = AddSubInfo(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
+        var newItem = CoreDataController.sharedInstace.addToDoList(title: "투둥 어플에 오신것을 환영 합니다",
+                                                                   startingDate: Date(),
+                                                                   alarms: [Date](),
+                                                                   colorIndex: 0,
+                                                                   color: dummy!.firstColor.backgroundColor!)
+        dolist.append(newItem)
+        
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "화면을 아래로 내리면, 새로운 아이템 입력이 가능합니다.",
+                                                                   startingDate: Date(),
+                                                                   alarms: [Date](),
+                                                                   colorIndex: 1,
+                                                                   color: dummy!.secondColor.backgroundColor!)
+        dolist.append(newItem)
+
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "손가락을 오른쪽으로 밀어내면, 완료 표시가 가능합니다.",
+                                                               startingDate: Date(),
+                                                               alarms: [Date](),
+                                                               colorIndex: 2,
+                                                               color: dummy!.thirdColor.backgroundColor!)
+        newItem.lineflag = NSNumber(value: true)
+        dolist.append(newItem)
+
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "다시한번 손가락을 오른쪽으로 밀어내면, 완료 표시 해제가 가능합니다.",
+                                                               startingDate: Date(),
+                                                               alarms: [Date](),
+                                                               colorIndex: 2,
+                                                               color: dummy!.thirdColor.backgroundColor!)
+        dolist.append(newItem)
+        
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "알람은 총 3개까지 추가가 가능합니다.",
+                                                               startingDate: Date(),
+                                                               alarms: [Date](),
+                                                               colorIndex: 3,
+                                                               color: dummy!.fourthColor.backgroundColor!)
+        dolist.append(newItem)
+        
+        let testDate = Date().addingTimeInterval(60)
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "가장 최근의 알람이 가까워 올때, 색이 차오릅니다.",
+                                                               startingDate: Date(),
+                                                               alarms: [testDate],
+                                                               colorIndex: 3,
+                                                               color: dummy!.fourthColor.backgroundColor!)
+        dolist.append(newItem)
+ 
+        newItem = CoreDataController.sharedInstace.addToDoList(title: "손가락을 오른쪽으로 밀어내면, 아이템 삭제가 가능합니다.",
+                                                               startingDate: Date(),
+                                                               alarms: [Date](),
+                                                               colorIndex: 4,
+                                                               color: dummy!.fifthColor.backgroundColor!)
+        dolist.append(newItem)
+        
+        dummy = nil
     }
 }
 

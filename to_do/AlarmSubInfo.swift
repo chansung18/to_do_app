@@ -20,6 +20,8 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
     @IBOutlet weak var minuteScrollView: UIScrollView!
     var delegate: AlarmSubinfoDelegate?
     
+    var startingDate: Date?
+    
     var day: Int = 0 {
         didSet {
             animateDayScrollView()
@@ -183,17 +185,17 @@ class AlarmSubInfo: UIView, UIScrollViewDelegate {
     }
     
     func setAlarmDate() {
-        let currentTime = Date()
-        
-        let dayInSeconds = day * 24 * 60 * 60
-        let hourInSeconds = hour * 60 * 60
-        let minuteInSeconds = minute * 60
-        let alarmTime = currentTime.addingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy. MM. dd. HH:mm"
-        dayCount.text = dateFormatter.string(from: alarmTime)
-        delegate?.alarmChanged()
+        if let startingDate = startingDate {
+            let dayInSeconds = day * 24 * 60 * 60
+            let hourInSeconds = hour * 60 * 60
+            let minuteInSeconds = minute * 60
+            let alarmTime = startingDate.addingTimeInterval(Double(dayInSeconds + hourInSeconds + minuteInSeconds))
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy. MM. dd. HH:mm"
+            dayCount.text = dateFormatter.string(from: alarmTime)
+            delegate?.alarmChanged()
+        }
     }
 
     func getAlarmDate()-> Date{

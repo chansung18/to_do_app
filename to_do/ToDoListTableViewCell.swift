@@ -57,16 +57,17 @@ class ToDoListTableViewCell: UITableViewCell {
     }
     
     func updateUI() {
-        let colorR = CGFloat(item!.color!.r!) / 255
-        let colorG = CGFloat(item!.color!.g!) / 255
-        let colorB = CGFloat(item!.color!.b!) / 255
+        if let item = item {
+            let colorR = CGFloat(item.color!.r!) / 255
+            let colorG = CGFloat(item.color!.g!) / 255
+            let colorB = CGFloat(item.color!.b!) / 255
+            
+            let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
         
-        let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
-        
-            if item!.alarms != nil && item!.alarms!.count > 0 {
+            if item.alarms != nil && item.alarms!.count > 0 {
                 var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
                 
-                for alarm in (item!.alarms?.allObjects)! {
+                for alarm in (item.alarms?.allObjects)! {
                     let nsAlarm = alarm as! Alarm
                     if minAlarm.timeIntervalSince(nsAlarm.alarm!) > 0 {
                         minAlarm = nsAlarm.alarm!
@@ -74,7 +75,7 @@ class ToDoListTableViewCell: UITableViewCell {
                 }
                 
                 let minInterval = minAlarm.timeIntervalSinceNow
-                let startingDateInterval = minAlarm.timeIntervalSince(item!.startingDate!)
+                let startingDateInterval = minAlarm.timeIntervalSince(item.startingDate!)
                 
                 var cellFrameWidth : Int?
                 
@@ -99,13 +100,16 @@ class ToDoListTableViewCell: UITableViewCell {
                     gaugeView!.alpha = 0.2
                 }
                 else {
-                    self.contentView.subviews[0].subviews[0].backgroundColor = labelColor
-                    gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
-                    print("width = \(gaugeView!.frame.size.width)")
-                    gaugeView!.backgroundColor = labelColor
-                    gaugeView!.alpha = 0.2
+                    if gaugeView!.frame.width < self.frame.width {
+                        self.contentView.subviews[0].subviews[0].backgroundColor = labelColor
+                        gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
+                        print("width = \(gaugeView!.frame.size.width)")
+                        gaugeView!.backgroundColor = labelColor
+                        gaugeView!.alpha = 0.2
+                    }
                 }
             }
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -125,10 +129,12 @@ class ToDoListTableViewCell: UITableViewCell {
                 isMultiGestureAllowed = false
                 isEditingMode = false
             }
-            else if abs(endY-startY) > 5 && isPanGestureStarted {
+            
+            if abs(endY-startY) > 5 && isPanGestureStarted {
                 isEditingMode = false
             }
-            else if gesture.velocity(in: self).x < 0 && isPanGestureStarted {
+            
+            if gesture.velocity(in: self).x < 0 && isPanGestureStarted {
                 isEditingMode = false
             }
             
@@ -143,7 +149,10 @@ class ToDoListTableViewCell: UITableViewCell {
                         
                         var tmpIndex = 0
                         
-                        if titleLength > 10 {
+                        if titleLength >= 20 {
+                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                        }
+                        else if titleLength > 10 && titleLength < 20 {
                             tmpIndex = Int(gesture.location(in: self).x * 3 / CGFloat(titleLength)) - 10
                         }
                         else {
@@ -163,7 +172,10 @@ class ToDoListTableViewCell: UITableViewCell {
                         
                         var tmpIndex = 0
                         
-                        if titleLength > 10 {
+                        if titleLength >= 20 {
+                            tmpIndex = Int(gesture.location(in: self).x * 5 / CGFloat(titleLength)) - 10
+                        }
+                        else if titleLength > 10 && titleLength < 20 {
                             tmpIndex = Int(gesture.location(in: self).x * 3 / CGFloat(titleLength)) - 10
                         }
                         else {
