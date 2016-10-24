@@ -46,6 +46,7 @@ class AddSubInfo: UIView {
     @IBOutlet weak var fifthColorSelection: UIButton!
     
     var view: UIView!
+    var selectAlarmIndex : [Bool] = Array(repeating:false, count:3)
     
     var selectedColorIndex = 0 {
         willSet(newColorIndex) {
@@ -361,25 +362,26 @@ class AddSubInfo: UIView {
     @IBAction func alarmClicked(_ sender: UIButton) {
         print("isNewAlarmSelected = \(isNewAlarmSelected)")
         print("alarmAddButtonToggle = \(alarmAddButtonToggle)")
+        print("sender.tag = \(sender.tag)")
+        print("currentSelectedAlarmIndex = \(currentSelectedAlarmIndex)")
         
-//        if isNewAlarmSelected {
-            alarmAddButtonToggle = !alarmAddButtonToggle
-//            isNewAlarmSelected = true
-//        }
-//        else{
-//            isNewAlarmSelected = false
-//        }
         
+        alarmAddButtonToggle = !alarmAddButtonToggle
+      
+
+
         isNewAlarmSelected = false
         
         if currentSelectedAlarmIndex == sender.tag {
             delegate?.alarmSelectionClicked(alarmIndex: currentSelectedAlarmIndex, appear: false)
             currentSelectedAlarmIndex = -1
             isNewAlarmSelected = true
+            selectAlarmIndex[sender.tag] = false
         }
         else {
             delegate?.alarmSelectionClicked(alarmIndex: sender.tag, appear: true)
             currentSelectedAlarmIndex = sender.tag
+            selectAlarmIndex[sender.tag] = true
         }
     }
 }

@@ -178,6 +178,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
         let itemList = mainViewController.dolist
         
         print("new alarm size = \(alarms.count)")
+        print("ainViewController.currentWorkingColor = \(mainViewController.currentWorkingColor)" )
         
         let textFieldText = refreshView.getTitleText()
 

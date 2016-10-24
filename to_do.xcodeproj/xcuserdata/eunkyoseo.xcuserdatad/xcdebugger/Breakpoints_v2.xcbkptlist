@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "confirmAlarmClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,7 +62,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
-            endingLineNumber = "402">
+            endingLineNumber = "402"
+            landmarkName = "setupInitialItems()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -76,7 +78,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
-            endingLineNumber = "402">
+            endingLineNumber = "402"
+            landmarkName = "setupInitialItems()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -90,7 +94,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
-            endingLineNumber = "402">
+            endingLineNumber = "402"
+            landmarkName = "setupInitialItems()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -114,11 +120,25 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498810631.805272"
+            timestampString = "499010805.922733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "399"
+            endingLineNumber = "399">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "to_do/AddSubInfo.swift"
+            timestampString = "499010805.922733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
             landmarkName = "alarmClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -130,11 +150,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498810631.805272"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394">
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "confirmAlarmClicked(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -144,11 +166,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498810631.805272"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375">
+            startingLineNumber = "361"
+            endingLineNumber = "361"
+            landmarkName = "AddSubInfo"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -158,7 +182,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "confirmAlarmClicked(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "to_do/AddSubInfo.swift"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "348"
@@ -174,39 +214,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498810631.805272"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
-            landmarkName = "alarmClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
-            landmarkName = "confirmAlarmClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "347"
@@ -222,12 +230,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "confirmAlarmClicked(_:)"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "AddSubInfo"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "to_do/AddSubInfo.swift"
+            timestampString = "499009731.851511"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "AddSubInfo"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "to_do/AddSubInfo.swift"
+            timestampString = "499010805.922733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "alarmClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -238,57 +278,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "AddSubInfo"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "AddSubInfo"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498810631.805272"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
             landmarkName = "AddSubInfo"
             landmarkType = "3">
          </BreakpointContent>
@@ -304,7 +298,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "408"
-            endingLineNumber = "408">
+            endingLineNumber = "408"
+            landmarkName = "setupInitialItems()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -318,7 +314,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "415"
-            endingLineNumber = "415">
+            endingLineNumber = "415"
+            landmarkName = "setupInitialItems()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -332,7 +330,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "423"
-            endingLineNumber = "423">
+            endingLineNumber = "423"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -375,7 +375,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "332"
             endingLineNumber = "332"
-            landmarkName = "tableView(_:editActionsForRowAt:)"
+            landmarkName = "cellLongPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -391,7 +391,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "349"
             endingLineNumber = "349"
-            landmarkName = "cellLongPressed(_:)"
+            landmarkName = "showAlarmDateChoosingView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -402,11 +402,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "setVisibleAlarmItems()"
             landmarkType = "7">
          </BreakpointContent>
@@ -418,11 +418,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "to_do/AddSubInfo.swift"
-            timestampString = "498668350.303431"
+            timestampString = "499009731.851511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "setVisibleAlarmItems()"
             landmarkType = "7">
          </BreakpointContent>
@@ -439,7 +439,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "352"
             endingLineNumber = "352"
-            landmarkName = "cellLongPressed(_:)"
+            landmarkName = "showAlarmDateChoosingView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -471,7 +471,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "300"
             endingLineNumber = "300"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkName = "tableView(_:editActionsForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -489,6 +489,54 @@
             endingLineNumber = "288"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "to_do/AddSubInfo.swift"
+            timestampString = "499009731.851511"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "AddSubInfo"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "to_do.AddSubInfo.init (frame : __C.CGRect) -&gt; to_do.AddSubInfo"
+                  moduleName = "to_do"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/eunkyoseo/Documents/to_do/to_do/AddSubInfo.swift"
+                  timestampString = "499009477.501475"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1479">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "to_do.AddSubInfo.init (coder : __ObjC.NSCoder) -&gt; to_do.AddSubInfo"
+                  moduleName = "to_do"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/eunkyoseo/Documents/to_do/to_do/AddSubInfo.swift"
+                  timestampString = "499009477.506852"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1402">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

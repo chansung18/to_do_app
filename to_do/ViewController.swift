@@ -28,7 +28,7 @@ class ViewController: UIViewController,
     */
     var currentWorkingTitle: String = String()
     var currentWorkingColorIndex: Int = 0
-    var currentWorkingColor: UIColor = UIColor(red: 238.0, green: 96.0, blue: 35.0, alpha: 1)
+    var currentWorkingColor: UIColor = UIColor(red: 256.0, green: 0.0, blue: 0.0, alpha: 1)
     var currentWorkingAlarms: [Date] = [Date]()
     var currentWorkingStartingDate: Date = Date() {
         didSet {
