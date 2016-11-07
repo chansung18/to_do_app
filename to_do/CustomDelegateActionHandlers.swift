@@ -47,7 +47,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
                                               preferredStyle: UIAlertControllerStyle.alert)
 
                 let yesAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-                    refreshView.titleField.becomeFirstResponder()
+                    refreshView?.titleField.becomeFirstResponder()
 
                     alarms.remove(at: alarmIndex)
                     colorAlarmSelectionView?.alarmCount -= 1
@@ -67,8 +67,8 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
                 mainViewController.present(alert, animated: true, completion: nil)
             }
             else {
-                mainViewController.currentWorkingTitle = refreshView.titleField.text!
-                refreshView.titleField.becomeFirstResponder()
+                mainViewController.currentWorkingTitle = (refreshView?.titleField.text!)!
+                refreshView?.titleField.becomeFirstResponder()
             }
         }
     }
@@ -92,7 +92,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
                                                     message: "No Interval Input",
                                                     preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
-                refreshView.titleField.becomeFirstResponder()
+                refreshView?.titleField.becomeFirstResponder()
             }))
                 
             mainViewController.present(alertController, animated: true, completion: nil)
@@ -108,7 +108,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
             }
             
             if !existingAlarmFlag {
-                refreshView.titleField.becomeFirstResponder()
+                refreshView?.titleField.becomeFirstResponder()
                 
                 if alarmIndex == -1 {
                     mainViewController.currentWorkingAlarms.append(newAlarm)
@@ -124,7 +124,7 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
                                                         message: "Same Alarm Date Not Allowed",
                                                         preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
-                    refreshView.titleField.becomeFirstResponder()
+                    refreshView?.titleField.becomeFirstResponder()
                 }))
                 mainViewController.present(alertController, animated: true, completion: nil)
             }
@@ -150,13 +150,12 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
             mainViewController.alarmDateChoosingView?.minute = Int(m.quot)
         }
         else {
-            refreshView.titleField.becomeFirstResponder()
+            refreshView?.titleField.becomeFirstResponder()
         }
     }
     
     func colorSelectionClicked(colorIndex: Int, color: UIColor) {
         mainViewController.currentWorkingColorIndex = colorIndex
-        mainViewController.currentWorkingColor = color
     }
 
     /*
@@ -171,40 +170,37 @@ class CustomDelegateActionHandlers: AddSubInfoDelegate,
     */
     func toDoItemAddClicked() {
         let refreshView = mainViewController.refreshView
-        let color = mainViewController.currentWorkingColor
         let colorIndex = mainViewController.currentWorkingColorIndex
         let startingDate = mainViewController.currentWorkingStartingDate
         let alarms = mainViewController.currentWorkingAlarms
         let itemList = mainViewController.dolist
         
         print("new alarm size = \(alarms.count)")
-        print("ainViewController.currentWorkingColor = \(mainViewController.currentWorkingColor)" )
-        
-        let textFieldText = refreshView.getTitleText()
 
-        if textFieldText != "null" &&
-            textFieldText.replacingOccurrences(of: " ", with: "") != "" {
-            
-            let result = isThereDuplicateItem(list: itemList, key: startingDate)
-            
-            if let item = result.item {
-                let replacedItem = CoreDataController.sharedInstace.replaceToDoList(item: item, title: textFieldText, alarms: alarms, colorIndex: colorIndex, color: color)
-                mainViewController.dolist[result.index] = replacedItem
-            
-            }
-            else {
-                let newItem = CoreDataController.sharedInstace.addToDoList(title: textFieldText,
-                                                                           startingDate: startingDate,
-                                                                           alarms: alarms,
-                                                                           colorIndex: colorIndex,
-                                                                           color: color)
-                mainViewController.dolist.append(newItem)
-            }
+        if let textFieldText = refreshView?.getTitleText() {
+            if textFieldText != "null" &&
+                textFieldText.replacingOccurrences(of: " ", with: "") != "" {
 
-            mainViewController.tableView.reloadData()
+                let result = isThereDuplicateItem(list: itemList, key: startingDate)
+                
+                if let item = result.item {
+                    let replacedItem = CoreDataController.sharedInstace.replaceToDoList(item: item, title: textFieldText, alarms: alarms, colorIndex: colorIndex)
+                    mainViewController.dolist[result.index] = replacedItem
+                
+                }
+                else {
+                    let newItem = CoreDataController.sharedInstace.addToDoList(title: textFieldText,
+                                                                               startingDate: startingDate,
+                                                                               alarms: alarms,
+                                                                               colorIndex: colorIndex)
+                    mainViewController.dolist.append(newItem)
+                }
+
+                mainViewController.tableView.reloadData()
+            }
         }
         
-        mainViewController.refreshView.titleField.text = ""
+        mainViewController.refreshView?.titleField.text = ""
         mainViewController.dismissRefreshControl()
     }
 

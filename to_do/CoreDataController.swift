@@ -20,14 +20,14 @@ class CoreDataController {
     //private init for singleton class
     fileprivate init() {}
     
-    func replaceToDoList(item: Dolist, title: String, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+    func replaceToDoList(item: Dolist, title: String, alarms: [Date], colorIndex: Int) -> Dolist {
         item.title = title
         
-        let coreImageColor = CoreImage.CIColor(color: color)
-        item.color!.r = (coreImageColor.red * 256) as NSNumber!
-        item.color!.g = (coreImageColor.green * 256) as NSNumber!
-        item.color!.b = (coreImageColor.blue * 256) as NSNumber!
-        item.color!.a = NSNumber(integerLiteral: 1)
+//        let coreImageColor = CoreImage.CIColor(color: color)
+//        item.color!.r = (coreImageColor.red * 256) as NSNumber!
+//        item.color!.g = (coreImageColor.green * 256) as NSNumber!
+//        item.color!.b = (coreImageColor.blue * 256) as NSNumber!
+//        item.color!.a = NSNumber(integerLiteral: 1)
         item.color!.index = colorIndex as NSNumber!
         
         for alarm in item.alarms! {
@@ -55,7 +55,7 @@ class CoreDataController {
         return item
     }
     
-    func addToDoList(title: String, startingDate: Date, alarms: [Date], colorIndex: Int, color: UIColor) -> Dolist {
+    func addToDoList(title: String, startingDate: Date, alarms: [Date], colorIndex: Int) -> Dolist {
         /* Create Dolist CoreData Object */
         let doListEntityDescription = NSEntityDescription.entity(forEntityName: "Dolist", in: managedObjectContext)
         let doListObject = Dolist(entity: doListEntityDescription!, insertInto: managedObjectContext)
@@ -64,11 +64,11 @@ class CoreDataController {
         let colorDescription = NSEntityDescription.entity(forEntityName: "Color", in: managedObjectContext)
         let colorObject = Color(entity: colorDescription!, insertInto: managedObjectContext)
         
-        let coreImageColor = CoreImage.CIColor(color: color)
-        colorObject.r = (coreImageColor.red * 256) as NSNumber!
-        colorObject.g = (coreImageColor.green * 256) as NSNumber!
-        colorObject.b = (coreImageColor.blue * 256) as NSNumber!
-        colorObject.a = NSNumber(integerLiteral: 1)
+//        let coreImageColor = CoreImage.CIColor(color: color)
+//        colorObject.r = (coreImageColor.red * 256) as NSNumber!
+//        colorObject.g = (coreImageColor.green * 256) as NSNumber!
+//        colorObject.b = (coreImageColor.blue * 256) as NSNumber!
+//        colorObject.a = NSNumber(integerLiteral: 1)
         colorObject.index = colorIndex as NSNumber!
         
         doListObject.title = title
