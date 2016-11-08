@@ -325,6 +325,8 @@ class ViewController: UIViewController,
     }
     
     func showAlarmDateChoosingView() {
+        refreshView?.titleField.endEditing(true)
+        
         let y = colorAlarmSelectionView!.frame.origin.y + colorAlarmSelectionView!.frame.size.height - 5
         
         UIView.animate(withDuration: 0.35, animations: {

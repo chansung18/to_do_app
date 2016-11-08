@@ -41,6 +41,8 @@ class ToDoListTableViewCell: UITableViewCell {
         }
     }
     
+    let dummyAlarmSelectionView: AddSubInfo = AddSubInfo()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layoutIfNeeded()
@@ -58,12 +60,6 @@ class ToDoListTableViewCell: UITableViewCell {
     
     func updateUI() {
         if let item = item {
-            let colorR = CGFloat(item.color!.r!) / 255
-            let colorG = CGFloat(item.color!.g!) / 255
-            let colorB = CGFloat(item.color!.b!) / 255
-            
-            let labelColor = UIColor(red:colorR, green: colorG, blue: colorB, alpha: 1)
-        
             if item.alarms != nil && item.alarms!.count > 0 {
                 var minAlarm = Date(timeIntervalSinceReferenceDate: 9999999999)
                 
@@ -95,17 +91,42 @@ class ToDoListTableViewCell: UITableViewCell {
                     }
                     
                     gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
-                    print("width = \(gaugeView!.frame.size.width)")
-                    gaugeView!.backgroundColor = labelColor
                     gaugeView!.alpha = 0.2
+                    
+                    switch item.color!.index!.intValue {
+                    case 0:
+                        gaugeView!.backgroundColor = dummyAlarmSelectionView.firstColor.backgroundColor
+                    case 1:
+                        gaugeView!.backgroundColor = dummyAlarmSelectionView.secondColor.backgroundColor
+                    case 2:
+                        gaugeView!.backgroundColor = dummyAlarmSelectionView.thirdColor.backgroundColor
+                    case 3:
+                        gaugeView!.backgroundColor = dummyAlarmSelectionView.fourthColor.backgroundColor
+                    case 4:
+                        gaugeView!.backgroundColor = dummyAlarmSelectionView.fifthColor.backgroundColor
+                    default:
+                        print("nothing")
+                    }
                 }
                 else {
                     if gaugeView!.frame.width < self.frame.width {
-                        self.contentView.subviews[0].subviews[0].backgroundColor = labelColor
                         gaugeView!.frame.size.width = CGFloat(Int(cellFrameWidth!))
-                        print("width = \(gaugeView!.frame.size.width)")
-                        gaugeView!.backgroundColor = labelColor
                         gaugeView!.alpha = 0.2
+                        
+                        switch item.color!.index!.intValue {
+                        case 0:
+                            gaugeView!.backgroundColor = dummyAlarmSelectionView.firstColor.backgroundColor
+                        case 1:
+                            gaugeView!.backgroundColor = dummyAlarmSelectionView.secondColor.backgroundColor
+                        case 2:
+                            gaugeView!.backgroundColor = dummyAlarmSelectionView.thirdColor.backgroundColor
+                        case 3:
+                            gaugeView!.backgroundColor = dummyAlarmSelectionView.fourthColor.backgroundColor
+                        case 4:
+                            gaugeView!.backgroundColor = dummyAlarmSelectionView.fifthColor.backgroundColor
+                        default:
+                            print("nothing")
+                        }
                     }
                 }
             }
