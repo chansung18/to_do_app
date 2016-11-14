@@ -26,6 +26,9 @@ class ToDoListTableViewCell: UITableViewCell {
     var startY: CGFloat = 0
     var endY: CGFloat = 0
     
+    var startX: CGFloat = 0
+    var endX: CGFloat = 0
+    
     var gaugeView: UIView?
     
     var isCrossedOut: Bool = false {
@@ -54,8 +57,8 @@ class ToDoListTableViewCell: UITableViewCell {
         panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
         
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(updateUI), name: NSNotification.Name(rawValue: "CustomCellUpdate"), object: nil)
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(updateUI), name: NSNotification.Name(rawValue: "CustomCellUpdate"), object: nil)
     }
     
     func updateUI() {
@@ -141,21 +144,27 @@ class ToDoListTableViewCell: UITableViewCell {
         if gesture.state == UIGestureRecognizerState.began {
             isPanGestureStarted = true
             startY = gesture.translation(in: self.tableView).y
+            startX = gesture.translation(in: self.tableView).x
         }
         
         else if gesture.state == .changed {
             endY = gesture.translation(in: self.tableView).y
+            endX = gesture.translation(in: self.tableView).x
             
             if abs(endY-startY) > 0 && !isInTheMiddleOfCrossingOut {
+                print("1")
                 isMultiGestureAllowed = false
                 isEditingMode = false
             }
             
             if abs(endY-startY) > 5 && isPanGestureStarted {
+                print("2")
                 isEditingMode = false
             }
             
-            if gesture.velocity(in: self).x < 0 && isPanGestureStarted {
+            if (gesture.velocity(in: self).x < 0 && isPanGestureStarted) ||
+                ((endX-startX) < -10) {
+                print("3")
                 isEditingMode = false
             }
             
@@ -255,6 +264,10 @@ class ToDoListTableViewCell: UITableViewCell {
                                     shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return isMultiGestureAllowed
     }
+    
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
 }
 
 

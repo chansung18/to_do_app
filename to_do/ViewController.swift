@@ -81,7 +81,7 @@ class ViewController: UIViewController,
                                                name: NSNotification.Name.UIKeyboardWillShow,
                                                object: nil)
         
-        Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(updateAlarmGauge), userInfo: nil, repeats: true)
+//        Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(updateAlarmGauge), userInfo: nil, repeats: true)
     }
     
     func updateAlarmGauge() {
@@ -99,7 +99,7 @@ class ViewController: UIViewController,
     
     func getColorAlarmSelectionViewFrame(keyboardHeight: CGFloat) -> CGRect {
         return CGRect(x: 0,
-                      y: dummyView.frame.height - keyboardHeight - 150,
+                      y: dummyView.frame.height - keyboardHeight - 150 + 80,
                       width: dummyView.frame.width,
                       height: 150)
     }
@@ -371,18 +371,18 @@ class ViewController: UIViewController,
                                                                colorIndex: 2)
         dolist.append(newItem)
         
-        newItem = CoreDataController.sharedInstace.addToDoList(title: "알람은 총 3개까지 추가가 가능합니다.",
-                                                               startingDate: Date(),
-                                                               alarms: [Date](),
-                                                               colorIndex: 3)
-        dolist.append(newItem)
-        
-        let testDate = Date().addingTimeInterval(60)
-        newItem = CoreDataController.sharedInstace.addToDoList(title: "가장 최근의 알람이 가까워 올때, 색이 차오릅니다.",
-                                                               startingDate: Date(),
-                                                               alarms: [testDate],
-                                                               colorIndex: 3)
-        dolist.append(newItem)
+//        newItem = CoreDataController.sharedInstace.addToDoList(title: "알람은 총 3개까지 추가가 가능합니다.",
+//                                                               startingDate: Date(),
+//                                                               alarms: [Date](),
+//                                                               colorIndex: 3)
+//        dolist.append(newItem)
+//        
+//        let testDate = Date().addingTimeInterval(60)
+//        newItem = CoreDataController.sharedInstace.addToDoList(title: "가장 최근의 알람이 가까워 올때, 색이 차오릅니다.",
+//                                                               startingDate: Date(),
+//                                                               alarms: [testDate],
+//                                                               colorIndex: 3)
+//        dolist.append(newItem)
  
         newItem = CoreDataController.sharedInstace.addToDoList(title: "손가락을 오른쪽으로 밀어내면, 아이템 삭제가 가능합니다.",
                                                                startingDate: Date(),
